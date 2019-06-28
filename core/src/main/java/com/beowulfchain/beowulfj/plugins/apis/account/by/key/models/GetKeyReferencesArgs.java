@@ -35,8 +35,7 @@ public class GetKeyReferencesArgs {
     private List<PublicKey> keys;
 
     /**
-     * Create a new {@link GetBlockHeaderArgs} instance to be passed to the
-     * {@link BlockApi#getBlock(CommunicationHandler, UInteger)} method.
+     * Create a new {@link GetBlockHeaderArgs} instance to be passed to the getBlock method.
      *
      * @param blockNumber The block number to search for.
      */

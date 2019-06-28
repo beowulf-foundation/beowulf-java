@@ -41,41 +41,6 @@ public class AccountHistoryApi {
     }
 
     /**
-     * Get a sequence of operations included/generated within a particular
-     * block.
-     *
-     * @param communicationHandler A
-     *                             {@link CommunicationHandler
-     *                             CommunicationHandler} instance that should be used to send the
-     *                             request.
-     * @param blockNumber          Height of the block whose generated virtual operations should
-     *                             be returned.
-     * @param onlyVirtual          Define if only virtual operations should be returned
-     *                             (<code>true</code>) or not (<code>false</code>).
-     * @return A sequence of operations included/generated within a particular
-     * block.
-     * @throws BeowulfCommunicationException <ul>
-     *                                       <li>If the server was not able to answer the request in the
-     *                                       given time (see
-     *                                       {@link BeowulfJConfig#setResponseTimeout(int)
-     *                                       setResponseTimeout}).</li>
-     *                                       <li>If there is a connection problem.</li>
-     *                                       </ul>
-     * @throws BeowulfResponseException      <ul>
-     *                                       <li>If the BeowulfJ is unable to transform the JSON response
-     *                                       into a Java object.</li>
-     *                                       <li>If the Server returned an error object.</li>
-     *                                       </ul>
-     */
-    public static GetOpsInBlockReturn getOpsInBlock(CommunicationHandler communicationHandler,
-                                                    GetOpsInBlockArgs getOpsInBlockArgs) throws BeowulfCommunicationException, BeowulfResponseException {
-        JsonRPCRequest requestObject = new JsonRPCRequest(BeowulfApiType.ACCOUNT_HISTORY_API,
-                RequestMethod.GET_OPS_IN_BLOCK, getOpsInBlockArgs);
-
-        return communicationHandler.performRequest(requestObject, GetOpsInBlockReturn.class).get(0);
-    }
-
-    /**
      * Find a transaction by its <code>transactionId</code>.
      *
      * @param communicationHandler A

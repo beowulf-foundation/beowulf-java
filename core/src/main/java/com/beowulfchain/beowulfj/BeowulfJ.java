@@ -754,21 +754,6 @@ public class BeowulfJ {
      *               and the amount to transfer.
      * @param memo   Message include with transfer (255 char max)
      * @return The TransferOperation broadcast.
-     * @throws BeowulfCommunicationException      <ul>
-     *                                            <li>If the server was not able to answer the request in the
-     *                                            given time (see
-     *                                            {@link BeowulfJConfig#setResponseTimeout(int)
-     *                                            setResponseTimeout}).</li>
-     *                                            <li>If there is a connection problem.</li>
-     *                                            </ul>
-     * @throws BeowulfResponseException           <ul>
-     *                                            <li>If the BeowulfJ is unable to transform the JSON response
-     *                                            into a Java object.</li>
-     *                                            <li>If the Server returned an error object.</li>
-     *                                            </ul>
-     * @throws BeowulfInvalidTransactionException If there is a problem while signing the transaction.
-     * @throws InvalidParameterException          If one of the provided parameters does not fulfill the
-     *                                            requirements described above.
      */
     public TransferOperation transfer(AccountName from, AccountName to, Asset amount, Asset fee, String memo) {
         TransferOperation transferOperation = new TransferOperation(from, to, amount, fee, memo);

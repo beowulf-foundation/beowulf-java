@@ -33,8 +33,7 @@ public class GetBlockArgs {
     // TODO: Original: Height of the block to be returned.
 
     /**
-     * Create a new {@link GetBlockHeaderArgs} instance to be passed to the
-     * {@link BlockApi#getBlock(CommunicationHandler, UInteger)} method.
+     * Create a new {@link GetBlockHeaderArgs} instance to be passed to the getBlock method.
      *
      * @param blockNumber The block number to search for.
      */

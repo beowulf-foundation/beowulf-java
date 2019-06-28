@@ -158,6 +158,7 @@ public class JsonRPCResponse {
      * {@link JsonRPCResponse} instance has the expected <code>id</code> and
      * will try to transform the JSON into the given <code>type</code>.
      *
+     * @param <T> The JavaType of type
      * @param type The type to transform the JSON to.
      * @param id   The expected id of the response.
      * @return A list of of <code>type</code> instances.

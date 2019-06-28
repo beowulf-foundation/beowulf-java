@@ -33,26 +33,26 @@ public class Price implements ByteTransformable {
     private Asset quote;
 
     /**
-     * Create a new price object by providing a <code>base</code> and a
-     * <code>quote</code> asset.
-     * <p>
+     * Create a new price object by providing a base and a
+     * quote asset.
+     * 
      * Represents quotation of the relative value of asset against another
      * asset. Similar to 'currency pair' used to determine value of currencies.
-     * <p>
+     * 
      * For example:
-     * <p>
+     * 
      * 1 EUR / 1.25 USD where:
-     * <ul>
-     * <li>1 EUR is an asset specified as a <code>base</code></li>
-     * <li>1.25 USD us an asset specified as a <code>quote</code></li>
-     * </ul>
+     * 
+     * 1 EUR is an asset specified as a base
+     * 1.25 USD us an asset specified as a quote
+     * 
      * can determine value of EUR against USD.
-     * </p>
+     * 
      *
-     * @param base  Represents a value of the <code>Price</code> object to be
-     *              expressed relatively to <code>quote</code> asset.
+     * @param base  Represents a value of the Price object to be
+     *              expressed relatively to quote asset.
      * @param quote Represents an relative asset.
-     * @throws InvalidParameterException If the <code>base</code>, the <code>quote</code> or both
+     * @throws InvalidParameterException If the base, the quote or both
      *                                   objects have not been provided, contain the same symbol or
      *                                   have an amount less than 1.
      */

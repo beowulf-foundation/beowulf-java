@@ -53,7 +53,7 @@ public class DatabaseApi {
     /**
      * Get the configuration.
      *
-     * @param communicationHandler
+     * @param communicationHandler The communication handler.
      * @return The beowulf configuration.
      * @throws BeowulfCommunicationException <ul>
      *                                       <li>If the server was not able to answer the request in the
@@ -78,7 +78,7 @@ public class DatabaseApi {
     /**
      * Get the global properties.
      *
-     * @param communicationHandler
+     * @param communicationHandler The communication handler.
      * @return The dynamic global properties.
      * @throws BeowulfCommunicationException <ul>
      *                                       <li>If the server was not able to answer the request in the
@@ -104,7 +104,7 @@ public class DatabaseApi {
     /**
      * Get the supernode schedule.
      *
-     * @param communicationHandler
+     * @param communicationHandler The communication handler.
      * @return The supernode schedule.
      * @throws BeowulfCommunicationException <ul>
      *                                       <li>If the server was not able to answer the request in the
@@ -157,11 +157,21 @@ public class DatabaseApi {
     }
 
     /**
-     * @param communicationHandler
-     * @param getTransactionHexArgs
+     * @param communicationHandler The communication handler.
+     * @param getTransactionHexArgs The TransactionHexArgs.
      * @return GetTransactionHexReturn
-     * @throws BeowulfCommunicationException
-     * @throws BeowulfResponseException
+     * @throws BeowulfCommunicationException <ul>
+     *                                       <li>If the server was not able to answer the request in the
+     *                                       given time (see
+     *                                       {@link BeowulfJConfig#setResponseTimeout(int)
+     *                                       setResponseTimeout}).</li>
+     *                                       <li>If there is a connection problem.</li>
+     *                                       </ul>
+     * @throws BeowulfResponseException      <ul>
+     *                                       <li>If the BeowulfJ is unable to transform the JSON response
+     *                                       into a Java object.</li>
+     *                                       <li>If the Server returned an error object.</li>
+     *                                       </ul>
      */
     public static GetTransactionHexReturn getTransactionHex(CommunicationHandler communicationHandler,
                                                             GetTransactionHexArgs getTransactionHexArgs) throws BeowulfCommunicationException, BeowulfResponseException {
@@ -172,11 +182,21 @@ public class DatabaseApi {
     }
 
     /**
-     * @param communicationHandler
-     * @param getRequiredSignaturesArgs
-     * @return GetRequiredSignaturesReturn
-     * @throws BeowulfCommunicationException
-     * @throws BeowulfResponseException
+     * @param communicationHandler The communication handler.
+     * @param getRequiredSignaturesArgs The RequiredSignaturesArgs.
+     * @return GetRequiredSignaturesReturn The GetRequiredSignaturesReturn.
+     * @throws BeowulfCommunicationException <ul>
+     *                                       <li>If the server was not able to answer the request in the
+     *                                       given time (see
+     *                                       {@link BeowulfJConfig#setResponseTimeout(int)
+     *                                       setResponseTimeout}).</li>
+     *                                       <li>If there is a connection problem.</li>
+     *                                       </ul>
+     * @throws BeowulfResponseException      <ul>
+     *                                       <li>If the BeowulfJ is unable to transform the JSON response
+     *                                       into a Java object.</li>
+     *                                       <li>If the Server returned an error object.</li>
+     *                                       </ul>
      */
     public static GetRequiredSignaturesReturn getRequiredSignatures(CommunicationHandler communicationHandler,
                                                                     GetRequiredSignaturesArgs getRequiredSignaturesArgs)
@@ -188,11 +208,21 @@ public class DatabaseApi {
     }
 
     /**
-     * @param communicationHandler
-     * @param getPotentialSignaturesArgs
-     * @return GetPotentialSignaturesReturn
-     * @throws BeowulfCommunicationException
-     * @throws BeowulfResponseException
+     * @param communicationHandler The communication handler.
+     * @param getPotentialSignaturesArgs The PotentialSignaturesArgs.
+     * @return GetPotentialSignaturesReturn The GetPotentialSignaturesReturn
+     * @throws BeowulfCommunicationException <ul>
+     *                                       <li>If the server was not able to answer the request in the
+     *                                       given time (see
+     *                                       {@link BeowulfJConfig#setResponseTimeout(int)
+     *                                       setResponseTimeout}).</li>
+     *                                       <li>If there is a connection problem.</li>
+     *                                       </ul>
+     * @throws BeowulfResponseException      <ul>
+     *                                       <li>If the BeowulfJ is unable to transform the JSON response
+     *                                       into a Java object.</li>
+     *                                       <li>If the Server returned an error object.</li>
+     *                                       </ul>
      */
     public static GetPotentialSignaturesReturn getPotentialSignatures(CommunicationHandler communicationHandler,
                                                                       GetPotentialSignaturesArgs getPotentialSignaturesArgs)
@@ -204,11 +234,21 @@ public class DatabaseApi {
     }
 
     /**
-     * @param communicationHandler
-     * @param verifyAuthorityArgs
-     * @return VerifyAuthorityReturn
-     * @throws BeowulfCommunicationException
-     * @throws BeowulfResponseException
+     * @param communicationHandler The communication handler.
+     * @param verifyAuthorityArgs The verify Authority Args.
+     * @return VerifyAuthorityReturn The VerifyAuthorityReturn.
+     * @throws BeowulfCommunicationException <ul>
+     *                                       <li>If the server was not able to answer the request in the
+     *                                       given time (see
+     *                                       {@link BeowulfJConfig#setResponseTimeout(int)
+     *                                       setResponseTimeout}).</li>
+     *                                       <li>If there is a connection problem.</li>
+     *                                       </ul>
+     * @throws BeowulfResponseException      <ul>
+     *                                       <li>If the BeowulfJ is unable to transform the JSON response
+     *                                       into a Java object.</li>
+     *                                       <li>If the Server returned an error object.</li>
+     *                                       </ul>
      */
     public static VerifyAuthorityReturn verifyAuthority(CommunicationHandler communicationHandler,
                                                         VerifyAuthorityArgs verifyAuthorityArgs) throws BeowulfCommunicationException, BeowulfResponseException {
@@ -219,11 +259,21 @@ public class DatabaseApi {
     }
 
     /**
-     * @param communicationHandler
-     * @param verifyAccountAuthorityArgs
-     * @return VerifyAccountAuthorityReturn
-     * @throws BeowulfCommunicationException
-     * @throws BeowulfResponseException
+     * @param communicationHandler The communication handler.
+     * @param verifyAccountAuthorityArgs The verifyAccountAuthorityArgs.
+     * @return VerifyAccountAuthorityReturn The VerifyAccountAuthorityReturn.
+     * @throws BeowulfCommunicationException <ul>
+     *                                       <li>If the server was not able to answer the request in the
+     *                                       given time (see
+     *                                       {@link BeowulfJConfig#setResponseTimeout(int)
+     *                                       setResponseTimeout}).</li>
+     *                                       <li>If there is a connection problem.</li>
+     *                                       </ul>
+     * @throws BeowulfResponseException      <ul>
+     *                                       <li>If the BeowulfJ is unable to transform the JSON response
+     *                                       into a Java object.</li>
+     *                                       <li>If the Server returned an error object.</li>
+     *                                       </ul>
      */
     public static VerifyAccountAuthorityReturn verifyAccountAuthority(CommunicationHandler communicationHandler,
                                                                       VerifyAccountAuthorityArgs verifyAccountAuthorityArgs)

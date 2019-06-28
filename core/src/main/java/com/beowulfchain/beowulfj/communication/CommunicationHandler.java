@@ -70,6 +70,7 @@ public class CommunicationHandler {
     /**
      * Initialize the Connection Handler.
      *
+     * @param config The config of beowulf blockchain.
      * @throws BeowulfCommunicationException If no connection to the Beowulf Node could be established.
      */
     public CommunicationHandler(BeowulfJConfig config) throws BeowulfCommunicationException {
@@ -107,6 +108,7 @@ public class CommunicationHandler {
      * Initialize a new <code>client</code> by selecting one of the configured
      * endpoints.
      *
+     * @param config The config of beowulf blockchain.
      * @throws BeowulfCommunicationException If no {@link AbstractClient} implementation for the given
      *                                       schema is available.
      */

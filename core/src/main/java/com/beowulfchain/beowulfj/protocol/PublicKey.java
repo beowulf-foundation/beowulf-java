@@ -34,8 +34,8 @@ import org.spongycastle.crypto.digests.RIPEMD160Digest;
 import java.util.Arrays;
 
 /**
- * This class is the java implementation of the <a href=
- * public_key object</a>.
+ * This class is the java implementation of the 
+ * public_key object.
  */
 @JsonSerialize(using = PublicKeySerializer.class)
 public class PublicKey implements ByteTransformable {
