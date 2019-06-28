@@ -7,9 +7,10 @@
         <version>0.0.1</version>
     </parent>
     <artifactId>beowulfj-sample</artifactId>
-    <name>BeowulfJ-Sample</name>
+    <packaging>jar</packaging>
+    <name>beowulfj-sample</name>
     <description>An example application for BeowulfJ.</description>
-    <url>http://www.beowulfchain.com/@trongcauhcmus</url>
+    <url>https://github.com/beowulf-foundation/beowulf-java</url>
 
     <licenses>
         <license>
@@ -17,6 +18,11 @@
             <url>https://www.gnu.org/licenses/gpl-3.0.txt</url>
         </license>
     </licenses>
+    <scm>
+        <url>https://github.com/beowulf-foundation/beowulf-java</url>
+        <connection>scm:git:git@github.com:beowulf-foundation/beowulf-java.git</connection>
+        <developerConnection>scm:git:git@github.com:beowulf-foundation/beowulf-java.git</developerConnection>
+    </scm>
 
     <developers>
         <developer>

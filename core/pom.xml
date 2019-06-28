@@ -7,9 +7,10 @@
         <version>0.0.1</version>
     </parent>
     <artifactId>beowulfj-core</artifactId>
-    <name>BeowulfJ-Core</name>
+    <packaging>jar</packaging>
+    <name>beowulfj-core</name>
     <description>BeowulfJ allows you to interact with the Beowulf Blockchain using Java.</description>
-    <url>http://www.beowulfchain.com/@trongcauhcmus</url>
+    <url>https://github.com/beowulf-foundation/beowulf-java</url>
 
 
     <licenses>
@@ -18,6 +19,11 @@
             <url>https://www.gnu.org/licenses/gpl-3.0.txt</url>
         </license>
     </licenses>
+    <scm>
+        <url>https://github.com/beowulf-foundation/beowulf-java</url>
+        <connection>scm:git:git@github.com:beowulf-foundation/beowulf-java.git</connection>
+        <developerConnection>scm:git:git@github.com:beowulf-foundation/beowulf-java.git</developerConnection>
+    </scm>
 
     <developers>
         <developer>
@@ -128,15 +134,15 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>beowulfchain.libs.beowulfj.BeowulfJ</mainClass>
+                            <!--<mainClass>com.beowulfchain.beowulfj.BeowulfJ</mainClass>-->
                             <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
                             <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
                         </manifest>
                         <manifestEntries>
                             <Built-By>@trongcauhcmus</Built-By>
-                            <Name>beowulfchain/libs/beowulfj/</Name>
-                            <Extension-name>beowulfchain.libs.beowulfj</Extension-name>
-                            <Implementation-Version>3.0.0.1</Implementation-Version>
+                            <Name>com/beowulfchain/beowulfj/</Name>
+                            <Extension-name>com.beowulfchain.beowulfj</Extension-name>
+                            <Implementation-Version>0.0.1</Implementation-Version>
                         </manifestEntries>
                     </archive>
                 </configuration>

@@ -6,10 +6,9 @@
     <artifactId>beowulfj-parent</artifactId>
     <version>0.0.1</version>
     <packaging>pom</packaging>
-
-    <name>BeowulfJ-Parent</name>
+    <name>beowulfj-parent</name>
     <description>Provides the common configuration for the BeowulfJ modules.</description>
-    <url>http://www.beowulfchain.com/@trongcauhcmus</url>
+    <url>https://github.com/beowulf-foundation/beowulf-java</url>
 
     <modules>
         <module>core</module>
@@ -45,6 +44,11 @@
             <url>https://www.gnu.org/licenses/gpl-3.0.txt</url>
         </license>
     </licenses>
+    <scm>
+        <url>https://github.com/beowulf-foundation/beowulf-java</url>
+        <connection>scm:git:git@github.com:beowulf-foundation/beowulf-java.git</connection>
+        <developerConnection>scm:git:git@github.com:beowulf-foundation/beowulf-java.git</developerConnection>
+    </scm>
 
     <developers>
         <developer>
@@ -63,6 +67,12 @@
     <profiles>
         <profile>
             <id>release</id>
+            <distributionManagement>
+                <repository>
+                    <id>ossrh</id>
+                    <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+                </repository>
+            </distributionManagement>
             <activation>
                 <activeByDefault>false</activeByDefault>
             </activation>
@@ -84,7 +94,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>3.0.0-M1</version>
+                        <version>3.0.1</version>
                         <executions>
                             <execution>
                                 <id>attach-javadocs</id>
