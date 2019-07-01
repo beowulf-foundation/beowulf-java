@@ -43,14 +43,15 @@ public class AccountUpdateOperation extends AbstractAccountOperation {
     private Asset fee;
 
     /**
-     * Create a new create account update operation. Use this operation to
-     * update the keys of an existing account.
+     * Create a new create account update operation.Use this operation to
+ update the keys of an existing account.
      *
      * @param account      The account to update (see {@link #setAccount(AccountName)}).
      * @param owner        The new owner authority or null if the owner authority should
      *                     not be updated (see {@link #setOwner(Authority)}).
      * @param jsonMetadata Set the additional information for the <code>account</code>
      *                     (see {@link #setJsonMetadata(String)}).
+     * @param fee          The fee of transaction.
      * @throws InvalidParameterException If one of the arguments does not fulfill the requirements.
      */
     @JsonCreator

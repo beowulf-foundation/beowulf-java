@@ -31,7 +31,7 @@ public class FindAccountsArgs {
     private List<AccountName> accounts;
 
     /**
-     * @param accounts
+     * @param accounts List accounts name.
      */
     @JsonCreator
     public FindAccountsArgs(@JsonProperty("accounts") List<AccountName> accounts) {

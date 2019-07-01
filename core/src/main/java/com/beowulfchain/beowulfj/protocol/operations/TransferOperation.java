@@ -39,8 +39,8 @@ public class TransferOperation extends AbstractTransferOperation {
     private String memo;
 
     /**
-     * Create a new transfer operation. Use this operation to transfer an asset
-     * from one account to another.
+     * Create a new transfer operation.Use this operation to transfer an asset
+ from one account to another.
      *
      * @param from   The account to transfer the vestings from (see
      *               {@link #setFrom(AccountName)}).
@@ -48,6 +48,7 @@ public class TransferOperation extends AbstractTransferOperation {
      *               {@link #setTo(AccountName)}).
      * @param amount The amount of vests to transfer (see
      *               {@link #setAmount(Asset)}).
+     * @param fee    The fee of transaction.
      * @param memo   An additional message added to the operation (see
      *               {@link #setMemo(String)}).
      * @throws InvalidParameterException If one of the arguments does not fulfill the requirements.

@@ -83,6 +83,7 @@ public class Transaction implements Serializable {
      *                       {@link #setOperations(List)}).
      * @param extensions     Extensions are currently not supported and will be ignored
      *                       (see {@link #setExtensions(List)}).
+     * @param createdTime    Timestamp create transaction.
      */
     @JsonCreator
     public Transaction(@JsonProperty("ref_block_num") UShort refBlockNum,

@@ -16,14 +16,11 @@
  */
 package com.beowulfchain.beowulfj.plugins.apis.account.by.key.models;
 
-import com.beowulfchain.beowulfj.communication.CommunicationHandler;
-import com.beowulfchain.beowulfj.plugins.apis.block.BlockApi;
 import com.beowulfchain.beowulfj.plugins.apis.block.models.GetBlockHeaderArgs;
 import com.beowulfchain.beowulfj.protocol.PublicKey;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.joou.UInteger;
 import java.util.Arrays;
 import java.util.List;
 
@@ -37,7 +34,7 @@ public class GetKeyReferencesArgs {
     /**
      * Create a new {@link GetBlockHeaderArgs} instance to be passed to the getBlock method.
      *
-     * @param blockNumber The block number to search for.
+     * @param keys List PublicKeys to search for.
      */
     @JsonCreator()
     public GetKeyReferencesArgs(@JsonProperty("keys") List<PublicKey> keys) {

@@ -50,6 +50,7 @@ public class TransferToVestingOperation extends AbstractTransferOperation {
      *               {@link #setTo(AccountName)}).
      * @param amount The amount of vests to transfer (see
      *               {@link #setAmount(Asset)}).
+     * @param fee    The fee of transaction.
      * @throws InvalidParameterException If one of the arguments does not fulfill the requirements.
      */
     @JsonCreator
@@ -72,6 +73,7 @@ public class TransferToVestingOperation extends AbstractTransferOperation {
      *               {@link #setFrom(AccountName)}).
      * @param amount The amount of vests to transfer (see
      *               {@link #setAmount(Asset)}).
+     * @param fee    The fee of transaction.
      * @throws InvalidParameterException If one of the arguments does not fulfill the requirements.
      */
     public TransferToVestingOperation(AccountName from, Asset amount, Asset fee) {

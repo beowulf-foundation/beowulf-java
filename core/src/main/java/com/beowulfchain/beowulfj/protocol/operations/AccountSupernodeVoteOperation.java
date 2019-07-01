@@ -59,6 +59,7 @@ public class AccountSupernodeVoteOperation extends Operation {
      *                  {@link #setSupernode(AccountName)}).
      * @param approve   Define if the vote is be approved or not (see
      *                  {@link #setApprove(boolean)}).
+     * @param fee       The fee of transaction.
      * @throws InvalidParameterException If one of the parameters does not fulfill the requirements.
      */
     @JsonCreator
@@ -83,6 +84,7 @@ public class AccountSupernodeVoteOperation extends Operation {
      *                  <code>supernode</code> (see {@link #getAccount()}).
      * @param supernode Set the <code>supernode</code> to vote for (see
      *                  {@link #setSupernode(AccountName)}).
+     * @param fee       The fee of transaction.
      * @throws InvalidParameterException If one of the parameters does not fulfill the requirements.
      */
     public AccountSupernodeVoteOperation(AccountName account, AccountName supernode, Asset fee) {

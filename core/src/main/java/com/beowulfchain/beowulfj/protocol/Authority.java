@@ -76,7 +76,7 @@ public class Authority implements ByteTransformable, SignatureObject {
     }
 
     /**
-     * @param weightThreshold
+     * @param weightThreshold The weight threshold.
      */
     public void setWeightThreshold(long weightThreshold) {
         this.weightThreshold = weightThreshold;
@@ -90,7 +90,7 @@ public class Authority implements ByteTransformable, SignatureObject {
     }
 
     /**
-     * @param accountAuths
+     * @param accountAuths The account auths.
      */
     public void setAccountAuths(Map<AccountName, Integer> accountAuths) {
         this.accountAuths = accountAuths;
@@ -104,7 +104,7 @@ public class Authority implements ByteTransformable, SignatureObject {
     }
 
     /**
-     * @param keyAuths
+     * @param keyAuths Map key auths.
      */
     public void setKeyAuths(Map<PublicKey, Integer> keyAuths) {
         this.keyAuths = keyAuths;

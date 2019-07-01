@@ -286,13 +286,14 @@ public class BeowulfJ {
     // #########################################################################
 
     /**
-     * Broadcast a transaction on the Beowulf blockchain. This method will
-     * validate the transaction and return immediately. Please notice that this
-     * does not mean that the operation has been accepted and has been
-     * processed. If you want to make sure that this is the case use the
-     * {@link #broadcastTransactionSynchronous(SignedTransaction)} method.
+     * Broadcast a transaction on the Beowulf blockchain.This method will
+ validate the transaction and return immediately. Please notice that this
+ does not mean that the operation has been accepted and has been
+ processed. If you want to make sure that this is the case use the
+ {@link #broadcastTransactionSynchronous(SignedTransaction)} method.
      *
      * @param transaction The {@link SignedTransaction} object to broadcast.
+     * @return TransactionId
      * @throws BeowulfCommunicationException      <ul>
      *                                            <li>If the server was not able to answer the request in the
      *                                            given time (see
@@ -492,6 +493,7 @@ public class BeowulfJ {
      *                                       into a Java object.</li>
      *                                       <li>If the Server returned an error object.</li>
      *                                       </ul>
+     * @throws BeowulfInvalidTransactionException The beowulf invalid transaction exception.
      */
     public String getTransactionHex(SignedTransaction signedTransaction)
             throws BeowulfCommunicationException, BeowulfResponseException, BeowulfInvalidTransactionException {
@@ -554,12 +556,13 @@ public class BeowulfJ {
     }
 
     /**
-     * Get a list of supernodes sorted by the amount of votes. The list begins
-     * with the given account name and contains the next supernodes with less
-     * votes than given one.
+     * Get a list of supernodes sorted by the amount of votes.The list begins
+ with the given account name and contains the next supernodes with less
+ votes than given one.
      *
      * @param supernodeName The supernode name to start from.
      * @param limit         The number of results.
+     * @param vestingShare  The number coin.
      * @return A list of supernodes.
      * @throws BeowulfCommunicationException <ul>
      *                                       <li>If the server was not able to answer the request in the
@@ -734,11 +737,11 @@ public class BeowulfJ {
     // #########################################################################
 
     /**
-     * Transfer currency from specified account to recipient. Amount is
-     * automatically converted from normalized representation to base
-     * representation. For example, to transfer 1.00 W to another account,
-     * simply use:
-     * <code>BeowulfJ.transfer(new AccountName("accounta"), new AccountName("accountb"), AssetSymbolType.W, 1.0, "My memo");</code>
+     * Transfer currency from specified account to recipient.Amount is
+ automatically converted from normalized representation to base
+ representation. For example, to transfer 1.00 W to another account,
+ simply use:
+ <code>BeowulfJ.transfer(new AccountName("accounta"), new AccountName("accountb"), AssetSymbolType.W, 1.0, "My memo");</code>
      *
      * <b>Attention</b> This method will write data on the blockchain. As all
      * writing operations, a private key is required to sign the transaction.
@@ -752,6 +755,7 @@ public class BeowulfJ {
      * @param amount An {@link Asset} object containing the Asset type (see
      *               {@link AssetSymbolType}
      *               and the amount to transfer.
+     * @param fee    The fee of transaction.
      * @param memo   Message include with transfer (255 char max)
      * @return The TransferOperation broadcast.
      */

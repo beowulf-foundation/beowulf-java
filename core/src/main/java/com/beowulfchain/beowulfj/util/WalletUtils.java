@@ -49,9 +49,10 @@ public class WalletUtils {
     }
 
     /**
-     * @param account
-     * @param password
-     * @return
+     * @param account The account name.
+     * @param keypair The key pair public key and private key.
+     * @param password The password.
+     * @return WalletObject
      */
     public static WalletObject encryptWallet(AccountName account, KeyPair keypair, String password) {
         String salt = UUID.randomUUID().toString().substring(16);

@@ -30,7 +30,7 @@ public class FindSupernodesArgs {
     private List<AccountName> owners;
 
     /**
-     * @param owners
+     * @param owners List accounts name.
      */
     @JsonCreator()
     public FindSupernodesArgs(@JsonProperty("owners") List<AccountName> owners) {

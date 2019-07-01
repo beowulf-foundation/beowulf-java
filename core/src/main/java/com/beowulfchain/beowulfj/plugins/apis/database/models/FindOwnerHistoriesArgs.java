@@ -30,7 +30,7 @@ public class FindOwnerHistoriesArgs {
     private AccountName owner;
 
     /**
-     * @param owner
+     * @param owner The account name.
      */
     @JsonCreator
     public FindOwnerHistoriesArgs(@JsonProperty("owner") AccountName owner) {

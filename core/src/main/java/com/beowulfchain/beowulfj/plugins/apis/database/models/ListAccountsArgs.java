@@ -35,9 +35,9 @@ public class ListAccountsArgs {
     private SortOrderType order;
 
     /**
-     * @param start
-     * @param limit
-     * @param order
+     * @param start The number start.
+     * @param limit The number limit.
+     * @param order The sort order type.
      */
     public ListAccountsArgs(@JsonProperty("start") Object start, @JsonProperty("limit") UInteger limit,
                             @JsonProperty("order") SortOrderType order) {

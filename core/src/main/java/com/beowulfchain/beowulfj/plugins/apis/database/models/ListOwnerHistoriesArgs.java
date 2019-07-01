@@ -33,8 +33,8 @@ public class ListOwnerHistoriesArgs {
     private UInteger limit;
 
     /**
-     * @param start
-     * @param limit
+     * @param start The number start.
+     * @param limit The number limit.
      */
     @JsonCreator
     public ListOwnerHistoriesArgs(@JsonProperty("start") Object start, @JsonProperty("limit") UInteger limit) {

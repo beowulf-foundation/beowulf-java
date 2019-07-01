@@ -90,6 +90,7 @@ public class SignedTransaction extends Transaction implements ByteTransformable,
      *                       {@link #setOperations(List)}).
      * @param extensions     Extensions are currently not supported and will be ignored
      *                       (see {@link #setExtensions(List)}).
+     * @param createdTime    The timestamp create transaction.
      */
     public SignedTransaction(UShort refBlockNum, UInteger refBlockPrefix, TimePointSec expirationDate,
                              List<Operation> operations, List<FutureExtensions> extensions, Long createdTime) {

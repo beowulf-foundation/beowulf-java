@@ -207,6 +207,7 @@ public class BeowulfJConfig {
 
     /**
      * Get current super node
+     * @return String
      */
     public String getDefaultBeowulfApiUri() {
         return DEFAULT_BEOWULF_API_URI;

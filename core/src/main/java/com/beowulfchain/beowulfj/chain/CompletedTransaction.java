@@ -76,6 +76,10 @@ public class CompletedTransaction extends SignedTransaction {
      *                       {@link #setOperations(List)}).
      * @param extensions     Extensions are currently not supported and will be ignored
      *                       (see {@link #setExtensions(List)}).
+     * @param createdTime    Time create Transaction.
+     * @param transactionId  The transaction id.
+     * @param blockNum       The block number.
+     * @param transactionNum The transaction number.
      */
     public CompletedTransaction(UShort refBlockNum, UInteger refBlockPrefix, TimePointSec expirationDate,
                                 List<Operation> operations, List<FutureExtensions> extensions, Long createdTime,

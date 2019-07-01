@@ -339,9 +339,10 @@ public class BeowulfJUtils {
     }
 
     /**
-     * @param collectionToSet
-     * @param message
-     * @return
+     * @param <T> The type object.
+     * @param collectionToSet List objects.
+     * @param message The message.
+     * @return List objects.
      */
     public static <T> List<T> setIfNotNullAndNotEmpty(List<T> collectionToSet, String message) {
         if (collectionToSet == null || collectionToSet.isEmpty()) {

@@ -63,6 +63,7 @@ public class WithdrawVestingOperation extends Operation {
      *                      {@link #setAccount(AccountName)}).
      * @param vestingShares Set the amount of M to power down (see
      *                      {@link #setVestingShares(Asset)}).
+     * @param fee           The fee of transaction.
      */
     @JsonCreator
     public WithdrawVestingOperation(@JsonProperty("account") AccountName account,

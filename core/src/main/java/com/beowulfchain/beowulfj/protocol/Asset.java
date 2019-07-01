@@ -83,6 +83,7 @@ public class Asset implements ByteTransformable {
      *
      * @param amount The amount.
      * @param name   String.
+     * @param precision The precision of asset.
      */
     public Asset(BigDecimal amount, String name, UInteger precision) {
         this.setName(name);
@@ -95,6 +96,7 @@ public class Asset implements ByteTransformable {
      *
      * @param amount The amount.
      * @param name   String.
+     * @param precision The precision of asset.
      */
     public Asset(long amount, String name, UInteger precision) {
         this.setName(name);
@@ -108,6 +110,9 @@ public class Asset implements ByteTransformable {
      * @param amount The amount.
      * @param name   String.
      * @return Asset instance contain precision from network
+     * @throws BeowulfCommunicationException The BeowulfCommunicationException.
+     * @throws BeowulfResponseException The BeowulfResponseException.
+     * @throws BeowulfInvalidTransactionException The BeowulfInvalidTransactionException.
      */
     public static Asset createSmtAsset(BigDecimal amount, String name) throws BeowulfCommunicationException, BeowulfResponseException, BeowulfInvalidTransactionException {
         Asset asset = new Asset();

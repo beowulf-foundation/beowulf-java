@@ -25,8 +25,6 @@ import com.beowulfchain.beowulfj.exceptions.BeowulfCommunicationException;
 import com.beowulfchain.beowulfj.exceptions.BeowulfResponseException;
 import com.beowulfchain.beowulfj.plugins.apis.account.history.models.GetAccountHistoryArgs;
 import com.beowulfchain.beowulfj.plugins.apis.account.history.models.GetAccountHistoryReturn;
-import com.beowulfchain.beowulfj.plugins.apis.account.history.models.GetOpsInBlockArgs;
-import com.beowulfchain.beowulfj.plugins.apis.account.history.models.GetOpsInBlockReturn;
 import com.beowulfchain.beowulfj.protocol.AnnotatedSignedTransaction;
 
 /**
@@ -47,7 +45,7 @@ public class AccountHistoryApi {
      *                             {@link CommunicationHandler
      *                             CommunicationHandler} instance that should be used to send the
      *                             request.
-     * @param transactionId        The <code>transactionId</code> to search for.
+     * @param getTransactionArgs        The <code>transactionId</code> to search for.
      * @return A sequence of operations included/generated within a particular
      * block.
      * @throws BeowulfCommunicationException <ul>
