@@ -44,6 +44,7 @@ import org.joou.UShort;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.spongycastle.util.encoders.Base64;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
@@ -138,6 +139,7 @@ public class SignedTransaction extends Transaction implements ByteTransformable,
      * @param signature A single signature in its byte representation.
      * @return True if the signature is canonical or false if not.
      */
+    @Deprecated
     private boolean isCanonical(byte[] signature) {
         return ((signature[0] & 0x80) != 0) || (signature[0] == 0) || ((signature[1] & 0x80) != 0)
                 || ((signature[32] & 0x80) != 0) || (signature[32] == 0) || ((signature[33] & 0x80) != 0);
@@ -167,27 +169,16 @@ public class SignedTransaction extends Transaction implements ByteTransformable,
         }
 
         for (ECKey requiredPrivateKey : getRequiredSignatureKeys()) {
-            boolean isCanonical = false;
-
             Sha256Hash messageAsHash;
-            while (!isCanonical) {
-                try {
-                    messageAsHash = Sha256Hash.of(this.toByteArray(chainId));
-                } catch (BeowulfInvalidTransactionException e) {
-                    throw new BeowulfInvalidTransactionException(
-                            "The required encoding is not supported by your platform.", e);
-                }
-
-                String signature = requiredPrivateKey.signMessage(messageAsHash);
-                byte[] signatureAsByteArray = Base64.decode(signature);
-
-                if (isCanonical(signatureAsByteArray)) {
-                    this.getExpirationDate().setDateTime(this.getExpirationDate().getDateTimeAsTimestamp() + 1000);
-                } else {
-                    isCanonical = true;
-                    this.signatures.add(CryptoUtils.HEX.encode(signatureAsByteArray));
-                }
+            try {
+                messageAsHash = Sha256Hash.of(this.toByteArray(chainId));
+            } catch (BeowulfInvalidTransactionException e) {
+                throw new BeowulfInvalidTransactionException(
+                        "The required encoding is not supported by your platform.", e);
             }
+            String signature = requiredPrivateKey.signMessage(messageAsHash);
+            byte[] signatureAsByteArray = Base64.decode(signature);
+            this.signatures.add(CryptoUtils.HEX.encode(signatureAsByteArray));
         }
     }
 
@@ -316,10 +307,6 @@ public class SignedTransaction extends Transaction implements ByteTransformable,
             serializedTransaction.write(futureExtensions.toByteArray());
         }
         serializedTransaction.write(BeowulfJUtils.transformLongToByteArray(this.getCreatedTime()));
-//        String txhexnetwork = BeowulfJ.getInstance().getTransactionHex(this);
-//        byte[] network = ByteUtils.fromHexString(txhexnetwork);
-//        byte[] local = serializedTransaction.toByteArray();
-//        String txhexlocal = ByteUtils.toHexString(local);
         return serializedTransaction.toByteArray();
     }
 

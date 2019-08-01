@@ -1,11 +1,5 @@
 package my.sample.project;
 
-import com.beowulfchain.beowulfj.protocol.Asset;
-import com.beowulfchain.beowulfj.protocol.PublicKey;
-import com.beowulfchain.beowulfj.protocol.AssetInfo;
-import com.beowulfchain.beowulfj.protocol.AccountName;
-import com.beowulfchain.beowulfj.protocol.Authority;
-import com.beowulfchain.beowulfj.protocol.TransactionId;
 import com.beowulfchain.beowulfj.BeowulfJ;
 import com.beowulfchain.beowulfj.base.models.Block;
 import com.beowulfchain.beowulfj.chain.CompletedTransaction;
@@ -17,6 +11,7 @@ import com.beowulfchain.beowulfj.exceptions.BeowulfCommunicationException;
 import com.beowulfchain.beowulfj.exceptions.BeowulfInvalidTransactionException;
 import com.beowulfchain.beowulfj.exceptions.BeowulfResponseException;
 import com.beowulfchain.beowulfj.plugins.apis.condenser.models.AccountHistoryReturn;
+import com.beowulfchain.beowulfj.protocol.*;
 import com.beowulfchain.beowulfj.protocol.operations.AccountCreateOperation;
 import com.beowulfchain.beowulfj.protocol.operations.Operation;
 import com.beowulfchain.beowulfj.protocol.operations.SmtCreateOperation;
@@ -28,6 +23,7 @@ import org.joou.UInteger;
 import org.joou.ULong;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.HashMap;
@@ -112,7 +108,7 @@ public class BeowulfJUsageExample {
             AccountName to = new AccountName("receiver");
             Asset amount = Asset.createSmtAsset(new BigDecimal("1.00000"), "BWF");
             TransferOperation transferOperation = beowulfJ.transfer(from, to, amount, network.getTransactionFee(), "Transfer 1.0 W from sender to receiver");
-            TransactionId transactionId = beowulfJ.signAndBroadcast(transferOperation);
+            TransactionId transactionId = beowulfJ.signAndBroadcast(Collections.singletonList(transferOperation));
             System.out.println("Transaction id: " + transactionId);
 
             /*
@@ -124,7 +120,7 @@ public class BeowulfJUsageExample {
             // create new keypair
             ECKey ecKey = new ECKey().decompress();
             // get private key
-            String newprivkey = BeowulfJUtils.getPrivkeyBase58FromEckey(ecKey);
+            String newprivkey = BeowulfJUtils.fromEckeyToWif(ecKey);
             System.out.println(newprivkey);
             // add new account to memory storage
             ImmutablePair<PrivateKeyType, String> newAccountKey = new ImmutablePair<>(PrivateKeyType.OWNER, newprivkey);
@@ -141,7 +137,7 @@ public class BeowulfJUsageExample {
             owner.setKeyAuths(keyAuths);
 
             AccountCreateOperation accountCreateOperation = beowulfJ.createAccount(creator, network.getAccountCreationFee(), newAccount, owner, "{}");
-            TransactionId transactionId1 = beowulfJ.signAndBroadcast(accountCreateOperation);
+            TransactionId transactionId1 = beowulfJ.signAndBroadcast(Collections.singletonList(accountCreateOperation));
             System.out.println("Transaction id: " + transactionId1);
 
             /*
@@ -149,7 +145,7 @@ public class BeowulfJUsageExample {
              */
             AssetInfo newAsset = new AssetInfo("BTC", UInteger.valueOf(5));
             SmtCreateOperation smtCreateOperation = beowulfJ.smtCreate(creator, creator, newAsset, network.getSmtCreationFee(), 1000000L);
-            TransactionId transactionId2 = beowulfJ.signAndBroadcast(smtCreateOperation);
+            TransactionId transactionId2 = beowulfJ.signAndBroadcast(Collections.singletonList(smtCreateOperation));
             System.out.println("Transaction id: " + transactionId2);
 
             // #########################################################################

@@ -12,7 +12,7 @@
 
     <modules>
         <module>core</module>
-        <!--<module>sample</module>-->
+        <module>sample</module>
     </modules>
 
     <properties>
