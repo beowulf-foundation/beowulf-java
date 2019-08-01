@@ -16,15 +16,6 @@
  */
 package com.beowulfchain.beowulfj;
 
-import com.beowulfchain.beowulfj.protocol.PublicKey;
-import com.beowulfchain.beowulfj.protocol.TransactionId;
-import com.beowulfchain.beowulfj.protocol.AccountName;
-import com.beowulfchain.beowulfj.protocol.Price;
-import com.beowulfchain.beowulfj.protocol.Authority;
-import com.beowulfchain.beowulfj.protocol.BlockHeader;
-import com.beowulfchain.beowulfj.protocol.AssetInfo;
-import com.beowulfchain.beowulfj.protocol.SignedBlock;
-import com.beowulfchain.beowulfj.protocol.Asset;
 import com.beowulfchain.beowulfj.base.models.Block;
 import com.beowulfchain.beowulfj.base.models.ScheduledHardfork;
 import com.beowulfchain.beowulfj.chain.CompletedTransaction;
@@ -45,6 +36,7 @@ import com.beowulfchain.beowulfj.plugins.apis.database.models.DynamicGlobalPrope
 import com.beowulfchain.beowulfj.plugins.apis.database.models.Supernode;
 import com.beowulfchain.beowulfj.plugins.apis.database.models.SupernodeSchedule;
 import com.beowulfchain.beowulfj.plugins.apis.network.broadcast.models.BroadcastTransactionSynchronousReturn;
+import com.beowulfchain.beowulfj.protocol.*;
 import com.beowulfchain.beowulfj.protocol.enums.AssetSymbolType;
 import com.beowulfchain.beowulfj.protocol.operations.AccountCreateOperation;
 import com.beowulfchain.beowulfj.protocol.operations.Operation;
@@ -60,7 +52,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.security.InvalidParameterException;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -782,21 +773,19 @@ public class BeowulfJ {
         return accountCreateOperation;
     }
 
-    public BroadcastTransactionSynchronousReturn signAndBroadcastSynchronous(Operation operation)
+    public BroadcastTransactionSynchronousReturn signAndBroadcastSynchronous(List<Operation> operations)
             throws BeowulfCommunicationException, BeowulfResponseException, BeowulfInvalidTransactionException {
-        SignedTransaction signedTransaction = signTransaction(operation);
+        SignedTransaction signedTransaction = signTransaction(operations);
         return this.broadcastTransactionSynchronous(signedTransaction);
     }
 
-    public TransactionId signAndBroadcast(Operation operation)
+    public TransactionId signAndBroadcast(List<Operation> operations)
             throws BeowulfCommunicationException, BeowulfResponseException, BeowulfInvalidTransactionException {
-        SignedTransaction signedTransaction = signTransaction(operation);
+        SignedTransaction signedTransaction = signTransaction(operations);
         return this.broadcastTransaction(signedTransaction);
     }
 
-    private SignedTransaction signTransaction(Operation operation) throws BeowulfCommunicationException, BeowulfResponseException {
-        ArrayList<Operation> operations = new ArrayList<>();
-        operations.add(operation);
+    private SignedTransaction signTransaction(List<Operation> operations) throws BeowulfCommunicationException, BeowulfResponseException {
         DynamicGlobalProperty globalProperties = this.getDynamicGlobalProperties();
         return new SignedTransaction(globalProperties.getHeadBlockId(), operations,
                 null);

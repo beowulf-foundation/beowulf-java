@@ -25,6 +25,7 @@ import eu.bittrade.crypto.core.VarInt;
 import eu.bittrade.crypto.core.base58.Sha256ChecksumProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import javax.annotation.Nullable;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutput;
@@ -392,17 +393,16 @@ public class BeowulfJUtils {
         return publicKey.getAddressFromPublicKey();
     }
 
-    public static ECKey getEckeyFromBase58Privkey(String base58) {
-        ECKey ecKey = DumpedPrivateKey.fromBase58(128, base58, new Sha256ChecksumProvider()).getKey();
-        return ecKey;
+    public static ECKey fromWifToEckey(String wif) {
+        return DumpedPrivateKey.fromBase58(128, wif, new Sha256ChecksumProvider()).getKey();
     }
 
-    public static String getPrivkeyBase58FromEckey(ECKey ecKey) {
+    public static String fromEckeyToWif(ECKey ecKey) {
         return ecKey.getPrivateKeyEncoded(128).toBase58();
     }
 
-    public static String convertPrivateKeyHexToBase58(String hexString) {
+    public static String fromPrivKeyHexToWif(String hexString) {
         ECKey ecKey = ECKey.fromPrivate(new BigInteger(hexString, 16)).decompress();
-        return ecKey.getPrivateKeyEncoded(128).toBase58();
+        return fromEckeyToWif(ecKey);
     }
 }

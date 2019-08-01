@@ -16,13 +16,6 @@
  */
 package com.beowulfchain.beowulfj.plugins.apis.condenser;
 
-import com.beowulfchain.beowulfj.protocol.PublicKey;
-import com.beowulfchain.beowulfj.protocol.TransactionId;
-import com.beowulfchain.beowulfj.protocol.AccountName;
-import com.beowulfchain.beowulfj.protocol.BlockHeader;
-import com.beowulfchain.beowulfj.protocol.AssetInfo;
-import com.beowulfchain.beowulfj.protocol.Asset;
-import com.beowulfchain.beowulfj.protocol.SignedBlock;
 import com.beowulfchain.beowulfj.base.models.Account;
 import com.beowulfchain.beowulfj.base.models.Block;
 import com.beowulfchain.beowulfj.base.models.ScheduledHardfork;
@@ -46,8 +39,10 @@ import com.beowulfchain.beowulfj.plugins.apis.database.models.Config;
 import com.beowulfchain.beowulfj.plugins.apis.database.models.Supernode;
 import com.beowulfchain.beowulfj.plugins.apis.database.models.SupernodeSchedule;
 import com.beowulfchain.beowulfj.plugins.apis.network.broadcast.models.BroadcastTransactionSynchronousReturn;
+import com.beowulfchain.beowulfj.protocol.*;
 import org.joou.UInteger;
 import org.joou.ULong;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -99,7 +94,7 @@ public class CondenserApi {
      *                             {@link CommunicationHandler
      *                             CommunicationHandler} instance that should be used to send the
      *                             request.
-     * @param accounts List accounts name.
+     * @param accounts             List accounts name.
      * @return List ExtendedAccount
      * @throws BeowulfCommunicationException <ul>
      *                                       <li>If the server was not able to answer the request in the
@@ -147,18 +142,19 @@ public class CondenserApi {
     public static String getHardforkVersion(CommunicationHandler communicationHandler)
             throws BeowulfCommunicationException, BeowulfResponseException {
         JsonRPCRequest requestObject = new JsonRPCRequest(BeowulfApiType.CONDENSER_API, RequestMethod.GET_HARDFORK_VERSION,
-                Arrays.asList());
+                Collections.emptyList());
 
         return communicationHandler.performRequest(requestObject, String.class).get(0);
     }
 
     /**
      * (get_block_header)
+     *
      * @param communicationHandler A
      *                             {@link CommunicationHandler
      *                             CommunicationHandler} instance that should be used to send the
      *                             request.
-     * @param blockNum The block number.
+     * @param blockNum             The block number.
      * @return BlockHeader
      * @throws BeowulfCommunicationException <ul>
      *                                       <li>If the server was not able to answer the request in the
@@ -176,18 +172,19 @@ public class CondenserApi {
     public static BlockHeader getBlockHeader(CommunicationHandler communicationHandler, long blockNum)
             throws BeowulfCommunicationException, BeowulfResponseException {
         JsonRPCRequest requestObject = new JsonRPCRequest(BeowulfApiType.CONDENSER_API, RequestMethod.GET_BLOCK_HEADER,
-                Arrays.asList(blockNum));
+                Collections.singletonList(blockNum));
 
         return communicationHandler.performRequest(requestObject, BlockHeader.class).get(0);
     }
 
     /**
      * (get_block)
+     *
      * @param communicationHandler A
      *                             {@link CommunicationHandler
      *                             CommunicationHandler} instance that should be used to send the
      *                             request.
-     * @param blockNum The block number.
+     * @param blockNum             The block number.
      * @return Block
      * @throws BeowulfCommunicationException <ul>
      *                                       <li>If the server was not able to answer the request in the
@@ -212,6 +209,7 @@ public class CondenserApi {
 
     /**
      * (get_active_supernodes)
+     *
      * @param communicationHandler A
      *                             {@link CommunicationHandler
      *                             CommunicationHandler} instance that should be used to send the
@@ -240,11 +238,12 @@ public class CondenserApi {
 
     /**
      * (get_ops_in_block)
+     *
      * @param communicationHandler A
      *                             {@link CommunicationHandler
      *                             CommunicationHandler} instance that should be used to send the
      *                             request.
-     * @param blockNum The block number.
+     * @param blockNum             The block number.
      * @return List AppliedOperation
      * @throws BeowulfCommunicationException <ul>
      *                                       <li>If the server was not able to answer the request in the
@@ -269,6 +268,7 @@ public class CondenserApi {
 
     /**
      * (get_config)
+     *
      * @param communicationHandler A
      *                             {@link CommunicationHandler
      *                             CommunicationHandler} instance that should be used to send the
@@ -290,18 +290,19 @@ public class CondenserApi {
     public static Config getConfig(CommunicationHandler communicationHandler)
             throws BeowulfCommunicationException, BeowulfResponseException {
         JsonRPCRequest requestObject = new JsonRPCRequest(BeowulfApiType.CONDENSER_API, RequestMethod.GET_CONFIG,
-                Arrays.asList());
+                Collections.emptyList());
 
         return communicationHandler.performRequest(requestObject, Config.class).get(0);
     }
 
     /**
      * (get_accounts)
+     *
      * @param communicationHandler A
      *                             {@link CommunicationHandler
      *                             CommunicationHandler} instance that should be used to send the
      *                             request.
-     * @param accounts List account name.
+     * @param accounts             List account name.
      * @return List Account
      * @throws BeowulfCommunicationException <ul>
      *                                       <li>If the server was not able to answer the request in the
@@ -334,8 +335,6 @@ public class CondenserApi {
      *                             CommunicationHandler} instance that should be used to send the
      *                             request.
      * @param account              get account history param include [name, start, limit]
-     * @param start The number start.
-     * @param limit The number limit.
      * @return A map containing the activities. The key is the id of the
      * activity.
      * @throws BeowulfCommunicationException <ul>
@@ -357,99 +356,14 @@ public class CondenserApi {
         return communicationHandler.performRequest(requestObject, AccountHistoryReturn.class);
     }
 
-
-    /**
-     * (broadcast_transaction)
-     */
-    /**
-     * Broadcast a transaction on the Beowulf blockchain.This method will
-     *   validate the transaction and return immediately. Please notice that this
-     *   does not mean that the operation has been accepted and has been
-     *   processed. If you want to make sure that this is the case use the
-     *   {@link #broadcastTransaction(CommunicationHandler, SignedTransaction)}
-     * method.
-     *
-     * @param communicationHandler A
-     *                             {@link CommunicationHandler
-     *                             CommunicationHandler} instance that should be used to send the
-     *                             request.
-     * @param transaction          The {@link SignedTransaction} object to broadcast.
-     * @return TransactionId
-     * @throws BeowulfCommunicationException      <ul>
-     *                                            <li>If the server was not able to answer the request in the
-     *                                            given time (see
-     *                                            {@link BeowulfJConfig#setResponseTimeout(int)
-     *                                            setResponseTimeout}).</li>
-     *                                            <li>If there is a connection problem.</li>
-     *                                            </ul>
-     * @throws BeowulfResponseException           <ul>
-     *                                            <li>If the BeowulfJ is unable to transform the JSON response
-     *                                            into a Java object.</li>
-     *                                            <li>If the Server returned an error object.</li>
-     *                                            </ul>
-     * @throws BeowulfInvalidTransactionException In case the provided transaction is not valid.
-     */
-    public static TransactionId broadcastTransaction(CommunicationHandler communicationHandler, SignedTransaction transaction)
-            throws BeowulfCommunicationException, BeowulfResponseException, BeowulfInvalidTransactionException {
-        if (transaction.getSignatures() == null || transaction.getSignatures().isEmpty()) {
-            transaction.sign();
-        }
-        JsonRPCRequest requestObject = new JsonRPCRequest(BeowulfApiType.CONDENSER_API,
-                RequestMethod.BROADCAST_TRANSACTION, Collections.singletonList(transaction));
-
-        communicationHandler.performRequest(requestObject, Object.class);
-        return transaction.generateTransactionId();
-    }
-
-
-    /**
-     * Broadcast a transaction on the Beowulf blockchain. This method will
-     * validate the transaction and return after it has been accepted and
-     * applied.
-     *
-     * @param communicationHandler A
-     *                             {@link CommunicationHandler
-     *                             CommunicationHandler} instance that should be used to send the
-     *                             request.
-     * @param transaction          The {@link SignedTransaction} object to broadcast.
-     * @return A {@link BroadcastTransactionSynchronousReturn} object providing
-     * information about the block in which the transaction has been
-     * applied.
-     * @throws BeowulfCommunicationException      <ul>
-     *                                            <li>If the server was not able to answer the request in the
-     *                                            given time (see
-     *                                            {@link BeowulfJConfig#setResponseTimeout(int)
-     *                                            setResponseTimeout}).</li>
-     *                                            <li>If there is a connection problem.</li>
-     *                                            </ul>
-     * @throws BeowulfResponseException           <ul>
-     *                                            <li>If the BeowulfJ is unable to transform the JSON response
-     *                                            into a Java object.</li>
-     *                                            <li>If the Server returned an error object.</li>
-     *                                            </ul>
-     * @throws BeowulfInvalidTransactionException In case the provided transaction is not valid.
-     */
-    public static BroadcastTransactionSynchronousReturn broadcastTransactionSynchronous(
-            CommunicationHandler communicationHandler, SignedTransaction transaction)
-            throws BeowulfCommunicationException, BeowulfResponseException, BeowulfInvalidTransactionException {
-        if (transaction.getSignatures() == null || transaction.getSignatures().isEmpty()) {
-            transaction.sign();
-            System.out.println(transaction.generateTransactionId());
-        }
-
-        JsonRPCRequest requestObject = new JsonRPCRequest(BeowulfApiType.CONDENSER_API,
-                RequestMethod.BROADCAST_TRANSACTION_SYNCHRONOUS, Collections.singletonList(transaction));
-
-        return communicationHandler.performRequest(requestObject, BroadcastTransactionSynchronousReturn.class).get(0);
-    }
-
     /**
      * (get_transaction_hex)
+     *
      * @param communicationHandler A
      *                             {@link CommunicationHandler
      *                             CommunicationHandler} instance that should be used to send the
      *                             request.
-     * @param transaction The transaction signed.
+     * @param transaction          get serialized of Signed Transaction.
      * @return String
      * @throws BeowulfCommunicationException <ul>
      *                                       <li>If the server was not able to answer the request in the
@@ -475,11 +389,12 @@ public class CondenserApi {
 
     /**
      * (find_smt_tokens_by_name)
+     *
      * @param communicationHandler A
      *                             {@link CommunicationHandler
      *                             CommunicationHandler} instance that should be used to send the
      *                             request.
-     * @param names List name token.
+     * @param names                List name token.
      * @return List FindSmtTokenByName
      * @throws BeowulfCommunicationException <ul>
      *                                       <li>If the server was not able to answer the request in the
@@ -505,6 +420,7 @@ public class CondenserApi {
 
     /**
      * (get_next_scheduled_hardfork)
+     *
      * @param communicationHandler A
      *                             {@link CommunicationHandler
      *                             CommunicationHandler} instance that should be used to send the
@@ -532,11 +448,12 @@ public class CondenserApi {
 
     /**
      * (get_key_references)
+     *
      * @param communicationHandler A
      *                             {@link CommunicationHandler
      *                             CommunicationHandler} instance that should be used to send the
      *                             request.
-     * @param publicKeys List public keys.
+     * @param publicKeys           List public keys.
      * @return List String
      * @throws BeowulfCommunicationException <ul>
      *                                       <li>If the server was not able to answer the request in the
@@ -593,7 +510,7 @@ public class CondenserApi {
      *                             {@link CommunicationHandler
      *                             CommunicationHandler} instance that should be used to send the
      *                             request.
-     * @param supernodeAccount The acoount name.
+     * @param supernodeAccount     The acoount name.
      * @return Supernode
      * @throws BeowulfCommunicationException <ul>
      *                                       <li>If the server was not able to answer the request in the
@@ -622,9 +539,9 @@ public class CondenserApi {
      *                             {@link CommunicationHandler
      *                             CommunicationHandler} instance that should be used to send the
      *                             request.
-     * @param supernodeAccount The acoount name.
-     * @param limit The number limit.
-     * @param vestingShare The number coin.
+     * @param supernodeAccount     The acoount name.
+     * @param limit                The number limit.
+     * @param vestingShare         The number coin.
      * @return List Supernode
      * @throws BeowulfCommunicationException <ul>
      *                                       <li>If the server was not able to answer the request in the
@@ -648,6 +565,7 @@ public class CondenserApi {
 
     /**
      * (get_supernode_schedule)
+     *
      * @param communicationHandler A
      *                             {@link CommunicationHandler
      *                             CommunicationHandler} instance that should be used to send the
@@ -675,6 +593,7 @@ public class CondenserApi {
 
     /**
      * (get_supernode_count)
+     *
      * @param communicationHandler A
      *                             {@link CommunicationHandler
      *                             CommunicationHandler} instance that should be used to send the
@@ -702,12 +621,13 @@ public class CondenserApi {
 
     /**
      * (lookupSupernodeAccounts)
+     *
      * @param communicationHandler A
      *                             {@link CommunicationHandler
      *                             CommunicationHandler} instance that should be used to send the
      *                             request.
-     * @param pattern The pattern name to search.
-     * @param limit The number limit.
+     * @param pattern              The pattern name to search.
+     * @param limit                The number limit.
      * @return List String
      * @throws BeowulfCommunicationException <ul>
      *                                       <li>If the server was not able to answer the request in the
@@ -731,12 +651,13 @@ public class CondenserApi {
 
     /**
      * (lookupSupernodeAccounts)
+     *
      * @param communicationHandler A
      *                             {@link CommunicationHandler
      *                             CommunicationHandler} instance that should be used to send the
      *                             request.
-     * @param pattern The pattern name to search.
-     * @param limit The number limit.
+     * @param pattern              The pattern name to search.
+     * @param limit                The number limit.
      * @return List String
      * @throws BeowulfCommunicationException <ul>
      *                                       <li>If the server was not able to answer the request in the
@@ -760,11 +681,12 @@ public class CondenserApi {
 
     /**
      * (get_transaction)
+     *
      * @param communicationHandler A
      *                             {@link CommunicationHandler
      *                             CommunicationHandler} instance that should be used to send the
      *                             request.
-     * @param trx_id The transaction id.
+     * @param trx_id               The transaction id.
      * @return CompletedTransaction
      * @throws BeowulfCommunicationException <ul>
      *                                       <li>If the server was not able to answer the request in the
@@ -793,8 +715,8 @@ public class CondenserApi {
      *                             {@link CommunicationHandler
      *                             CommunicationHandler} instance that should be used to send the
      *                             request.
-     * @param accountName The account name.
-     * @param publicKeys List public keys.
+     * @param accountName          The account name.
+     * @param publicKeys           List public keys.
      * @return Boolean
      * @throws BeowulfCommunicationException <ul>
      *                                       <li>If the server was not able to answer the request in the
@@ -815,6 +737,35 @@ public class CondenserApi {
                 RequestMethod.VERIFY_ACCOUNT_AUTHORITY, Arrays.asList(accountName, publicKeys));
 
         return communicationHandler.performRequest(requestObject, Boolean.class).get(0);
+    }
+
+    /**
+     * Broadcast a whole block.
+     *
+     * @param communicationHandler A
+     *                             {@link CommunicationHandler
+     *                             CommunicationHandler} instance that should be used to send the
+     *                             request.
+     * @param accountName          account get balance
+     * @param assetInfo            asset type
+     * @throws BeowulfCommunicationException <ul>
+     *                                       <li>If the server was not able to answer the request in the
+     *                                       given time (see
+     *                                       {@link BeowulfJConfig#setResponseTimeout(int)
+     *                                       setResponseTimeout}).</li>
+     *                                       <li>If there is a connection problem.</li>
+     *                                       </ul>
+     * @throws BeowulfResponseException      <ul>
+     *                                       <li>If the BeowulfJ is unable to transform the JSON response
+     *                                       into a Java object.</li>
+     *                                       <li>If the Server returned an error object.</li>
+     *                                       </ul>
+     */
+    public static Asset getBalance(CommunicationHandler communicationHandler, String accountName, AssetInfo assetInfo)
+            throws BeowulfCommunicationException, BeowulfResponseException {
+        JsonRPCRequest requestObject = new JsonRPCRequest(BeowulfApiType.CONDENSER_API,
+                RequestMethod.GET_BALANCE, Arrays.asList(accountName, assetInfo));
+        return communicationHandler.performRequest(requestObject, Asset.class).get(0);
     }
 
     /**
@@ -846,11 +797,86 @@ public class CondenserApi {
         communicationHandler.performRequest(requestObject, Object.class);
     }
 
-    public static Asset getBalance(CommunicationHandler communicationHandler, String accountName, AssetInfo assetInfo)
-            throws BeowulfCommunicationException, BeowulfResponseException {
+    /**
+     * Broadcast a transaction on the Beowulf blockchain. This method will
+     * validate the transaction and return immediately. Please notice that this
+     * does not mean that the operation has been accepted and has been
+     * processed. If you want to make sure that this is the case use the
+     * {@link #broadcastTransaction(CommunicationHandler, SignedTransaction)}
+     * method.
+     *
+     * @param communicationHandler A
+     *                             {@link CommunicationHandler
+     *                             CommunicationHandler} instance that should be used to send the
+     *                             request.
+     * @param transaction          The {@link SignedTransaction} object to broadcast.
+     *
+     * @return transactionId the local generate transaction id
+     * @throws BeowulfCommunicationException      <ul>
+     *                                            <li>If the server was not able to answer the request in the
+     *                                            given time (see
+     *                                            {@link BeowulfJConfig#setResponseTimeout(int)
+     *                                            setResponseTimeout}).</li>
+     *                                            <li>If there is a connection problem.</li>
+     *                                            </ul>
+     * @throws BeowulfResponseException           <ul>
+     *                                            <li>If the BeowulfJ is unable to transform the JSON response
+     *                                            into a Java object.</li>
+     *                                            <li>If the Server returned an error object.</li>
+     *                                            </ul>
+     * @throws BeowulfInvalidTransactionException In case the provided transaction is not valid.
+     */
+    public static TransactionId broadcastTransaction(CommunicationHandler communicationHandler, SignedTransaction transaction)
+            throws BeowulfCommunicationException, BeowulfResponseException, BeowulfInvalidTransactionException {
+        if (transaction.getSignatures() == null || transaction.getSignatures().isEmpty()) {
+            transaction.sign();
+        }
         JsonRPCRequest requestObject = new JsonRPCRequest(BeowulfApiType.CONDENSER_API,
-                RequestMethod.GET_BALANCE, Arrays.asList(accountName, assetInfo));
-        return communicationHandler.performRequest(requestObject, Asset.class).get(0);
+                RequestMethod.BROADCAST_TRANSACTION, Collections.singletonList(transaction));
+
+        communicationHandler.performRequest(requestObject, Object.class);
+        return transaction.generateTransactionId();
+    }
+
+    /**
+     * Broadcast a transaction on the Beowulf blockchain. This method will
+     * validate the transaction and return after it has been accepted and
+     * applied.
+     *
+     * @param communicationHandler A
+     *                             {@link CommunicationHandler
+     *                             CommunicationHandler} instance that should be used to send the
+     *                             request.
+     * @param transaction          The {@link SignedTransaction} object to broadcast.
+     * @return A {@link BroadcastTransactionSynchronousReturn} object providing
+     * information about the block in which the transaction has been
+     * applied.
+     * @throws BeowulfCommunicationException      <ul>
+     *                                            <li>If the server was not able to answer the request in the
+     *                                            given time (see
+     *                                            {@link BeowulfJConfig#setResponseTimeout(int)
+     *                                            setResponseTimeout}).</li>
+     *                                            <li>If there is a connection problem.</li>
+     *                                            </ul>
+     * @throws BeowulfResponseException           <ul>
+     *                                            <li>If the BeowulfJ is unable to transform the JSON response
+     *                                            into a Java object.</li>
+     *                                            <li>If the Server returned an error object.</li>
+     *                                            </ul>
+     * @throws BeowulfInvalidTransactionException In case the provided transaction is not valid.
+     */
+    public static BroadcastTransactionSynchronousReturn broadcastTransactionSynchronous(
+            CommunicationHandler communicationHandler, SignedTransaction transaction)
+            throws BeowulfCommunicationException, BeowulfResponseException, BeowulfInvalidTransactionException {
+        if (transaction.getSignatures() == null || transaction.getSignatures().isEmpty()) {
+            transaction.sign();
+            System.out.println(transaction.generateTransactionId());
+        }
+
+        JsonRPCRequest requestObject = new JsonRPCRequest(BeowulfApiType.CONDENSER_API,
+                RequestMethod.BROADCAST_TRANSACTION_SYNCHRONOUS, Collections.singletonList(transaction));
+
+        return communicationHandler.performRequest(requestObject, BroadcastTransactionSynchronousReturn.class).get(0);
     }
 
 
