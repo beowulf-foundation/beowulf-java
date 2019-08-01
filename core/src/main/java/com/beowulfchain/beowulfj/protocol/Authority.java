@@ -24,11 +24,13 @@ import com.beowulfchain.beowulfj.exceptions.BeowulfInvalidTransactionException;
 import com.beowulfchain.beowulfj.interfaces.ByteTransformable;
 import com.beowulfchain.beowulfj.interfaces.SignatureObject;
 import com.beowulfchain.beowulfj.util.BeowulfJUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -116,6 +118,7 @@ public class Authority implements ByteTransformable, SignatureObject {
      * @return <code>true</code> if the authority is impossible, otherwise
      * <code>false</code>.
      */
+    @JsonIgnore
     public boolean isImpossible() {
         long authWeights = 0;
         for (int weight : this.getAccountAuths().values()) {
@@ -186,6 +189,7 @@ public class Authority implements ByteTransformable, SignatureObject {
      * @return {@code true} if the account name has more than {@code 0},
      * otherwise {@code false}
      */
+    @JsonIgnore
     public boolean isEmpty() {
         return this.getAccountAuths().isEmpty() && this.getKeyAuths().isEmpty();
     }
