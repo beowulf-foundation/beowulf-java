@@ -125,7 +125,7 @@ public class TransferOperation extends AbstractTransferOperation {
             super.validate(validationType);
 
             if (!ValidationType.SKIP_ASSET_VALIDATION.equals(validationType)) {
-                if (amount.getName().equals(BeowulfJConfig.getInstance().getVestsSymbol())) {
+                if (amount.getName().equals(BeowulfJConfig.getInstance().getVestsSymbol().name())) {
                     throw new InvalidParameterException("Transfering Beowulf Power (M) is not allowed.");
                 } else if (amount.getAmount() <= 0) {
                     throw new InvalidParameterException("Must transfer a nonzero amount.");
