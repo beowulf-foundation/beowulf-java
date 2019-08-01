@@ -102,11 +102,11 @@ public class BeowulfJUsageExample {
             System.out.println(asset.toString());
 
             /*
-             * Let the default account transfer 1.0 W from sender to receiver
+             * transfer 1.0 W from sender to receiver
              */
             AccountName from = new AccountName("sender");
             AccountName to = new AccountName("receiver");
-            Asset amount = Asset.createSmtAsset(new BigDecimal("1.00000"), "BWF");
+            Asset amount = Asset.createSmtAsset(new BigDecimal("1.00000"), "W");
             TransferOperation transferOperation = beowulfJ.transfer(from, to, amount, network.getTransactionFee(), "Transfer 1.0 W from sender to receiver");
             TransactionId transactionId = beowulfJ.signAndBroadcast(Collections.singletonList(transferOperation));
             System.out.println("Transaction id: " + transactionId);

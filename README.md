@@ -108,8 +108,8 @@ owner.setKeyAuths(keyAuths);
 String jsonMetadata = "{}";
 
 AccountCreateOperation accountCreateOperation = beowulfJ.createAccount(creator, network.getAccountCreationFee(), newAccount, owner, "{}");
-TransactionId transactionId1 = beowulfJ.signAndBroadcast(accountCreateOperation);
-System.out.println(transactionId1);
+TransactionId transactionId1 = beowulfJ.signAndBroadcast(Collections.singletonList(accountCreateOperation));
+System.out.println("Transaction id: " + transactionId1);
 ```
 
 ##### Signing and pushing a transaction
@@ -120,10 +120,10 @@ System.out.println(transactionId1);
  */
 AccountName from = new AccountName("sender");
 AccountName to = new AccountName("receiver");
-Asset amount = Asset.createSmtAsset(new BigDecimal("1.00000"), "BWF");
-TransferOperation operation = beowulfJ.transfer(from, to, amount, network.getTransactionFee(), "transfer 1.0 W from sender to receiver");
-TransactionId trx_id = beowulfJ.signAndBroadcast(operation);
-System.out.println("Transaction id: " + trx_id);
+Asset amount = Asset.createSmtAsset(new BigDecimal("1.00000"), "W");
+TransferOperation transferOperation = beowulfJ.transfer(from, to, amount, network.getTransactionFee(), "Transfer 1.0 W from sender to receiver");
+TransactionId transactionId = beowulfJ.signAndBroadcast(Collections.singletonList(transferOperation));
+System.out.println("Transaction id: " + transactionId);
 ```
 
 ##### Getting a block
