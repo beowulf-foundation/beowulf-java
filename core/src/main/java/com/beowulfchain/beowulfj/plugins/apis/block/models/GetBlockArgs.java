@@ -16,8 +16,6 @@
  */
 package com.beowulfchain.beowulfj.plugins.apis.block.models;
 
-import com.beowulfchain.beowulfj.communication.CommunicationHandler;
-import com.beowulfchain.beowulfj.plugins.apis.block.BlockApi;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.apache.commons.lang3.builder.ToStringBuilder;
