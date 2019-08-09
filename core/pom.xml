@@ -119,6 +119,12 @@
             <version>${hamcrest.date.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -134,7 +140,6 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <!--<mainClass>com.beowulfchain.beowulfj.BeowulfJ</mainClass>-->
                             <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
                             <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
                         </manifest>
@@ -162,7 +167,7 @@
                     <execution>
                         <goals>
                             <goal>integration-test</goal>
-                            <!--<goal>verify</goal>-->
+                            <goal>verify</goal>
                         </goals>
                     </execution>
                 </executions>
@@ -175,7 +180,7 @@
                     <includes>
                         <include>**/*.*</include>
                     </includes>
-                    <!--<excludedGroups>IntegrationTest</excludedGroups>-->
+                    <excludedGroups>IntegrationTest</excludedGroups>
                 </configuration>
             </plugin>
             <plugin>
@@ -235,7 +240,7 @@
                         <id>sign-artifacts</id>
                         <phase>verify</phase>
                         <goals>
-                            <goal>sign</goal>
+                            <goal>help</goal>
                         </goals>
                     </execution>
                 </executions>

@@ -14,8 +14,11 @@
  *     You should have received a copy of the GNU General Public License
  *     along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.beowulfchain.beowulfj.chain.util;
+package com.beowulfchain.beowulfj;
 
-public class Asset {
+/**
+ * Category marker interface for integration tests.
+ */
+public interface IntegrationTest {
 
 }
