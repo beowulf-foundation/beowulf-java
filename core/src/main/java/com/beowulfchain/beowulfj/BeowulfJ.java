@@ -26,7 +26,6 @@ import com.beowulfchain.beowulfj.enums.PrivateKeyType;
 import com.beowulfchain.beowulfj.exceptions.BeowulfCommunicationException;
 import com.beowulfchain.beowulfj.exceptions.BeowulfInvalidTransactionException;
 import com.beowulfchain.beowulfj.exceptions.BeowulfResponseException;
-import com.beowulfchain.beowulfj.plugins.apis.account.history.models.AppliedOperation;
 import com.beowulfchain.beowulfj.plugins.apis.condenser.CondenserApi;
 import com.beowulfchain.beowulfj.plugins.apis.condenser.models.AccountHistoryReturn;
 import com.beowulfchain.beowulfj.plugins.apis.condenser.models.ExtendedAccount;
@@ -168,33 +167,6 @@ public class BeowulfJ {
     }
 
     /**
-     * Get a sequence of operations included/generated within a particular
-     * block.
-     *
-     * @param blockNumber Height of the block whose generated virtual operations should
-     *                    be returned.
-     * @return A sequence of operations included/generated within a particular
-     * block.
-     * @throws BeowulfCommunicationException <ul>
-     *                                       <li>If the server was not able to answer the request in the
-     *                                       given time (see
-     *                                       {@link BeowulfJConfig#setResponseTimeout(int)
-     *                                       setResponseTimeout}).</li>
-     *                                       <li>If there is a connection problem.</li>
-     *                                       </ul>
-     * @throws BeowulfResponseException      <ul>
-     *                                       <li>If the BeowulfJ is unable to transform the JSON response
-     *                                       into a Java object.</li>
-     *                                       <li>If the Server returned an error object.</li>
-     *                                       </ul>
-     */
-    public List<AppliedOperation> getOpsInBlock(long blockNumber)
-            throws BeowulfCommunicationException, BeowulfResponseException {
-        return CondenserApi
-                .getOpsInBlock(communicationHandler, blockNumber);
-    }
-
-    /**
      * Get all operations performed by the specified account.
      *
      * @param accountName The user name of the account.
@@ -215,6 +187,7 @@ public class BeowulfJ {
      *                                       <li>If the Server returned an error object.</li>
      *                                       </ul>
      */
+    @Deprecated
     public List<AccountHistoryReturn> getAccountHistory(AccountName accountName, ULong start, UInteger limit)
             throws BeowulfCommunicationException, BeowulfResponseException {
         return CondenserApi

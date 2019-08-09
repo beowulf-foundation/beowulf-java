@@ -29,7 +29,6 @@ import com.beowulfchain.beowulfj.enums.RequestMethod;
 import com.beowulfchain.beowulfj.exceptions.BeowulfCommunicationException;
 import com.beowulfchain.beowulfj.exceptions.BeowulfInvalidTransactionException;
 import com.beowulfchain.beowulfj.exceptions.BeowulfResponseException;
-import com.beowulfchain.beowulfj.plugins.apis.account.history.models.AppliedOperation;
 import com.beowulfchain.beowulfj.plugins.apis.condenser.models.AccountHistoryReturn;
 import com.beowulfchain.beowulfj.plugins.apis.condenser.models.ExtendedAccount;
 import com.beowulfchain.beowulfj.plugins.apis.condenser.models.ExtendedDynamicGlobalProperties;
@@ -237,36 +236,6 @@ public class CondenserApi {
     }
 
     /**
-     * (get_ops_in_block)
-     *
-     * @param communicationHandler A
-     *                             {@link CommunicationHandler
-     *                             CommunicationHandler} instance that should be used to send the
-     *                             request.
-     * @param blockNum             The block number.
-     * @return List AppliedOperation
-     * @throws BeowulfCommunicationException <ul>
-     *                                       <li>If the server was not able to answer the request in the
-     *                                       given time (see
-     *                                       {@link BeowulfJConfig#setResponseTimeout(int)
-     *                                       setResponseTimeout}).</li>
-     *                                       <li>If there is a connection problem.</li>
-     *                                       </ul>
-     * @throws BeowulfResponseException      <ul>
-     *                                       <li>If the BeowulfJ is unable to transform the JSON response
-     *                                       into a Java object.</li>
-     *                                       <li>If the Server returned an error object.</li>
-     *                                       </ul>
-     */
-    public static List<AppliedOperation> getOpsInBlock(CommunicationHandler communicationHandler, long blockNum)
-            throws BeowulfCommunicationException, BeowulfResponseException {
-        JsonRPCRequest requestObject = new JsonRPCRequest(BeowulfApiType.CONDENSER_API, RequestMethod.GET_OPS_IN_BLOCK,
-                Collections.singletonList(blockNum));
-
-        return communicationHandler.performRequest(requestObject, AppliedOperation.class);
-    }
-
-    /**
      * (get_config)
      *
      * @param communicationHandler A
@@ -335,6 +304,8 @@ public class CondenserApi {
      *                             CommunicationHandler} instance that should be used to send the
      *                             request.
      * @param account              get account history param include [name, start, limit]
+     * @param start start position
+     * @param limit limitation fo history
      * @return A map containing the activities. The key is the id of the
      * activity.
      * @throws BeowulfCommunicationException <ul>
@@ -350,6 +321,7 @@ public class CondenserApi {
      *                                       <li>If the Server returned an error object.</li>
      *                                       </ul>
      */
+    @Deprecated
     public static List<AccountHistoryReturn> getAccountHistory(CommunicationHandler communicationHandler, String account, long start, long limit) throws BeowulfCommunicationException, BeowulfResponseException {
         JsonRPCRequest requestObject = new JsonRPCRequest(BeowulfApiType.CONDENSER_API,
                 RequestMethod.GET_ACCOUNT_HISTORY, Arrays.asList(account, start, limit));
@@ -748,6 +720,7 @@ public class CondenserApi {
      *                             request.
      * @param accountName          account get balance
      * @param assetInfo            asset type
+     * @return Asset balance of accountName
      * @throws BeowulfCommunicationException <ul>
      *                                       <li>If the server was not able to answer the request in the
      *                                       given time (see
