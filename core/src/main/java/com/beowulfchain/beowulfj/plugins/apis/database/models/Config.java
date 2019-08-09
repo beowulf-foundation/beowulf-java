@@ -20,6 +20,7 @@ import com.beowulfchain.beowulfj.protocol.Symbol;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import java.math.BigInteger;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -189,7 +190,7 @@ public class Config {
     @JsonProperty("BEOWULF_OWNER_AUTH_RECOVERY_PERIOD")
     private long beowulfOwnerAuthRecoveryPeriod;
     @JsonProperty("BEOWULF_OWNER_UPDATE_LIMIT")
-    private int beowulfOwnerUpdateLimit;
+    private long beowulfOwnerUpdateLimit;
     @JsonProperty("BEOWULF_POST_AVERAGE_WINDOW")
     private int beowulfPostAvarageWindow;
     @JsonProperty("BEOWULF_POST_MAX_BANDWIDTH")
@@ -594,7 +595,7 @@ public class Config {
         return beowulfOwnerAuthRecoveryPeriod;
     }
 
-    public int getBeowulfOwnerUpdateLimit() {
+    public long getBeowulfOwnerUpdateLimit() {
         return beowulfOwnerUpdateLimit;
     }
 
