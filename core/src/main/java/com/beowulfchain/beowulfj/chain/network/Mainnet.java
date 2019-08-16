@@ -21,7 +21,7 @@ import com.beowulfchain.beowulfj.protocol.Asset;
 import com.beowulfchain.beowulfj.protocol.enums.AssetSymbolType;
 
 public class Mainnet implements NetworkProperties {
-    private static final String chain_id = "0000000000000000000000000000000000000000000000000000000000000000";
+    private static final String chain_id = "e2222eeabcf9224632c82ec86ba3d77b359e3b5cb8a089ddd45090c31c98e3f2";
     private static final String prefix = "BEO";
     private static final String beowulf_symbol = "BWF";
     private static final String wd_symbol = "W";
