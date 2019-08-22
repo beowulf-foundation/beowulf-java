@@ -4,7 +4,7 @@
 
     <groupId>com.beowulfchain</groupId>
     <artifactId>beowulfj-parent</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.2</version>
     <packaging>pom</packaging>
     <name>beowulfj-parent</name>
     <description>Provides the common configuration for the BeowulfJ modules.</description>
