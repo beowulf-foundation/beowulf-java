@@ -55,14 +55,14 @@ The resulting JAR can be found in the target directory as usual. Please notice t
 Create a new client instance of BeowulfJ
 ```java
 // Define config:
-NetworkProperties network = new Testnet();
+NetworkProperties network = new Mainnet();
 BeowulfJConfig myConfig = BeowulfJConfig.getInstance();
 myConfig.setResponseTimeout(100000);
 // default account will be used if transaction doesn't define
 myConfig.setDefaultAccount(new AccountName("default-account"));
 myConfig.setNetwork(network);
 // init beowulf node
-myConfig.setDefaultBeowulfApiUri("https://testnet-bw.beowulfchain.com/rpc");
+myConfig.setDefaultBeowulfApiUri("https://bw.beowulfchain.com/rpc");
 
 
 // Add and manage private keys follow base58 format:
