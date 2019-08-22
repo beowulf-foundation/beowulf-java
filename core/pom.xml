@@ -161,7 +161,7 @@
                     <execution>
                         <goals>
                             <goal>integration-test</goal>
-                            <goal>verify</goal>
+                            <!--<goal>verify</goal>-->
                         </goals>
                     </execution>
                 </executions>
@@ -174,7 +174,7 @@
                     <includes>
                         <include>**/*.*</include>
                     </includes>
-                    <excludedGroups>IntegrationTest</excludedGroups>
+                    <!--<excludedGroups>IntegrationTest</excludedGroups>-->
                 </configuration>
             </plugin>
             <plugin>
@@ -234,7 +234,7 @@
                         <id>sign-artifacts</id>
                         <phase>verify</phase>
                         <goals>
-                            <goal>help</goal>
+                            <goal>sign</goal>
                         </goals>
                     </execution>
                 </executions>
