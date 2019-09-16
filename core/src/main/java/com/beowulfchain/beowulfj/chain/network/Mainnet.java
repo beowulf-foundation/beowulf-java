@@ -21,14 +21,14 @@ import com.beowulfchain.beowulfj.protocol.Asset;
 import com.beowulfchain.beowulfj.protocol.enums.AssetSymbolType;
 
 public class Mainnet implements NetworkProperties {
-    private static final String chain_id = "0000000000000000000000000000000000000000000000000000000000000000";
+    private static final String chain_id = "e2222eeabcf9224632c82ec86ba3d77b359e3b5cb8a089ddd45090c31c98e3f2";
     private static final String prefix = "BEO";
     private static final String beowulf_symbol = "BWF";
     private static final String wd_symbol = "W";
     private static final String vests_symbol = "M";
-    private static final Asset account_creation_fee = new Asset(1000L, AssetSymbolType.W);
+    private static final Asset account_creation_fee = new Asset(10000L, AssetSymbolType.W);
     private static final Asset smt_creation_fee = new Asset(100000000L, AssetSymbolType.W);
-    private static final Asset transaction_fee = new Asset(100L, AssetSymbolType.W);
+    private static final Asset transaction_fee = new Asset(1000L, AssetSymbolType.W);
 
     @Override
     public String getChain_id() {
