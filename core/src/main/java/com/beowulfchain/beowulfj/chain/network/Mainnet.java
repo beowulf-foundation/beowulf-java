@@ -26,7 +26,7 @@ public class Mainnet implements NetworkProperties {
     private static final String beowulf_symbol = "BWF";
     private static final String wd_symbol = "W";
     private static final String vests_symbol = "M";
-    private static final Asset account_creation_fee = new Asset(100000L, AssetSymbolType.W);
+    private static final Asset account_creation_fee = new Asset(10000L, AssetSymbolType.W);
     private static final Asset smt_creation_fee = new Asset(100000000L, AssetSymbolType.W);
     private static final Asset transaction_fee = new Asset(1000L, AssetSymbolType.W);
 
