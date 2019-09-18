@@ -32,9 +32,7 @@ import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
+import java.util.*;
 
 /**
  * This class is the java implementation of the Beowulf "authority" object.
@@ -67,7 +65,7 @@ public class Authority implements ByteTransformable, SignatureObject {
         this.setAccountAuths(new HashMap<AccountName, Integer>());
         this.setKeyAuths(new HashMap<PublicKey, Integer>());
         // Set default values.
-        this.setWeightThreshold(0);
+        this.setWeightThreshold(1L);
     }
 
     /**
@@ -138,16 +136,23 @@ public class Authority implements ByteTransformable, SignatureObject {
 
             serializedAuthority.write(BeowulfJUtils.transformLongToVarIntByteArray(this.getAccountAuths().size()));
 
-            for (Entry<AccountName, Integer> accountAuth : this.getAccountAuths().entrySet()) {
-                serializedAuthority.write(accountAuth.getKey().toByteArray());
-                serializedAuthority.write(BeowulfJUtils.transformShortToByteArray(accountAuth.getValue()));
+            // get sorted keyset by alphabet
+            List<AccountName> accountAuthsKeySet = new ArrayList<>(this.getAccountAuths().keySet());
+            accountAuthsKeySet.sort(Comparator.comparing(AccountName::getName));
+
+            for (AccountName accountName : accountAuthsKeySet) {
+                serializedAuthority.write(accountName.toByteArray());
+                serializedAuthority.write(BeowulfJUtils.transformShortToByteArray(this.getAccountAuths().get(accountName)));
             }
 
             serializedAuthority.write(BeowulfJUtils.transformLongToVarIntByteArray(this.getKeyAuths().size()));
 
-            for (Entry<PublicKey, Integer> keyAuth : this.getKeyAuths().entrySet()) {
-                serializedAuthority.write(keyAuth.getKey().toByteArray());
-                serializedAuthority.write(BeowulfJUtils.transformShortToByteArray(keyAuth.getValue()));
+            // get sorted keyset by alphabet
+            List<PublicKey> keyAuthsKeySet = new ArrayList<>(this.getKeyAuths().keySet());
+            keyAuthsKeySet.sort(Comparator.comparing(PublicKey::getAddressFromPublicKey));
+            for (PublicKey key : keyAuthsKeySet) {
+                serializedAuthority.write(key.toByteArray());
+                serializedAuthority.write(BeowulfJUtils.transformShortToByteArray(this.getKeyAuths().get(key)));
             }
 
             return serializedAuthority.toByteArray();

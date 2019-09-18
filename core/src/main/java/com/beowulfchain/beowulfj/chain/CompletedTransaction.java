@@ -27,6 +27,7 @@ import org.joou.UInteger;
 import org.joou.UShort;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.util.List;
 
 /**
@@ -42,6 +43,8 @@ public class CompletedTransaction extends SignedTransaction {
     protected long blockNum;
     @JsonProperty("transaction_num")
     protected long transactionNum;
+    @JsonProperty("status")
+    protected String status;
 
     /**
      * This constructor is only used to create the POJO from a JSON response.
@@ -56,11 +59,13 @@ public class CompletedTransaction extends SignedTransaction {
                                  @JsonProperty("created_time") Long createdTime,
                                  @JsonProperty("transaction_id") TransactionId transactionId,
                                  @JsonProperty("block_num") Long blockNum,
-                                 @JsonProperty("transaction_num") Long transactionNum) {
+                                 @JsonProperty("transaction_num") Long transactionNum,
+                                 @JsonProperty("status") String status) {
         super(refBlockNum, refBlockPrefix, expirationDate, operations, extensions, createdTime);
         this.setTransactionId(transactionId);
         this.setBlockNum(blockNum);
         this.setTransactionNum(transactionNum);
+        this.setStatus(status);
     }
 
     /**
@@ -80,15 +85,16 @@ public class CompletedTransaction extends SignedTransaction {
      * @param transactionId  The transaction id.
      * @param blockNum       The block number.
      * @param transactionNum The transaction number.
+     * @param status status of transaction
      */
     public CompletedTransaction(UShort refBlockNum, UInteger refBlockPrefix, TimePointSec expirationDate,
                                 List<Operation> operations, List<FutureExtensions> extensions, Long createdTime,
-                                TransactionId transactionId, Long blockNum, Long transactionNum) {
+                                TransactionId transactionId, Long blockNum, Long transactionNum, String status) {
         super(refBlockNum, refBlockPrefix, expirationDate, operations, extensions, createdTime);
         this.setTransactionId(transactionId);
         this.setBlockNum(blockNum);
         this.setTransactionNum(transactionNum);
-
+        this.setStatus(status);
     }
 
     /**
@@ -132,5 +138,14 @@ public class CompletedTransaction extends SignedTransaction {
 
     public void setTransactionNum(long transactionNum) {
         this.transactionNum = transactionNum;
+    }
+
+    public String getStatus() {
+
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
