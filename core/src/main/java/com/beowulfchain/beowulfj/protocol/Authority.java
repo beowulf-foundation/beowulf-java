@@ -67,7 +67,7 @@ public class Authority implements ByteTransformable, SignatureObject {
         this.setAccountAuths(new HashMap<AccountName, Integer>());
         this.setKeyAuths(new HashMap<PublicKey, Integer>());
         // Set default values.
-        this.setWeightThreshold(0);
+        this.setWeightThreshold(1L);
     }
 
     /**
