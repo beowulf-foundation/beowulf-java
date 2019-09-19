@@ -16,6 +16,7 @@
  */
 package com.beowulfchain.beowulfj.base.models.deserializer;
 
+import com.beowulfchain.beowulfj.protocol.AccountName;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.ObjectCodec;
 import com.fasterxml.jackson.core.TreeNode;
@@ -23,23 +24,25 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AccountAuthHashMapDeserializer extends JsonDeserializer<Map<String, Integer>> {
+public class AccountAuthHashMapDeserializer extends JsonDeserializer<Map<AccountName, Integer>> {
     @Override
-    public Map<String, Integer> deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
+    public Map<AccountName, Integer> deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
             throws IOException {
 
-        HashMap<String, Integer> result = new HashMap<>();
+        HashMap<AccountName, Integer> result = new HashMap<>();
 
         ObjectCodec codec = jsonParser.getCodec();
         TreeNode rootNode = codec.readTree(jsonParser);
 
         if (rootNode.isArray()) {
             for (JsonNode node : (ArrayNode) rootNode) {
-                result.put((node.get(0)).asText(), (node.get(0)).asInt());
+                AccountName accountName = new AccountName((node.get(0)).asText());
+                result.put(accountName, (node.get(0)).asInt());
             }
 
             return result;
