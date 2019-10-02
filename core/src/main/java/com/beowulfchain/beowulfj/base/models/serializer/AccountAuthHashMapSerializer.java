@@ -16,22 +16,24 @@
  */
 package com.beowulfchain.beowulfj.base.models.serializer;
 
+import com.beowulfchain.beowulfj.protocol.AccountName;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
+
 import java.io.IOException;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class AccountAuthHashMapSerializer extends JsonSerializer<Map<String, Integer>> {
+public class AccountAuthHashMapSerializer extends JsonSerializer<Map<AccountName, Integer>> {
 
     @Override
-    public void serialize(Map<String, Integer> accountAuthMap, JsonGenerator jsonGenerator,
+    public void serialize(Map<AccountName, Integer> accountAuthMap, JsonGenerator jsonGenerator,
                           SerializerProvider serializerProvider) throws IOException {
         jsonGenerator.writeStartArray();
-        for (Entry<String, Integer> accountAuth : accountAuthMap.entrySet()) {
+        for (Entry<AccountName, Integer> accountAuth : accountAuthMap.entrySet()) {
             jsonGenerator.writeStartArray();
-            jsonGenerator.writeString(accountAuth.getKey());
+            jsonGenerator.writeString(accountAuth.getKey().getName());
             jsonGenerator.writeNumber(accountAuth.getValue());
             jsonGenerator.writeEndArray();
         }

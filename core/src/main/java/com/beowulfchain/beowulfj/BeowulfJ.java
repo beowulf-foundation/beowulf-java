@@ -31,6 +31,7 @@ import com.beowulfchain.beowulfj.plugins.apis.condenser.models.AccountHistoryRet
 import com.beowulfchain.beowulfj.plugins.apis.condenser.models.ExtendedAccount;
 import com.beowulfchain.beowulfj.plugins.apis.condenser.models.FindSmtTokenByName;
 import com.beowulfchain.beowulfj.plugins.apis.database.DatabaseApi;
+import com.beowulfchain.beowulfj.plugins.apis.database.models.Config;
 import com.beowulfchain.beowulfj.plugins.apis.database.models.DynamicGlobalProperty;
 import com.beowulfchain.beowulfj.plugins.apis.database.models.Supernode;
 import com.beowulfchain.beowulfj.plugins.apis.database.models.SupernodeSchedule;
@@ -367,6 +368,10 @@ public class BeowulfJ {
     public DynamicGlobalProperty getDynamicGlobalProperties()
             throws BeowulfCommunicationException, BeowulfResponseException {
         return CondenserApi.getDynamicGlobalProperties(communicationHandler);
+    }
+
+    public Config getConfig() throws BeowulfCommunicationException, BeowulfResponseException {
+        return CondenserApi.getConfig(communicationHandler);
     }
 
     /**
