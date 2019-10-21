@@ -20,6 +20,7 @@ import com.beowulfchain.beowulfj.base.models.deserializer.AccountAuthHashMapDese
 import com.beowulfchain.beowulfj.base.models.deserializer.PublicKeyHashMapDeserializer;
 import com.beowulfchain.beowulfj.base.models.serializer.AccountAuthHashMapSerializer;
 import com.beowulfchain.beowulfj.base.models.serializer.PublicKeyHashMapSerializer;
+import com.beowulfchain.beowulfj.exceptions.BeowulfInvalidParamException;
 import com.beowulfchain.beowulfj.exceptions.BeowulfInvalidTransactionException;
 import com.beowulfchain.beowulfj.interfaces.ByteTransformable;
 import com.beowulfchain.beowulfj.interfaces.SignatureObject;
@@ -79,6 +80,9 @@ public class Authority implements ByteTransformable, SignatureObject {
      * @param weightThreshold The weight threshold.
      */
     public void setWeightThreshold(long weightThreshold) {
+        if (weightThreshold < 1L) {
+            throw new BeowulfInvalidParamException("Weight threshold must not lower than 1");
+        }
         this.weightThreshold = weightThreshold;
     }
 
