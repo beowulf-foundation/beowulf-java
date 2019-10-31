@@ -67,7 +67,7 @@ public class SignedTransaction extends Transaction implements ByteTransformable,
      * This constructor is only used to create the POJO from a JSON response.
      */
     @JsonCreator
-    private SignedTransaction(@JsonProperty("ref_block_num") UShort refBlockNum,
+    SignedTransaction(@JsonProperty("ref_block_num") UShort refBlockNum,
                               @JsonProperty("ref_block_prefix") UInteger refBlockPrefix,
                               @JsonProperty("expiration") TimePointSec expirationDate,
                               @JsonProperty("operations") List<Operation> operations,

@@ -33,18 +33,18 @@ import java.util.List;
 /**
  * this class present Transaction had been mined
  */
-public class CompletedTransaction extends SignedTransaction {
+public final class CompletedTransaction extends SignedTransaction {
     private static final long serialVersionUID = 4821422578657270330L;
     private static final Logger LOGGER = LoggerFactory.getLogger(CompletedTransaction.class);
 
     @JsonProperty("transaction_id")
-    protected TransactionId transactionId;
+    private TransactionId transactionId;
     @JsonProperty("block_num")
-    protected long blockNum;
+    private long blockNum;
     @JsonProperty("transaction_num")
-    protected long transactionNum;
+    private long transactionNum;
     @JsonProperty("status")
-    protected String status;
+    private String status;
 
     /**
      * This constructor is only used to create the POJO from a JSON response.
@@ -61,7 +61,7 @@ public class CompletedTransaction extends SignedTransaction {
                                  @JsonProperty("block_num") Long blockNum,
                                  @JsonProperty("transaction_num") Long transactionNum,
                                  @JsonProperty("status") String status) {
-        super(refBlockNum, refBlockPrefix, expirationDate, operations, extensions, createdTime);
+        super(refBlockNum, refBlockPrefix, expirationDate, operations, extensions, signatures, createdTime);
         this.setTransactionId(transactionId);
         this.setBlockNum(blockNum);
         this.setTransactionNum(transactionNum);
@@ -85,7 +85,7 @@ public class CompletedTransaction extends SignedTransaction {
      * @param transactionId  The transaction id.
      * @param blockNum       The block number.
      * @param transactionNum The transaction number.
-     * @param status status of transaction
+     * @param status         status of transaction
      */
     public CompletedTransaction(UShort refBlockNum, UInteger refBlockPrefix, TimePointSec expirationDate,
                                 List<Operation> operations, List<FutureExtensions> extensions, Long createdTime,
