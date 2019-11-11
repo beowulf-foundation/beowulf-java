@@ -34,14 +34,6 @@ public enum AssetSymbolType {
     W;
 
     public static AssetSymbolType getValue(String symbol) {
-
-        if (symbol.toUpperCase().equals(AssetSymbolType.M.name())) {
-            return AssetSymbolType.M;
-        } else if (symbol.toUpperCase().equals(AssetSymbolType.BWF.name())) {
-            return AssetSymbolType.BWF;
-        } else if (symbol.toUpperCase().equals(AssetSymbolType.W.name())) {
-            return AssetSymbolType.W;
-        }
-        return null;
+        return AssetSymbolType.valueOf(symbol);
     }
 }
