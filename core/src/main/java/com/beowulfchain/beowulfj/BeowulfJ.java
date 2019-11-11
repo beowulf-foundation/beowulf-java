@@ -17,6 +17,7 @@
 package com.beowulfchain.beowulfj;
 
 import com.beowulfchain.beowulfj.base.models.Block;
+import com.beowulfchain.beowulfj.base.models.FutureExtensions;
 import com.beowulfchain.beowulfj.base.models.ScheduledHardfork;
 import com.beowulfchain.beowulfj.chain.CompletedTransaction;
 import com.beowulfchain.beowulfj.chain.SignedTransaction;
@@ -38,11 +39,15 @@ import com.beowulfchain.beowulfj.plugins.apis.database.models.SupernodeSchedule;
 import com.beowulfchain.beowulfj.plugins.apis.network.broadcast.models.BroadcastTransactionSynchronousReturn;
 import com.beowulfchain.beowulfj.protocol.*;
 import com.beowulfchain.beowulfj.protocol.enums.AssetSymbolType;
+import com.beowulfchain.beowulfj.protocol.extensions.JsonExtension;
+import com.beowulfchain.beowulfj.protocol.extensions.VoidExtension;
 import com.beowulfchain.beowulfj.protocol.operations.AccountCreateOperation;
 import com.beowulfchain.beowulfj.protocol.operations.Operation;
 import com.beowulfchain.beowulfj.protocol.operations.SmtCreateOperation;
 import com.beowulfchain.beowulfj.protocol.operations.TransferOperation;
 import com.beowulfchain.beowulfj.util.BeowulfJUtils;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import eu.bittrade.crypto.core.CryptoUtils;
 import eu.bittrade.crypto.core.ECKey;
 import eu.bittrade.crypto.core.Sha256Hash;
 import org.apache.commons.lang3.tuple.ImmutablePair;
@@ -52,6 +57,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.security.InvalidParameterException;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -757,7 +763,7 @@ public class BeowulfJ {
         return this.broadcastTransactionSynchronous(signedTransaction);
     }
 
-    public TransactionId signAndBroadcast(List<Operation> operations)
+    public TransactionId signAndBroadcast(List<Operation> operations, JsonExtension extensions)
             throws BeowulfCommunicationException, BeowulfResponseException, BeowulfInvalidTransactionException {
         SignedTransaction signedTransaction = signTransaction(operations);
         return this.broadcastTransaction(signedTransaction);
@@ -767,5 +773,21 @@ public class BeowulfJ {
         DynamicGlobalProperty globalProperties = this.getDynamicGlobalProperties();
         return new SignedTransaction(globalProperties.getHeadBlockId(), operations,
                 null);
+    }
+
+    public TransactionId signAndBroadcastWithExtension(List<Operation> operations, FutureExtensions extensions)
+            throws BeowulfCommunicationException, BeowulfResponseException, BeowulfInvalidTransactionException, JsonProcessingException {
+        SignedTransaction signedTransaction = null;
+        if (extensions instanceof VoidExtension) {
+            signedTransaction = signTransaction(operations);
+        } else {
+            signedTransaction = signTransactionWithExtension(operations, Arrays.asList(extensions));
+        }
+        return this.broadcastTransaction(signedTransaction);
+    }
+
+    private SignedTransaction signTransactionWithExtension(List<Operation> operations, List<FutureExtensions> extensions) throws BeowulfCommunicationException, BeowulfResponseException {
+        DynamicGlobalProperty globalProperties = this.getDynamicGlobalProperties();
+        return new SignedTransaction(globalProperties.getHeadBlockId(), operations, extensions);
     }
 }

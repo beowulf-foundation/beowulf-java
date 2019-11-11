@@ -17,6 +17,8 @@
 package com.beowulfchain.beowulfj.base.models.serializer;
 
 import com.beowulfchain.beowulfj.base.models.FutureExtensions;
+import com.beowulfchain.beowulfj.protocol.extensions.JsonExtension;
+import com.beowulfchain.beowulfj.protocol.extensions.VoidExtension;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
@@ -27,7 +29,16 @@ public class FutureExtensionsSerializer extends JsonSerializer<FutureExtensions>
     @Override
     public void serialize(FutureExtensions futureExtensions, JsonGenerator jsonGenerator,
                           SerializerProvider serializerProvider) throws IOException {
-        // As long as Extensions are not supported we simply return nothing
-        // here.
+        // Check type of Extension for serialize Json format
+        if (futureExtensions instanceof JsonExtension) {
+            jsonGenerator.writeStartObject();
+            jsonGenerator.writeStringField("type", ((JsonExtension) futureExtensions).getType());
+            jsonGenerator.writeObjectFieldStart("value");
+            jsonGenerator.writeStringField("data", ((JsonExtension) futureExtensions).getValue().getData());
+            jsonGenerator.writeEndObject();
+            jsonGenerator.writeEndObject();
+        } else if (futureExtensions instanceof VoidExtension) {
+            return;
+        }
     }
 }

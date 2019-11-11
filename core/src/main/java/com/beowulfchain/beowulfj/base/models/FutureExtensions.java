@@ -17,30 +17,11 @@
 package com.beowulfchain.beowulfj.base.models;
 
 import com.beowulfchain.beowulfj.base.models.serializer.FutureExtensionsSerializer;
-import com.beowulfchain.beowulfj.exceptions.BeowulfInvalidTransactionException;
 import com.beowulfchain.beowulfj.interfaces.ByteTransformable;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+
+import java.io.Serializable;
 
 @JsonSerialize(using = FutureExtensionsSerializer.class)
-public class FutureExtensions implements ByteTransformable {
-    @Override
-    public byte[] toByteArray() throws BeowulfInvalidTransactionException {
-        try (ByteArrayOutputStream serializedFutureExtensions = new ByteArrayOutputStream()) {
-            byte[] extension = {0x00};
-            serializedFutureExtensions.write(extension);
-
-            return serializedFutureExtensions.toByteArray();
-        } catch (IOException e) {
-            throw new BeowulfInvalidTransactionException(
-                    "A problem occured while transforming the operation into a byte array.", e);
-        }
-    }
-
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
+public abstract class FutureExtensions implements ByteTransformable, Serializable {
 }
