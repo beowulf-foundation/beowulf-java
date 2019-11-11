@@ -16,12 +16,9 @@
  */
 package com.beowulfchain.beowulfj.base.models;
 
-import com.beowulfchain.beowulfj.base.models.serializer.FutureExtensionsSerializer;
 import com.beowulfchain.beowulfj.interfaces.ByteTransformable;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.io.Serializable;
 
-@JsonSerialize(using = FutureExtensionsSerializer.class)
 public abstract class FutureExtensions implements ByteTransformable, Serializable {
 }

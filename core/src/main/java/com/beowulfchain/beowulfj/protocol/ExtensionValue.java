@@ -19,7 +19,6 @@ public class ExtensionValue implements ByteTransformable {
         this.setData(data);
     }
 
-    @JsonValue
     public String getData() {
         return data;
     }
