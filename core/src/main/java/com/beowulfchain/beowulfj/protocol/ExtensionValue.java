@@ -46,11 +46,11 @@ public class ExtensionValue implements ByteTransformable {
 
     @Override
     public boolean equals(Object otherObject) {
-        if (otherObject == null || !(otherObject instanceof ExtensionValue)) {
+        if (!(otherObject instanceof ExtensionValue)) {
             return false;
         }
         ExtensionValue otherExtensionValue = (ExtensionValue) otherObject;
-        return this.getData() == otherExtensionValue.getData();
+        return this.getData().equals(otherExtensionValue.getData());
     }
 
 }

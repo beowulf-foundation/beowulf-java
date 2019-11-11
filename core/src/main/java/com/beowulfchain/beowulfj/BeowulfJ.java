@@ -39,7 +39,6 @@ import com.beowulfchain.beowulfj.plugins.apis.database.models.SupernodeSchedule;
 import com.beowulfchain.beowulfj.plugins.apis.network.broadcast.models.BroadcastTransactionSynchronousReturn;
 import com.beowulfchain.beowulfj.protocol.*;
 import com.beowulfchain.beowulfj.protocol.enums.AssetSymbolType;
-import com.beowulfchain.beowulfj.protocol.extensions.JsonExtension;
 import com.beowulfchain.beowulfj.protocol.extensions.VoidExtension;
 import com.beowulfchain.beowulfj.protocol.operations.AccountCreateOperation;
 import com.beowulfchain.beowulfj.protocol.operations.Operation;
@@ -47,7 +46,6 @@ import com.beowulfchain.beowulfj.protocol.operations.SmtCreateOperation;
 import com.beowulfchain.beowulfj.protocol.operations.TransferOperation;
 import com.beowulfchain.beowulfj.util.BeowulfJUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import eu.bittrade.crypto.core.CryptoUtils;
 import eu.bittrade.crypto.core.ECKey;
 import eu.bittrade.crypto.core.Sha256Hash;
 import org.apache.commons.lang3.tuple.ImmutablePair;
@@ -763,7 +761,7 @@ public class BeowulfJ {
         return this.broadcastTransactionSynchronous(signedTransaction);
     }
 
-    public TransactionId signAndBroadcast(List<Operation> operations, JsonExtension extensions)
+    public TransactionId signAndBroadcast(List<Operation> operations)
             throws BeowulfCommunicationException, BeowulfResponseException, BeowulfInvalidTransactionException {
         SignedTransaction signedTransaction = signTransaction(operations);
         return this.broadcastTransaction(signedTransaction);
