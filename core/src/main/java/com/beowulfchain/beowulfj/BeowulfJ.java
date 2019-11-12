@@ -39,7 +39,6 @@ import com.beowulfchain.beowulfj.plugins.apis.database.models.SupernodeSchedule;
 import com.beowulfchain.beowulfj.plugins.apis.network.broadcast.models.BroadcastTransactionSynchronousReturn;
 import com.beowulfchain.beowulfj.protocol.*;
 import com.beowulfchain.beowulfj.protocol.enums.AssetSymbolType;
-import com.beowulfchain.beowulfj.protocol.extensions.VoidExtension;
 import com.beowulfchain.beowulfj.protocol.operations.AccountCreateOperation;
 import com.beowulfchain.beowulfj.protocol.operations.Operation;
 import com.beowulfchain.beowulfj.protocol.operations.SmtCreateOperation;
@@ -55,7 +54,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.security.InvalidParameterException;
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -757,35 +755,25 @@ public class BeowulfJ {
 
     public BroadcastTransactionSynchronousReturn signAndBroadcastSynchronous(List<Operation> operations)
             throws BeowulfCommunicationException, BeowulfResponseException, BeowulfInvalidTransactionException {
-        SignedTransaction signedTransaction = signTransaction(operations);
+        SignedTransaction signedTransaction = signTransaction(operations, null);
         return this.broadcastTransactionSynchronous(signedTransaction);
     }
 
     public TransactionId signAndBroadcast(List<Operation> operations)
             throws BeowulfCommunicationException, BeowulfResponseException, BeowulfInvalidTransactionException {
-        SignedTransaction signedTransaction = signTransaction(operations);
+        SignedTransaction signedTransaction = signTransaction(operations, null);
         return this.broadcastTransaction(signedTransaction);
     }
 
-    private SignedTransaction signTransaction(List<Operation> operations) throws BeowulfCommunicationException, BeowulfResponseException {
+    private SignedTransaction signTransaction(List<Operation> operations,  List<FutureExtensions> extensions) throws BeowulfCommunicationException, BeowulfResponseException {
         DynamicGlobalProperty globalProperties = this.getDynamicGlobalProperties();
         return new SignedTransaction(globalProperties.getHeadBlockId(), operations,
-                null);
+                extensions);
     }
 
-    public TransactionId signAndBroadcastWithExtension(List<Operation> operations, FutureExtensions extensions)
+    public TransactionId signAndBroadcastWithExtension(List<Operation> operations, List<FutureExtensions> extensions)
             throws BeowulfCommunicationException, BeowulfResponseException, BeowulfInvalidTransactionException, JsonProcessingException {
-        SignedTransaction signedTransaction = null;
-        if (extensions instanceof VoidExtension) {
-            signedTransaction = signTransaction(operations);
-        } else {
-            signedTransaction = signTransactionWithExtension(operations, Arrays.asList(extensions));
-        }
+        SignedTransaction signedTransaction = signTransaction(operations, extensions);
         return this.broadcastTransaction(signedTransaction);
-    }
-
-    private SignedTransaction signTransactionWithExtension(List<Operation> operations, List<FutureExtensions> extensions) throws BeowulfCommunicationException, BeowulfResponseException {
-        DynamicGlobalProperty globalProperties = this.getDynamicGlobalProperties();
-        return new SignedTransaction(globalProperties.getHeadBlockId(), operations, extensions);
     }
 }
