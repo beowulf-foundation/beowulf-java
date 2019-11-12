@@ -17,8 +17,15 @@
 package com.beowulfchain.beowulfj.base.models;
 
 import com.beowulfchain.beowulfj.interfaces.ByteTransformable;
+import com.beowulfchain.beowulfj.protocol.extensions.JsonExtension;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import java.io.Serializable;
 
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = JsonExtension.class, name = "extension_json_type"),
+})
 public abstract class FutureExtensions implements ByteTransformable, Serializable {
 }
