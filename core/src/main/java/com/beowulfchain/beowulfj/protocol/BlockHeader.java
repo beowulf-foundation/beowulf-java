@@ -36,8 +36,6 @@ public class BlockHeader implements ByteTransformable {
     // Original type is "block_header_extensions_type" which is an array of
     // "block_header_extensions".
     protected List<BlockHeaderExtensions> extensions;
-    @JsonProperty("block_reward")
-    private Asset blockReward;
 
     /**
      * @return The block id of the previous block.

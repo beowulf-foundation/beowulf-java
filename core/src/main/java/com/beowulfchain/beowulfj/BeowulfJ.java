@@ -17,6 +17,7 @@
 package com.beowulfchain.beowulfj;
 
 import com.beowulfchain.beowulfj.base.models.Block;
+import com.beowulfchain.beowulfj.base.models.FutureExtensions;
 import com.beowulfchain.beowulfj.base.models.ScheduledHardfork;
 import com.beowulfchain.beowulfj.chain.CompletedTransaction;
 import com.beowulfchain.beowulfj.chain.SignedTransaction;
@@ -43,6 +44,7 @@ import com.beowulfchain.beowulfj.protocol.operations.Operation;
 import com.beowulfchain.beowulfj.protocol.operations.SmtCreateOperation;
 import com.beowulfchain.beowulfj.protocol.operations.TransferOperation;
 import com.beowulfchain.beowulfj.util.BeowulfJUtils;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import eu.bittrade.crypto.core.ECKey;
 import eu.bittrade.crypto.core.Sha256Hash;
 import org.apache.commons.lang3.tuple.ImmutablePair;
@@ -753,19 +755,25 @@ public class BeowulfJ {
 
     public BroadcastTransactionSynchronousReturn signAndBroadcastSynchronous(List<Operation> operations)
             throws BeowulfCommunicationException, BeowulfResponseException, BeowulfInvalidTransactionException {
-        SignedTransaction signedTransaction = signTransaction(operations);
+        SignedTransaction signedTransaction = signTransaction(operations, null);
         return this.broadcastTransactionSynchronous(signedTransaction);
     }
 
     public TransactionId signAndBroadcast(List<Operation> operations)
             throws BeowulfCommunicationException, BeowulfResponseException, BeowulfInvalidTransactionException {
-        SignedTransaction signedTransaction = signTransaction(operations);
+        SignedTransaction signedTransaction = signTransaction(operations, null);
         return this.broadcastTransaction(signedTransaction);
     }
 
-    private SignedTransaction signTransaction(List<Operation> operations) throws BeowulfCommunicationException, BeowulfResponseException {
+    private SignedTransaction signTransaction(List<Operation> operations,  List<FutureExtensions> extensions) throws BeowulfCommunicationException, BeowulfResponseException {
         DynamicGlobalProperty globalProperties = this.getDynamicGlobalProperties();
         return new SignedTransaction(globalProperties.getHeadBlockId(), operations,
-                null);
+                extensions);
+    }
+
+    public TransactionId signAndBroadcastWithExtension(List<Operation> operations, List<FutureExtensions> extensions)
+            throws BeowulfCommunicationException, BeowulfResponseException, BeowulfInvalidTransactionException, JsonProcessingException {
+        SignedTransaction signedTransaction = signTransaction(operations, extensions);
+        return this.broadcastTransaction(signedTransaction);
     }
 }
