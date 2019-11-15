@@ -31,7 +31,9 @@ public enum AssetSymbolType {
     /**
      * Beowulf Backed Dollar (W) Symbol
      */
-    W;
+    W,
+
+    NLP;
 
     public static AssetSymbolType getValue(String symbol) {
         return AssetSymbolType.valueOf(symbol);
