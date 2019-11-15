@@ -11,6 +11,10 @@ buildNumber.properties
 log4j2.xml
 beowulf-api-wrapper.iml
 accountDetailsUsedDuringTests.properties
+beowulfj-parent.iml
+core/beowulfj-core.iml
+sample/beowulfj-sample.iml
+
 
 /*.project
 /.settings
