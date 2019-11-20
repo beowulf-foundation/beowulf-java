@@ -24,6 +24,7 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -41,7 +42,7 @@ public class PublicKeyHashMapDeserializer extends JsonDeserializer<Map<PublicKey
         if (rootNode.isArray()) {
             for (JsonNode node : (ArrayNode) rootNode) {
                 PublicKey publicKey = new PublicKey((node.get(0)).asText());
-                result.put(publicKey, (node.get(0)).asInt());
+                result.put(publicKey, (node.get(1)).asInt());
             }
 
             return result;
