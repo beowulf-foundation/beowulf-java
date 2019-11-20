@@ -30,6 +30,7 @@ import com.beowulfchain.beowulfj.util.BeowulfJUtils;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.joou.UInteger;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -52,14 +53,21 @@ public class Asset implements ByteTransformable {
      * Create a new asset object by providing all required fields.
      *
      * @param amount The amount.
-     * @param name   One type of
+     * @param symbol   One type of
      *               {@link AssetSymbolType
      *               AssetSymbolType}.
      */
-    public Asset(BigDecimal amount, AssetSymbolType name) {
+    public Asset(BigDecimal amount, AssetSymbolType symbol) {
         // native asset by precision equal 5 by default
         this.setPrecision(UInteger.valueOf(5));
-        this.setName(name.name());
+        this.setName(symbol.name());
+        this.setAmount(amount);
+    }
+
+    public Asset(long amount, AssetSymbolType symbol) {
+        // native asset by precision equal 5 by default
+        this.setPrecision(UInteger.valueOf(5));
+        this.setName(symbol.name());
         this.setAmount(amount);
     }
 
@@ -67,16 +75,23 @@ public class Asset implements ByteTransformable {
      * Create a new asset object by providing all required fields.
      *
      * @param amount The amount.
-     * @param name   One type of
-     *               {@link AssetSymbolType
-     *               AssetSymbolType}.
+     * @param symbol   One type of
+     *               {@link AssetSymbol
+     *               AssetSymbol}.
      */
-    public Asset(long amount, AssetSymbolType name) {
+    public Asset(long amount, AssetSymbol symbol, UInteger precision) {
         // native asset by precision equal 5 by default
-        this.setPrecision(UInteger.valueOf(5));
-        this.setName(name.name());
+        this.setPrecision(precision);
+        this.setName(symbol.getName());
         this.setAmount(amount);
     }
+
+    public Asset(BigDecimal amount, AssetSymbol symbol, UInteger precision) {
+        this.setPrecision(precision);
+        this.setName(symbol.getName());
+        this.setAmount(amount);
+    }
+
 
     /**
      * Create a new asset object by providing all required fields.
@@ -112,11 +127,10 @@ public class Asset implements ByteTransformable {
      * @return Asset instance contain precision from network
      * @throws BeowulfCommunicationException The BeowulfCommunicationException.
      * @throws BeowulfResponseException The BeowulfResponseException.
-     * @throws BeowulfInvalidTransactionException The BeowulfInvalidTransactionException.
      */
-    public static Asset createSmtAsset(BigDecimal amount, String name) throws BeowulfCommunicationException, BeowulfResponseException, BeowulfInvalidTransactionException {
+    public static Asset createAsset(BigDecimal amount, String name) throws BeowulfCommunicationException, BeowulfResponseException {
         Asset asset = new Asset();
-        if (AssetSymbolType.getValue(name) != null) {
+        if (AssetSymbolType.getNativeAsset(name) != null) {
             asset.setPrecision(UInteger.valueOf(5));
             asset.setName(name);
             asset.setAmount(amount);
@@ -157,7 +171,7 @@ public class Asset implements ByteTransformable {
         if (amount.scale() > this.getPrecision().intValue()) {
             throw new InvalidParameterException("The provided 'amount' has a 'scale' of " + amount.scale()
                     + ", but needs to have a 'scale' of " + this.getPrecision() + " when " + this.getName()
-                    + " is used as a AssetSymbolType.");
+                    + " is used as a AssetSymbol.");
         }
 
         this.amount = amount.multiply(BigDecimal.valueOf(Math.pow(10, this.getPrecision().intValue()))).longValue();
@@ -236,25 +250,8 @@ public class Asset implements ByteTransformable {
             serializedAsset.write(BeowulfJUtils.transformLongToByteArray(this.amount));
 
             String filledAssetSymbol = this.name.toUpperCase();
-            /*****************************************/
-            // remove after update serialize asset
-            /*if (AssetSymbolType.getValue(this.getName()) != null) {
-
-                serializedAsset.write(BeowulfJUtils.transformByteToLittleEndian(this.precision));
-
-                serializedAsset
-                        .write(this.name.toUpperCase().getBytes(BeowulfJConfig.getInstance().getEncodingCharset()));
-
-                for (int i = filledAssetSymbol.length(); i < 7; i++) {
-                    serializedAsset.write(0x00);
-                }
-            } else {
-                // padding byte => 4 byte
-                serializedAsset.write(BeowulfJUtils.transformIntToByteArray((int) this.precision));
-            }*/
-            /*****************************************/
             // padding byte => 4 byte
-            serializedAsset.write(BeowulfJUtils.transformIntToByteArray((int) this.precision));
+            serializedAsset.write(BeowulfJUtils.transformIntToByteArray(this.precision));
             serializedAsset
                     .write(this.name.toUpperCase().getBytes(BeowulfJConfig.getInstance().getEncodingCharset()));
 
@@ -272,8 +269,7 @@ public class Asset implements ByteTransformable {
     @Override
     public String toString() {
 //        return ToStringBuilder.reflectionToString(this);
-        String result = BigDecimal.valueOf(this.getAmount()).divide(BigDecimal.valueOf(100000L)).toPlainString() + " " + this.getName();
-        return result;
+        return BigDecimal.valueOf(this.getAmount()).divide(BigDecimal.valueOf(100000L)).toPlainString() + " " + this.getName();
     }
 
     @Override

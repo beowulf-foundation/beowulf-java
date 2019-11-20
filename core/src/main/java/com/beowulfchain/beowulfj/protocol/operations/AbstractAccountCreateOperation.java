@@ -148,8 +148,10 @@ public abstract class AbstractAccountCreateOperation extends AbstractAccountOper
             super.validate(validationType);
 
             if (!ValidationType.SKIP_ASSET_VALIDATION.equals(validationType)) {
-                if (!fee.getName().equals(BeowulfJConfig.getInstance().getDollarSymbol().name())) {
-                    throw new InvalidParameterException("The fee must be paid in W.");
+                if (!fee.getName().equals(BeowulfJConfig.getInstance().getDollarSymbol().getName())) {
+                    throw new InvalidParameterException("The fee must be paid in " +
+                            BeowulfJConfig.getInstance().getDollarSymbol().getName() +
+                            ".");
                 } else if (fee.getAmount() < 0) {
                     throw new InvalidParameterException("The fee must be a positive amount.");
                 }

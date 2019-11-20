@@ -25,6 +25,7 @@ import com.beowulfchain.beowulfj.enums.SynchronizationType;
 import com.beowulfchain.beowulfj.enums.ValidationType;
 import com.beowulfchain.beowulfj.exceptions.BeowulfTimeoutException;
 import com.beowulfchain.beowulfj.protocol.AccountName;
+import com.beowulfchain.beowulfj.protocol.AssetSymbol;
 import com.beowulfchain.beowulfj.protocol.enums.AssetSymbolType;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
@@ -86,9 +87,9 @@ public class BeowulfJConfig {
     private short beowulfJWeight;
     private ValidationType validationLevel;
     private SynchronizationType synchronizationLevel;
-    private AssetSymbolType dollarSymbol;
-    private AssetSymbolType tokenSymbol;
-    private AssetSymbolType vestsSymbol;
+    private AssetSymbol dollarSymbol;
+    private AssetSymbol tokenSymbol;
+    private AssetSymbol vestsSymbol;
     private NetworkProperties network;
 
     /**
@@ -607,13 +608,13 @@ public class BeowulfJConfig {
     }
 
     /**
-     * Get the currently configured {@link AssetSymbolType} for dollars (e.g.
+     * Get the currently configured {@link AssetSymbol} for dollars (e.g.
      * W). The configured symbol type is used to validate M fields of
      * operations.
      *
-     * @return The currently configured {@link AssetSymbolType} for dollars.
+     * @return The currently configured {@link AssetSymbol} for dollars.
      */
-    public AssetSymbolType getDollarSymbol() {
+    public AssetSymbol getDollarSymbol() {
         return dollarSymbol;
     }
 
@@ -621,9 +622,9 @@ public class BeowulfJConfig {
      * Override the default <code>dollarSymbol</code>. The configured symbol
      * type is used to validate M fields of operations.
      *
-     * @param dollarSymbol The {@link AssetSymbolType} for dollars to set.
+     * @param dollarSymbol The {@link AssetSymbol} for dollars to set.
      */
-    public void setDollarSymbol(AssetSymbolType dollarSymbol) {
+    public void setDollarSymbol(AssetSymbol dollarSymbol) {
         this.dollarSymbol = dollarSymbol;
     }
 
@@ -634,7 +635,7 @@ public class BeowulfJConfig {
      *
      * @return The currently configured {@link AssetSymbolType} for tokens.
      */
-    public AssetSymbolType getTokenSymbol() {
+    public AssetSymbol getTokenSymbol() {
         return tokenSymbol;
     }
 
@@ -644,7 +645,7 @@ public class BeowulfJConfig {
      *
      * @param tokenSymbol The {@link AssetSymbolType} for tokens to set.
      */
-    public void setTokenSymbol(AssetSymbolType tokenSymbol) {
+    public void setTokenSymbol(AssetSymbol tokenSymbol) {
         this.tokenSymbol = tokenSymbol;
     }
 
@@ -654,7 +655,7 @@ public class BeowulfJConfig {
      *
      * @return The currently configured {@link AssetSymbolType} for M.
      */
-    public AssetSymbolType getVestsSymbol() {
+    public AssetSymbol getVestsSymbol() {
         return vestsSymbol;
     }
 
@@ -664,7 +665,7 @@ public class BeowulfJConfig {
      *
      * @param vestsSymbol The {@link AssetSymbolType} for M to set.
      */
-    public void setVestsSymbol(AssetSymbolType vestsSymbol) {
+    public void setVestsSymbol(AssetSymbol vestsSymbol) {
         this.vestsSymbol = vestsSymbol;
     }
 
@@ -677,8 +678,8 @@ public class BeowulfJConfig {
         this.setAddressPrefix(AddressPrefixType.valueOf(network.getPrefix()));
         // using testnet id by default
         this.setChainId(network.getChain_id());
-        this.setDollarSymbol(AssetSymbolType.getValue(network.getWd_symbol()));
-        this.setTokenSymbol(AssetSymbolType.getValue(network.getBeowulf_symbol()));
-        this.setVestsSymbol(AssetSymbolType.getValue(network.getVests_symbol()));
+        this.setDollarSymbol(new AssetSymbol(network.getWd_symbol()));
+        this.setTokenSymbol(new AssetSymbol(network.getBeowulf_symbol()));
+        this.setVestsSymbol(new AssetSymbol(network.getVests_symbol()));
     }
 }

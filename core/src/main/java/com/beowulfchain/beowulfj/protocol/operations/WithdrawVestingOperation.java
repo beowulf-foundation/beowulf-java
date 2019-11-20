@@ -158,8 +158,10 @@ public class WithdrawVestingOperation extends Operation {
     public void validate(ValidationType validationType) {
         if ((!ValidationType.SKIP_ASSET_VALIDATION.equals(validationType)
                 && !ValidationType.SKIP_VALIDATION.equals(validationType))
-                && (!BeowulfJConfig.getInstance().getVestsSymbol().equals(this.getVestingShares().getName()))) {
-            throw new InvalidParameterException("The vesting shares needs to be provided in M.");
+                && (!BeowulfJConfig.getInstance().getVestsSymbol().getName().equals(this.getVestingShares().getName()))) {
+            throw new InvalidParameterException("The vesting shares needs to be provided in " +
+                    BeowulfJConfig.getInstance().getVestsSymbol().getName() +
+                    ".");
         }
     }
 }

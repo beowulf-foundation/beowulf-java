@@ -10,7 +10,7 @@ import com.beowulfchain.beowulfj.enums.PrivateKeyType;
 import com.beowulfchain.beowulfj.exceptions.BeowulfCommunicationException;
 import com.beowulfchain.beowulfj.exceptions.BeowulfInvalidTransactionException;
 import com.beowulfchain.beowulfj.exceptions.BeowulfResponseException;
-import com.beowulfchain.beowulfj.plugins.apis.condenser.models.AccountHistoryReturn;
+import com.beowulfchain.beowulfj.plugins.apis.condenser.models.ExtendedAccount;
 import com.beowulfchain.beowulfj.protocol.*;
 import com.beowulfchain.beowulfj.protocol.operations.AccountCreateOperation;
 import com.beowulfchain.beowulfj.protocol.operations.Operation;
@@ -20,7 +20,6 @@ import com.beowulfchain.beowulfj.util.BeowulfJUtils;
 import eu.bittrade.crypto.core.ECKey;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.joou.UInteger;
-import org.joou.ULong;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,7 +41,7 @@ public class BeowulfJUsageExample {
      *
      * @param args The arguments to set.
      */
-    public static void main(String args[]) throws Exception {
+    public static void main(String[] args) {
         try {
             // #########################################################################
             // ## Configure BeowulfJ to fit your needs ###################################
@@ -78,6 +77,14 @@ public class BeowulfJUsageExample {
             System.out.println(block.toString());
 
             /*
+             * Get account detail
+             */
+            AccountName accountName = new AccountName("beowulf");
+            List<ExtendedAccount> accounts = beowulfJ.getAccounts(Collections.singletonList(accountName));
+            System.out.println(accounts.toString());
+
+
+            /*
              * Get transaction detail from transactionid
              */
             TransactionId trx_id = block.getTransactionIds().get(0);
@@ -106,7 +113,7 @@ public class BeowulfJUsageExample {
              */
             AccountName from = new AccountName("sender");
             AccountName to = new AccountName("receiver");
-            Asset amount = Asset.createSmtAsset(new BigDecimal("1.00000"), "W");
+            Asset amount = Asset.createAsset(new BigDecimal("1.00000"), "W");
             TransferOperation transferOperation = beowulfJ.transfer(from, to, amount, network.getTransactionFee(), "Transfer 1.0 W from sender to receiver");
             TransactionId transactionId = beowulfJ.signAndBroadcast(Collections.singletonList(transferOperation));
             System.out.println("Transaction id: " + transactionId);

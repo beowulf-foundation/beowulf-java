@@ -175,8 +175,10 @@ public class SupernodeUpdateOperation extends Operation {
         if ((!ValidationType.SKIP_ASSET_VALIDATION.equals(validationType)
                 && !ValidationType.SKIP_VALIDATION.equals(validationType))
                 && (this.getFee().getAmount() < 0
-                || !BeowulfJConfig.getInstance().getTokenSymbol().equals(this.getFee().getName()))) {
-            throw new InvalidParameterException("The fee needs to be a positive amount of BWF.");
+                || !BeowulfJConfig.getInstance().getTokenSymbol().getName().equals(this.getFee().getName()))) {
+            throw new InvalidParameterException("The fee needs to be a positive amount of " +
+                    BeowulfJConfig.getInstance().getTokenSymbol().getName() +
+                    ".");
         }
     }
 }

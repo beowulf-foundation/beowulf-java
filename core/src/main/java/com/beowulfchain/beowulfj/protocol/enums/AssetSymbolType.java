@@ -16,6 +16,8 @@
  */
 package com.beowulfchain.beowulfj.protocol.enums;
 
+import com.beowulfchain.beowulfj.protocol.AssetSymbol;
+
 /**
  * This enum stores all available asset symbols.
  */
@@ -31,11 +33,13 @@ public enum AssetSymbolType {
     /**
      * Beowulf Backed Dollar (W) Symbol
      */
-    W,
+    W;
 
-    NLP;
-
-    public static AssetSymbolType getValue(String symbol) {
-        return AssetSymbolType.valueOf(symbol);
+    public static AssetSymbol getNativeAsset(String symbol) {
+        try {
+            return new AssetSymbol(AssetSymbolType.valueOf(symbol).name());
+        } catch (IllegalArgumentException e) {
+            return null;
+        }
     }
 }
