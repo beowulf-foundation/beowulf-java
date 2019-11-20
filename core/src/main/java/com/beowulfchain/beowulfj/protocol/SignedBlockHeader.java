@@ -32,10 +32,14 @@ public class SignedBlockHeader extends BlockHeader implements ByteTransformable 
     protected String supernodeSignature;
 
     /**
-     * @return the supernodeSignature
+     * @return the ECDSASignature supernode
      */
-    public ECDSASignature getSupernodeSignature() {
+    public ECDSASignature getSupernodeSignatureECDSA() {
         return ECDSASignature.decodeFromDER(CryptoUtils.HEX.decode(supernodeSignature));
+    }
+
+    public String getSupernodeSignature() {
+        return this.supernodeSignature;
     }
 
     /**
