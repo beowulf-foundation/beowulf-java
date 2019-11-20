@@ -44,7 +44,6 @@ import com.beowulfchain.beowulfj.protocol.operations.Operation;
 import com.beowulfchain.beowulfj.protocol.operations.SmtCreateOperation;
 import com.beowulfchain.beowulfj.protocol.operations.TransferOperation;
 import com.beowulfchain.beowulfj.util.BeowulfJUtils;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import eu.bittrade.crypto.core.ECKey;
 import eu.bittrade.crypto.core.Sha256Hash;
 import org.apache.commons.lang3.tuple.ImmutablePair;
@@ -772,7 +771,7 @@ public class BeowulfJ {
     }
 
     public TransactionId signAndBroadcastWithExtension(List<Operation> operations, List<FutureExtensions> extensions)
-            throws BeowulfCommunicationException, BeowulfResponseException, BeowulfInvalidTransactionException, JsonProcessingException {
+            throws BeowulfCommunicationException, BeowulfResponseException, BeowulfInvalidTransactionException {
         SignedTransaction signedTransaction = signTransaction(operations, extensions);
         return this.broadcastTransaction(signedTransaction);
     }
