@@ -2,6 +2,7 @@ package my.sample.project;
 
 import com.beowulfchain.beowulfj.BeowulfJ;
 import com.beowulfchain.beowulfj.base.models.Block;
+import com.beowulfchain.beowulfj.base.models.FutureExtensions;
 import com.beowulfchain.beowulfj.chain.CompletedTransaction;
 import com.beowulfchain.beowulfj.chain.NetworkProperties;
 import com.beowulfchain.beowulfj.chain.network.Testnet;
@@ -12,6 +13,7 @@ import com.beowulfchain.beowulfj.exceptions.BeowulfInvalidTransactionException;
 import com.beowulfchain.beowulfj.exceptions.BeowulfResponseException;
 import com.beowulfchain.beowulfj.plugins.apis.condenser.models.ExtendedAccount;
 import com.beowulfchain.beowulfj.protocol.*;
+import com.beowulfchain.beowulfj.protocol.extensions.JsonExtension;
 import com.beowulfchain.beowulfj.protocol.operations.AccountCreateOperation;
 import com.beowulfchain.beowulfj.protocol.operations.Operation;
 import com.beowulfchain.beowulfj.protocol.operations.SmtCreateOperation;
@@ -73,7 +75,7 @@ public class BeowulfJUsageExample {
             /*
              * Get block by block number
              */
-            Block block = beowulfJ.getBlock(165099L);
+            Block block = beowulfJ.getBlock(826582L);
             System.out.println(block.toString());
 
             /*
@@ -116,7 +118,15 @@ public class BeowulfJUsageExample {
             Asset amount = Asset.createAsset(new BigDecimal("1.00000"), "W");
             TransferOperation transferOperation = beowulfJ.transfer(from, to, amount, network.getTransactionFee(), "Transfer 1.0 W from sender to receiver");
             TransactionId transactionId = beowulfJ.signAndBroadcast(Collections.singletonList(transferOperation));
-            System.out.println("Transaction id: " + transactionId);
+            System.out.println("Sign and Broadcast Transaction id: " + transactionId);
+
+            /*
+             * Create transaction with an extension object
+             */
+            ExtensionValue value = new ExtensionValue("sample value");
+            FutureExtensions extensions = new JsonExtension(value);
+            TransactionId transactionIdExt = beowulfJ.signAndBroadcastWithExtension(Collections.singletonList(transferOperation), Collections.singletonList(extensions));
+            System.out.println("Broadcast Transaction with extension return transaction id: " + transactionIdExt);
 
             /*
              * Create new account and get private key
