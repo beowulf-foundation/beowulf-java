@@ -19,6 +19,7 @@ https://beowulfchain.com/developer-guide/java
 # Main Functions Supported
 1. CHAIN
 - get_block
+- get_account
 - get_transaction
 - get_balance
 - get operation
@@ -113,26 +114,48 @@ System.out.println("Transaction id: " + transactionId1);
 ```
 
 ##### Signing and pushing a transaction
-
+A transaction in beowulf blockchain can contain more than one operation. We can put them into one transaction through a list.
 ```java
 /*
  * Transfer 1.0 W from sender to receiver
  */
 AccountName from = new AccountName("sender");
 AccountName to = new AccountName("receiver");
-Asset amount = Asset.createSmtAsset(new BigDecimal("1.00000"), "W");
+Asset amount = Asset.createAsset(new BigDecimal("1.00000"), "W");
 TransferOperation transferOperation = beowulfJ.transfer(from, to, amount, network.getTransactionFee(), "Transfer 1.0 W from sender to receiver");
 TransactionId transactionId = beowulfJ.signAndBroadcast(Collections.singletonList(transferOperation));
 System.out.println("Transaction id: " + transactionId);
 ```
 
-##### Getting a block
+##### Signing and pushing a transaction with extension
+Extension is an extend object embedded in transaction for flexible pushing more data
+```java
+/*
+* Create transaction with an extension object
+*/
+ExtensionValue value = new ExtensionValue("sample value");
+FutureExtensions extensions = new JsonExtension(value);
+TransactionId transactionIdExt = beowulfJ.signAndBroadcastWithExtension(Collections.singletonList(transferOperation), Collections.singletonList(extensions));
+System.out.println("Broadcast Transaction with extension return transaction id: " + transactionIdExt);
+```
+
+##### Getting a block details
 ```java
 /*
  * Get block from block number
  */
 Block block = beowulfJ.getBlock(165099L);
 ```
+
+##### Getting an account details
+```java
+/*
+ * Get account detail from account name
+ */
+AccountName accountName = new AccountName("beowulf");
+List<ExtendedAccount> accounts = beowulfJ.getAccounts(Collections.singletonList(accountName));
+```
+
 
 ##### Getting transaction details
 ```java
@@ -141,6 +164,7 @@ CompletedTransaction transaction = beowulfJ.getTransactionDetail(transactionId.t
 ```
 
 ##### Getting operation in transaction
+Specify type of operation by checking `instanceof`
 ```java
 List<Operation> operations = transaction.getOperations();
 Operation operation = operations.get(0);
