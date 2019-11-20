@@ -154,17 +154,6 @@ public class BeowulfJUsageExample {
             SmtCreateOperation smtCreateOperation = beowulfJ.smtCreate(creator, creator, newAsset, network.getSmtCreationFee(), 1000000L);
             TransactionId transactionId2 = beowulfJ.signAndBroadcast(Collections.singletonList(smtCreateOperation));
             System.out.println("Transaction id: " + transactionId2);
-
-            // #########################################################################
-            // ## EXECUTE READ OPERATIONS AGAINS THE NDOE ##############################
-            // #########################################################################
-            // Let's have a look at the account history of alice:
-            List<AccountHistoryReturn> accountHistories = beowulfJ.getAccountHistory(new AccountName("sender"), ULong.valueOf(5),
-                    UInteger.valueOf(5));
-            if (accountHistories.get(0).getAppliedOperation().getOp() instanceof AccountCreateOperation) {
-                AccountCreateOperation accountCreateOperation1 = (AccountCreateOperation) (accountHistories.get(0).getAppliedOperation().getOp());
-                LOGGER.info("The account {} has been created by {}.", "sender", accountCreateOperation1.getCreator());
-            }
         } catch (BeowulfResponseException e) {
             LOGGER.error("An error occured.", e);
             LOGGER.error("The error code is {}", e.getCode());
