@@ -23,6 +23,7 @@ import com.beowulfchain.beowulfj.protocol.Authority;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import java.util.List;
 
 @JsonIgnoreProperties
@@ -31,7 +32,6 @@ public class Account {
     private long id;
     private AccountName name;
     private Authority owner;
-    private Authority active;
     @JsonProperty("json_metadata")
     private String jsonMetadata;
     //    private AccountName proxy;
@@ -40,20 +40,12 @@ public class Account {
     @JsonProperty("last_account_update")
     private TimePointSec lastAccountUpdate;
     private TimePointSec created;
-    //    private boolean mined;
-    @JsonProperty("owner_challenged")
-    private boolean ownerChallenged;
-    @JsonProperty("active_challenged")
-    private boolean activeChallenged;
-    @JsonProperty("last_owner_proved")
-    private TimePointSec lastOwnerProved;
-    @JsonProperty("last_active_proved")
-    private TimePointSec lastActiveProved;
     // Orginial type is uint16, but we have to use int here.
     @JsonProperty("voting_power")
     private int votingPower;
     @JsonProperty("last_vote_time")
     private TimePointSec lastVoteTime;
+    @JsonProperty("balance")
     private Asset balance;
     @JsonProperty("wd_balance")
     private Asset wdBalance;
@@ -74,10 +66,6 @@ public class Account {
     private TimePointSec nextVestingWithdraw;
     @JsonProperty("token_list")
     private List<Asset> tokenList;
-    @JsonProperty("vesting_balance")
-    private Asset vestingBalance;
-    @JsonProperty("supernode_votes")
-    private List<String> supernodeVotes;
 
     /**
      * This object is only used to wrap the JSON response in a POJO, so
@@ -108,13 +96,6 @@ public class Account {
     }
 
     /**
-     * @return the active
-     */
-    public Authority getActive() {
-        return active;
-    }
-
-    /**
      * @return the jsonMetadata
      */
     public String getJsonMetadata() {
@@ -140,34 +121,6 @@ public class Account {
      */
     public TimePointSec getCreated() {
         return created;
-    }
-
-    /**
-     * @return the ownerChallenged
-     */
-    public boolean isOwnerChallenged() {
-        return ownerChallenged;
-    }
-
-    /**
-     * @return the activeChallenged
-     */
-    public boolean isActiveChallenged() {
-        return activeChallenged;
-    }
-
-    /**
-     * @return the lastOwnerProved
-     */
-    public TimePointSec getLastOwnerProved() {
-        return lastOwnerProved;
-    }
-
-    /**
-     * @return the lastActiveProved
-     */
-    public TimePointSec getLastActiveProved() {
-        return lastActiveProved;
     }
 
     /**
@@ -239,14 +192,6 @@ public class Account {
 
     public List<Asset> getTokenList() {
         return tokenList;
-    }
-
-    public Asset getVestingBalance() {
-        return vestingBalance;
-    }
-
-    public List<String> getSupernodeVotes() {
-        return supernodeVotes;
     }
 
     @Override
