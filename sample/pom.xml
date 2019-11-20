@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.beowulfchain</groupId>
         <artifactId>beowulfj-parent</artifactId>
-        <version>0.0.1</version>
+        <version>0.0.4</version>
     </parent>
     <artifactId>beowulfj-sample</artifactId>
     <packaging>jar</packaging>
