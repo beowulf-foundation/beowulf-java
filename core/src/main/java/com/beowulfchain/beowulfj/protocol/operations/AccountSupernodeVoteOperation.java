@@ -43,6 +43,8 @@ public class AccountSupernodeVoteOperation extends Operation {
     private AccountName supernode;
     @JsonProperty("approve")
     private boolean approve;
+    @JsonProperty("votes")
+    private long votes;
     @JsonProperty("fee")
     private Asset fee;
 
@@ -66,18 +68,20 @@ public class AccountSupernodeVoteOperation extends Operation {
     public AccountSupernodeVoteOperation(@JsonProperty("account") AccountName account,
                                          @JsonProperty("supernode") AccountName supernode,
                                          @JsonProperty("approve") boolean approve,
+                                         @JsonProperty("votes") long votes,
                                          @JsonProperty("fee") Asset fee) {
         super(false);
 
         this.setAccount(account);
         this.setSupernode(supernode);
         this.setApprove(approve);
+        this.setVotes(votes);
         this.setFee(fee);
     }
 
     /**
      * Like
-     * {@link #AccountSupernodeVoteOperation(AccountName, AccountName, boolean, Asset)},
+     * {@link #AccountSupernodeVoteOperation(AccountName, AccountName, boolean, long, Asset)},
      * but the <code>approve</code> parameter is automatically set to true.
      *
      * @param account   Set the <code>account</code> that votes for a
@@ -87,9 +91,9 @@ public class AccountSupernodeVoteOperation extends Operation {
      * @param fee       The fee of transaction.
      * @throws InvalidParameterException If one of the parameters does not fulfill the requirements.
      */
-    public AccountSupernodeVoteOperation(AccountName account, AccountName supernode, Asset fee) {
+    public AccountSupernodeVoteOperation(AccountName account, AccountName supernode, long votes, Asset fee) {
         // Set default values:
-        this(account, supernode, true, fee);
+        this(account, supernode, true, votes, fee);
     }
 
     /**
@@ -149,6 +153,18 @@ public class AccountSupernodeVoteOperation extends Operation {
         this.approve = approve;
     }
 
+    public boolean isApprove() {
+        return approve;
+    }
+
+    public long getVotes() {
+        return votes;
+    }
+
+    public void setVotes(long votes) {
+        this.votes = votes;
+    }
+
     public Asset getFee() {
         return fee;
     }
@@ -165,6 +181,7 @@ public class AccountSupernodeVoteOperation extends Operation {
             serializedAccountSupernodeVoteOperation.write(this.getAccount().toByteArray());
             serializedAccountSupernodeVoteOperation.write(this.getSupernode().toByteArray());
             serializedAccountSupernodeVoteOperation.write(BeowulfJUtils.transformBooleanToByteArray(this.getApprove()));
+            serializedAccountSupernodeVoteOperation.write(BeowulfJUtils.transformLongToByteArray(this.getVotes()));
             serializedAccountSupernodeVoteOperation.write(this.getFee().toByteArray());
 
             return serializedAccountSupernodeVoteOperation.toByteArray();
