@@ -27,8 +27,10 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import org.apache.http.client.ClientProtocolException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.net.URI;
+import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
 
 public class HttpClient extends AbstractClient {
@@ -52,6 +54,7 @@ public class HttpClient extends AbstractClient {
             LOGGER.debug("Sending {}.", requestPayload);
 
             HttpResponse httpResponse = httpRequest.execute();
+            httpResponse.getMediaType().setCharsetParameter(StandardCharsets.UTF_8);
 
             int status = httpResponse.getStatusCode();
             String responsePayload = httpResponse.parseAsString();
