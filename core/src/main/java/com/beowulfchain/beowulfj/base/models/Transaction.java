@@ -24,6 +24,7 @@ import com.beowulfchain.beowulfj.fc.TimePointSec;
 import com.beowulfchain.beowulfj.interfaces.SignatureObject;
 import com.beowulfchain.beowulfj.protocol.operations.Operation;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.annotations.VisibleForTesting;
 import eu.bittrade.crypto.core.CryptoUtils;
@@ -32,6 +33,7 @@ import org.joou.UInteger;
 import org.joou.UShort;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.io.Serializable;
 import java.security.InvalidParameterException;
 import java.sql.Timestamp;
@@ -291,6 +293,11 @@ public class Transaction implements Serializable {
 
     public Long getCreatedTime() {
         return createdTime;
+    }
+
+    @JsonIgnore
+    public Long getCreatedTimeAsMillis() {
+        return this.createdTime * 1000;
     }
 
     public void setCreatedTime(Long createdTime) {
