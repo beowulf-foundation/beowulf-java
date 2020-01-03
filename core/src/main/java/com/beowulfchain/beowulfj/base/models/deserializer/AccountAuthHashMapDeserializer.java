@@ -42,7 +42,7 @@ public class AccountAuthHashMapDeserializer extends JsonDeserializer<Map<Account
         if (rootNode.isArray()) {
             for (JsonNode node : (ArrayNode) rootNode) {
                 AccountName accountName = new AccountName((node.get(0)).asText());
-                result.put(accountName, (node.get(0)).asInt());
+                result.put(accountName, (node.get(1)).asInt());
             }
 
             return result;
