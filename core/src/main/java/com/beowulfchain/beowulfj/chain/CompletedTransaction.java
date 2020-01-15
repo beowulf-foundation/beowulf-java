@@ -42,7 +42,7 @@ public final class CompletedTransaction extends SignedTransaction {
     @JsonProperty("block_num")
     private long blockNum;
     @JsonProperty("transaction_num")
-    private long transactionNum;
+    private int transactionNum;
     @JsonProperty("status")
     private String status;
 
@@ -59,7 +59,7 @@ public final class CompletedTransaction extends SignedTransaction {
                                  @JsonProperty("created_time") Long createdTime,
                                  @JsonProperty("transaction_id") TransactionId transactionId,
                                  @JsonProperty("block_num") Long blockNum,
-                                 @JsonProperty("transaction_num") Long transactionNum,
+                                 @JsonProperty("transaction_num") Integer transactionNum,
                                  @JsonProperty("status") String status) {
         super(refBlockNum, refBlockPrefix, expirationDate, operations, extensions, signatures, createdTime);
         this.setTransactionId(transactionId);
@@ -89,7 +89,7 @@ public final class CompletedTransaction extends SignedTransaction {
      */
     public CompletedTransaction(UShort refBlockNum, UInteger refBlockPrefix, TimePointSec expirationDate,
                                 List<Operation> operations, List<FutureExtensions> extensions, Long createdTime,
-                                TransactionId transactionId, Long blockNum, Long transactionNum, String status) {
+                                TransactionId transactionId, Long blockNum, Integer transactionNum, String status) {
         super(refBlockNum, refBlockPrefix, expirationDate, operations, extensions, createdTime);
         this.setTransactionId(transactionId);
         this.setBlockNum(blockNum);
@@ -132,11 +132,11 @@ public final class CompletedTransaction extends SignedTransaction {
         this.blockNum = blockNum;
     }
 
-    public long getTransactionNum() {
+    public int getTransactionNum() {
         return transactionNum;
     }
 
-    public void setTransactionNum(long transactionNum) {
+    public void setTransactionNum(int transactionNum) {
         this.transactionNum = transactionNum;
     }
 
