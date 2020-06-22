@@ -2,21 +2,7 @@
 
 `beowulf-java` is the official Beowulf library for Java.  
 
-# Full Documentation
-- Please have a look at the [Wiki](https://github.com/beowulf-foundation/beowulf-java/wiki) for full documentation, examples, operational details and other information.
-- Or have a look at the JavaDoc.
-
-# Communication
-- Beside that you can also create an [Issue](https://github.com/beowulf-foundation/beowulf-java/issues) here at GitHub.
-
-# Beowulf Java Api Wrapper
-
-*A Java implementation of the Beowulf RPC Calls. Under the [GNU General Public Licence v3.0](https://raw.githubusercontent.com/beowulf-foundation/beowulf-java/master/LICENSE)*.
-
-The api documentation can be found in the official beowulf developers portal:
-https://beowulfchain.com/developer-guide/java  
-
-# Main Functions Supported
+## Main Functions Supported
 1. CHAIN
 - get_block
 - get_transaction
@@ -28,12 +14,11 @@ https://beowulfchain.com/developer-guide/java
 - create account
 - create token
 
-#### Requirements
+## Requirements
 * Java 8
 * Maven 3.5
 
-
-## Maven
+### Maven
 File: *pom.xml*
 ```Xml
 <dependency>
@@ -43,7 +28,7 @@ File: *pom.xml*
 </dependency>
 ```
 
-# How to build & install
+## Installation
 The project requires Maven and Java to be installed on your machine. It can be build with the default maven command:
 
 >mvn clean install
@@ -51,7 +36,7 @@ The project requires Maven and Java to be installed on your machine. It can be b
 The resulting JAR can be found in the target directory as usual. Please notice that some integration tests require different private keys. If you do not want to execute tests at all add *"-DskipTests=true"* to the mvn call which skips the test execution during the build.
 
 
-#### Configuration
+## Configuration
 Create a new client instance of BeowulfJ
 ```java
 // Define config:
@@ -76,7 +61,7 @@ myConfig.getPrivateKeyStorage().addPrivateKeyToAccount(user1, user1PrivKey);
 BeowulfJ beowulfJ = BeowulfJ.getInstance();
 ```
 
-#### Example Usage
+## Example Usage
 ##### Creating a wallet
 ```java
 /*
@@ -157,15 +142,3 @@ AssetInfo assetInfo = new AssetInfo("BWF", UInteger.valueOf(5));
 Asset asset = beowulfJ.getBalance(accountToGetBalance, assetInfo);
 System.out.println(asset.toString());
 ```
-
-#### Notes
-* All methods are synchronous and blocking.
-* All methods will throw a catchable BeowulfException.
-
-# Bugs and Feedback
-For bugs or feature requests please create a [GitHub Issue](https://github.com/beowulf-foundation/beowulf-java/issues).  
-
-# Example
-The [sample module](https://github.com/beowulf-foundation/beowulf-java/tree/master/sample) of the BeowulfJ project provides showcases for the most common acitivies and operations users want to perform. 
-
-Beside that you can find a lot of snippets and examples in the different [Wiki sections](https://github.com/beowulf-foundation/beowulf-java/wiki).  
