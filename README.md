@@ -62,7 +62,49 @@ BeowulfJ beowulfJ = BeowulfJ.getInstance();
 ```
 
 ## Example Usage
-##### Creating a wallet
+
+##### Get block
+```java
+/*
+ * Get block from block number
+ */
+Block block = beowulfJ.getBlock(165099L);
+```
+
+##### Get transaction
+```java
+TransactionId transactionId = block.getTransactionIds().get(0);
+CompletedTransaction transaction = beowulfJ.getTransactionDetail(transactionId.toString());
+```
+
+##### Transfer native coin
+###### Transfer BWF
+```java
+/*
+ * Transfer 1.0 W from sender to receiver
+ */
+AccountName from = new AccountName("sender");
+AccountName to = new AccountName("receiver");
+Asset amount = Asset.createSmtAsset(new BigDecimal("1.00000"), "BWF");
+TransferOperation transferOperation = beowulfJ.transfer(from, to, amount, network.getTransactionFee(), "Transfer 1.0 BWF from sender to receiver");
+TransactionId transactionId = beowulfJ.signAndBroadcast(Collections.singletonList(transferOperation));
+System.out.println("Transaction id: " + transactionId);
+```
+
+###### Transfer W
+```java
+/*
+ * Transfer 1.0 W from sender to receiver
+ */
+AccountName from = new AccountName("sender");
+AccountName to = new AccountName("receiver");
+Asset amount = Asset.createSmtAsset(new BigDecimal("1.00000"), "W");
+TransferOperation transferOperation = beowulfJ.transfer(from, to, amount, network.getTransactionFee(), "Transfer 1.0 W from sender to receiver");
+TransactionId transactionId = beowulfJ.signAndBroadcast(Collections.singletonList(transferOperation));
+System.out.println("Transaction id: " + transactionId);
+```
+
+##### Create wallet
 ```java
 /*
  * Create new account and get private key
@@ -95,50 +137,4 @@ String jsonMetadata = "{}";
 AccountCreateOperation accountCreateOperation = beowulfJ.createAccount(creator, network.getAccountCreationFee(), newAccount, owner, "{}");
 TransactionId transactionId1 = beowulfJ.signAndBroadcast(Collections.singletonList(accountCreateOperation));
 System.out.println("Transaction id: " + transactionId1);
-```
-
-##### Signing and pushing a transaction
-
-```java
-/*
- * Transfer 1.0 W from sender to receiver
- */
-AccountName from = new AccountName("sender");
-AccountName to = new AccountName("receiver");
-Asset amount = Asset.createSmtAsset(new BigDecimal("1.00000"), "W");
-TransferOperation transferOperation = beowulfJ.transfer(from, to, amount, network.getTransactionFee(), "Transfer 1.0 W from sender to receiver");
-TransactionId transactionId = beowulfJ.signAndBroadcast(Collections.singletonList(transferOperation));
-System.out.println("Transaction id: " + transactionId);
-```
-
-##### Getting a block
-```java
-/*
- * Get block from block number
- */
-Block block = beowulfJ.getBlock(165099L);
-```
-
-##### Getting transaction details
-```java
-TransactionId transactionId = block.getTransactionIds().get(0);
-CompletedTransaction transaction = beowulfJ.getTransactionDetail(transactionId.toString());
-```
-
-##### Getting operation in transaction
-```java
-List<Operation> operations = transaction.getOperations();
-Operation operation = operations.get(0);
-if (operation instanceof TransferOperation){
-    TransferOperation transferOperation = (TransferOperation) operation;
-    System.out.println(transferOperation.toString());
-}
-```
-
-##### Getting balance of specific asset in an account
-```java
-AccountName accountToGetBalance = new AccountName("sender");
-AssetInfo assetInfo = new AssetInfo("BWF", UInteger.valueOf(5));
-Asset asset = beowulfJ.getBalance(accountToGetBalance, assetInfo);
-System.out.println(asset.toString());
 ```
