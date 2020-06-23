@@ -1,10 +1,9 @@
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.beowulfchain</groupId>
         <artifactId>beowulfj-parent</artifactId>
-        <version>0.0.5-SNAPSHOT</version>
+        <version>0.0.6-SNAPSHOT</version>
     </parent>
     <artifactId>beowulfj-sample</artifactId>
     <packaging>jar</packaging>
@@ -18,11 +17,6 @@
             <url>https://www.gnu.org/licenses/gpl-3.0.txt</url>
         </license>
     </licenses>
-    <scm>
-        <url>https://github.com/beowulf-foundation/beowulf-java</url>
-        <connection>scm:git:git@github.com:beowulf-foundation/beowulf-java.git</connection>
-        <developerConnection>scm:git:git@github.com:beowulf-foundation/beowulf-java.git</developerConnection>
-    </scm>
 
     <developers>
         <developer>
