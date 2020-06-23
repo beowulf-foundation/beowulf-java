@@ -42,6 +42,7 @@ public class BeowulfJUsageExample {
      * Called at startup.
      *
      * @param args The arguments to set.
+     * @throws java.lang.Exception Main Exception
      */
     public static void main(String[] args) {
         try {

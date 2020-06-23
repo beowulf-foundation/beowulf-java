@@ -119,12 +119,6 @@
             <version>${hamcrest.date.version}</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
-            <scope>test</scope>
-        </dependency>
     </dependencies>
 
     <build>
@@ -167,7 +161,7 @@
                     <execution>
                         <goals>
                             <goal>integration-test</goal>
-                            <goal>verify</goal>
+                            <!--<goal>verify</goal>-->
                         </goals>
                     </execution>
                 </executions>
@@ -180,7 +174,7 @@
                     <includes>
                         <include>**/*.*</include>
                     </includes>
-                    <excludedGroups>IntegrationTest</excludedGroups>
+                    <!--<excludedGroups>IntegrationTest</excludedGroups>-->
                 </configuration>
             </plugin>
             <plugin>
@@ -240,7 +234,7 @@
                         <id>sign-artifacts</id>
                         <phase>verify</phase>
                         <goals>
-                            <goal>help</goal>
+                            <goal>sign</goal>
                         </goals>
                     </execution>
                 </executions>
@@ -258,7 +252,7 @@
         <hamcrest.version>1.3</hamcrest.version>
         <hamcrest.date.version>2.0.4</hamcrest.date.version>
         <tyrus.client.version>1.13.1</tyrus.client.version>
-        <jackson.version>2.9.9</jackson.version>
+        <jackson.version>2.10.0</jackson.version>
         <apache.commons.lang.version>3.7</apache.commons.lang.version>
         <apache.commons.io.version>2.6</apache.commons.io.version>
         <slf4j.version>1.7.25</slf4j.version>

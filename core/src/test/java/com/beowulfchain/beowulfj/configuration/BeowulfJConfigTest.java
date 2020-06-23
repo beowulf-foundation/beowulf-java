@@ -33,7 +33,7 @@ public class BeowulfJConfigTest {
     private static final String BEOWULFJ_API_USERNAME = "customnodename";
     private static final String BEOWULFJ_API_PASSWORD = "test1234";
     private static final String BEOWULFJ_KEY_ACCOUNTNAME = "alice";
-    private static final String BEOWULFJ_KEY_OWNER = "5JhxZZ6oGwFm2egPWyy21DWvroSoUur33sEHBamobDdSmhPN9U4";
+    private static final String BEOWULFJ_KEY_OWNER = "5Hxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
 
     /**
      * Setup the required system properties.

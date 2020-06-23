@@ -2,24 +2,9 @@
 
 `beowulf-java` is the official Beowulf library for Java.  
 
-# Full Documentation
-- Please have a look at the [Wiki](https://github.com/beowulf-foundation/beowulf-java/wiki) for full documentation, examples, operational details and other information.
-- Or have a look at the JavaDoc.
-
-# Communication
-- Beside that you can also create an [Issue](https://github.com/beowulf-foundation/beowulf-java/issues) here at GitHub.
-
-# Beowulf Java Api Wrapper
-
-*A Java implementation of the Beowulf RPC Calls. Under the [GNU General Public Licence v3.0](https://raw.githubusercontent.com/beowulf-foundation/beowulf-java/master/LICENSE)*.
-
-The api documentation can be found in the official beowulf developers portal:
-https://beowulfchain.com/developer-guide/java  
-
-# Main Functions Supported
+## Main Functions Supported
 1. CHAIN
 - get_block
-- get_account
 - get_transaction
 - get_balance
 - get operation
@@ -29,12 +14,11 @@ https://beowulfchain.com/developer-guide/java
 - create account
 - create token
 
-#### Requirements
+## Requirements
 * Java 8
 * Maven 3.5
 
-
-## Maven
+### Maven
 File: *pom.xml*
 ```Xml
 <dependency>
@@ -44,7 +28,7 @@ File: *pom.xml*
 </dependency>
 ```
 
-# How to build & install
+## Installation
 The project requires Maven and Java to be installed on your machine. It can be build with the default maven command:
 
 >mvn clean install
@@ -52,18 +36,18 @@ The project requires Maven and Java to be installed on your machine. It can be b
 The resulting JAR can be found in the target directory as usual. Please notice that some integration tests require different private keys. If you do not want to execute tests at all add *"-DskipTests=true"* to the mvn call which skips the test execution during the build.
 
 
-#### Configuration
+## Configuration
 Create a new client instance of BeowulfJ
 ```java
 // Define config:
-NetworkProperties network = new Testnet();
+NetworkProperties network = new Mainnet();
 BeowulfJConfig myConfig = BeowulfJConfig.getInstance();
 myConfig.setResponseTimeout(100000);
 // default account will be used if transaction doesn't define
 myConfig.setDefaultAccount(new AccountName("default-account"));
 myConfig.setNetwork(network);
 // init beowulf node
-myConfig.setDefaultBeowulfApiUri("https://testnet-bw.beowulfchain.com/rpc");
+myConfig.setDefaultBeowulfApiUri("https://bw.beowulfchain.com/rpc");
 
 
 // Add and manage private keys follow base58 format:
@@ -77,8 +61,50 @@ myConfig.getPrivateKeyStorage().addPrivateKeyToAccount(user1, user1PrivKey);
 BeowulfJ beowulfJ = BeowulfJ.getInstance();
 ```
 
-#### Example Usage
-##### Creating a wallet
+## Example Usage
+
+##### Get block
+```java
+/*
+ * Get block from block number
+ */
+Block block = beowulfJ.getBlock(165099L);
+```
+
+##### Get transaction
+```java
+TransactionId transactionId = block.getTransactionIds().get(0);
+CompletedTransaction transaction = beowulfJ.getTransactionDetail(transactionId.toString());
+```
+
+##### Transfer native coin
+###### Transfer BWF
+```java
+/*
+ * Transfer 1.0 W from sender to receiver
+ */
+AccountName from = new AccountName("sender");
+AccountName to = new AccountName("receiver");
+Asset amount = Asset.createSmtAsset(new BigDecimal("1.00000"), "BWF");
+TransferOperation transferOperation = beowulfJ.transfer(from, to, amount, network.getTransactionFee(), "Transfer 1.0 BWF from sender to receiver");
+TransactionId transactionId = beowulfJ.signAndBroadcast(Collections.singletonList(transferOperation));
+System.out.println("Transaction id: " + transactionId);
+```
+
+###### Transfer W
+```java
+/*
+ * Transfer 1.0 W from sender to receiver
+ */
+AccountName from = new AccountName("sender");
+AccountName to = new AccountName("receiver");
+Asset amount = Asset.createSmtAsset(new BigDecimal("1.00000"), "W");
+TransferOperation transferOperation = beowulfJ.transfer(from, to, amount, network.getTransactionFee(), "Transfer 1.0 W from sender to receiver");
+TransactionId transactionId = beowulfJ.signAndBroadcast(Collections.singletonList(transferOperation));
+System.out.println("Transaction id: " + transactionId);
+```
+
+##### Create wallet
 ```java
 /*
  * Create new account and get private key
@@ -112,84 +138,3 @@ AccountCreateOperation accountCreateOperation = beowulfJ.createAccount(creator, 
 TransactionId transactionId1 = beowulfJ.signAndBroadcast(Collections.singletonList(accountCreateOperation));
 System.out.println("Transaction id: " + transactionId1);
 ```
-
-##### Signing and pushing a transaction
-A transaction in beowulf blockchain can contain more than one operation. We can put them into one transaction through a list.
-```java
-/*
- * Transfer 1.0 W from sender to receiver
- */
-AccountName from = new AccountName("sender");
-AccountName to = new AccountName("receiver");
-Asset amount = Asset.createAsset(new BigDecimal("1.00000"), "W");
-TransferOperation transferOperation = beowulfJ.transfer(from, to, amount, network.getTransactionFee(), "Transfer 1.0 W from sender to receiver");
-TransactionId transactionId = beowulfJ.signAndBroadcast(Collections.singletonList(transferOperation));
-System.out.println("Transaction id: " + transactionId);
-```
-
-##### Signing and pushing a transaction with extension
-Extension is an extend object embedded in transaction for flexible pushing more data
-```java
-/*
-* Create transaction with an extension object
-*/
-ExtensionValue value = new ExtensionValue("sample value");
-FutureExtensions extensions = new JsonExtension(value);
-TransactionId transactionIdExt = beowulfJ.signAndBroadcastWithExtension(Collections.singletonList(transferOperation), Collections.singletonList(extensions));
-System.out.println("Broadcast Transaction with extension return transaction id: " + transactionIdExt);
-```
-
-##### Getting a block details
-```java
-/*
- * Get block from block number
- */
-Block block = beowulfJ.getBlock(165099L);
-```
-
-##### Getting an account details
-```java
-/*
- * Get account detail from account name
- */
-AccountName accountName = new AccountName("beowulf");
-List<ExtendedAccount> accounts = beowulfJ.getAccounts(Collections.singletonList(accountName));
-```
-
-
-##### Getting transaction details
-```java
-TransactionId transactionId = block.getTransactionIds().get(0);
-CompletedTransaction transaction = beowulfJ.getTransactionDetail(transactionId.toString());
-```
-
-##### Getting operation in transaction
-Specify type of operation by checking `instanceof`
-```java
-List<Operation> operations = transaction.getOperations();
-Operation operation = operations.get(0);
-if (operation instanceof TransferOperation){
-    TransferOperation transferOperation = (TransferOperation) operation;
-    System.out.println(transferOperation.toString());
-}
-```
-
-##### Getting balance of specific asset in an account
-```java
-AccountName accountToGetBalance = new AccountName("sender");
-AssetInfo assetInfo = new AssetInfo("BWF", UInteger.valueOf(5));
-Asset asset = beowulfJ.getBalance(accountToGetBalance, assetInfo);
-System.out.println(asset.toString());
-```
-
-#### Notes
-* All methods are synchronous and blocking.
-* All methods will throw a catchable BeowulfException.
-
-# Bugs and Feedback
-For bugs or feature requests please create a [GitHub Issue](https://github.com/beowulf-foundation/beowulf-java/issues).  
-
-# Example
-The [sample module](https://github.com/beowulf-foundation/beowulf-java/tree/master/sample) of the BeowulfJ project provides showcases for the most common acitivies and operations users want to perform. 
-
-Beside that you can find a lot of snippets and examples in the different [Wiki sections](https://github.com/beowulf-foundation/beowulf-java/wiki).  
