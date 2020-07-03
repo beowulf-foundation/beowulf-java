@@ -41,6 +41,8 @@ Create a new client instance of BeowulfJ
 ```java
 // Define config:
 NetworkProperties network = new Mainnet();
+// if you want to use testnet:
+// NetworkProperties network = new Testnet();
 BeowulfJConfig myConfig = BeowulfJConfig.getInstance();
 myConfig.setResponseTimeout(100000);
 // default account will be used if transaction doesn't define
