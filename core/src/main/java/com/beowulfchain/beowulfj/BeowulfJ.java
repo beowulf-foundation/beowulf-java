@@ -39,10 +39,7 @@ import com.beowulfchain.beowulfj.plugins.apis.database.models.SupernodeSchedule;
 import com.beowulfchain.beowulfj.plugins.apis.network.broadcast.models.BroadcastTransactionSynchronousReturn;
 import com.beowulfchain.beowulfj.protocol.*;
 import com.beowulfchain.beowulfj.protocol.enums.AssetSymbolType;
-import com.beowulfchain.beowulfj.protocol.operations.AccountCreateOperation;
-import com.beowulfchain.beowulfj.protocol.operations.Operation;
-import com.beowulfchain.beowulfj.protocol.operations.SmtCreateOperation;
-import com.beowulfchain.beowulfj.protocol.operations.TransferOperation;
+import com.beowulfchain.beowulfj.protocol.operations.*;
 import com.beowulfchain.beowulfj.util.BeowulfJUtils;
 import eu.bittrade.crypto.core.ECKey;
 import eu.bittrade.crypto.core.Sha256Hash;
@@ -750,6 +747,25 @@ public class BeowulfJ {
     public AccountCreateOperation createAccount(AccountName creator, Asset fee, AccountName newAccount, Authority owner, String jsonMetadata) {
         AccountCreateOperation accountCreateOperation = new AccountCreateOperation(creator, fee, newAccount, owner, jsonMetadata);
         return accountCreateOperation;
+    }
+
+    public AccountUpdateOperation updateAccount(AccountName accountName, Asset fee, Authority owner, String jsonMetadata) {
+        AccountUpdateOperation accountUpdateOperation = new AccountUpdateOperation(accountName, owner, jsonMetadata, fee);
+        return accountUpdateOperation;
+    }
+
+    public TransferToVestingOperation transferToVesting(AccountName from, AccountName to, Asset amount) {
+        TransferToVestingOperation transferToVestingOperation = new TransferToVestingOperation(from, to, amount, BeowulfJConfig.getInstance().getNetwork().getTransactionFee());
+        return transferToVestingOperation;
+    }
+
+    public TransferToVestingOperation transferToVesting(AccountName from, Asset amount) {
+        return transferToVesting(from, from, amount);
+    }
+
+    public WithdrawVestingOperation withdrawVesting(AccountName from, Asset amount) {
+        WithdrawVestingOperation withdrawVestingOperation = new WithdrawVestingOperation(from, amount, BeowulfJConfig.getInstance().getNetwork().getTransactionFee());
+        return withdrawVestingOperation;
     }
 
     public BroadcastTransactionSynchronousReturn signAndBroadcastSynchronous(List<Operation> operations)

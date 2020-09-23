@@ -105,7 +105,7 @@ public class BeowulfJConfig {
         this.setApiPassword(System.getProperty("beowulfj.api.password", "").toCharArray());
         this.setMaximumExpirationDateOffset(3600000L);
         this.setEncodingCharset(StandardCharsets.UTF_8);
-        this.setBeowulfJWeight(Short.valueOf("250"));
+        this.setBeowulfJWeight(Short.parseShort("250"));
         this.setValidationLevel(ValidationType.ALL);
         this.setSynchronizationLevel(SynchronizationType.FULL);
         NetworkProperties network = new Testnet();

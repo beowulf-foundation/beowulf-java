@@ -52,8 +52,10 @@ public class AccountCreateOperation extends AbstractAccountCreateOperation {
      * @throws InvalidParameterException If one of the arguments does not fulfill the requirements.
      */
     @JsonCreator
-    public AccountCreateOperation(@JsonProperty("creator") AccountName creator, @JsonProperty("fee") Asset fee,
-                                  @JsonProperty("new_account_name") AccountName newAccountName, @JsonProperty("owner") Authority owner,
+    public AccountCreateOperation(@JsonProperty("creator") AccountName creator,
+                                  @JsonProperty("fee") Asset fee,
+                                  @JsonProperty("new_account_name") AccountName newAccountName,
+                                  @JsonProperty("owner") Authority owner,
                                   @JsonProperty("json_metadata") String jsonMetadata) {
         super(false);
 
