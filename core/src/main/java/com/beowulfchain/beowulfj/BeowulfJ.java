@@ -448,18 +448,18 @@ public class BeowulfJ {
      * @param signedTransaction The signed Transaction object you want to receive the HEX
      *                          representation for.
      * @return The HEX representation.
-     * @throws BeowulfCommunicationException <ul>
-     *                                       <li>If the server was not able to answer the request in the
-     *                                       given time (see
-     *                                       {@link BeowulfJConfig#setResponseTimeout(int)
-     *                                       setResponseTimeout}).</li>
-     *                                       <li>If there is a connection problem.</li>
-     *                                       </ul>
-     * @throws BeowulfResponseException      <ul>
-     *                                       <li>If the BeowulfJ is unable to transform the JSON response
-     *                                       into a Java object.</li>
-     *                                       <li>If the Server returned an error object.</li>
-     *                                       </ul>
+     * @throws BeowulfCommunicationException      <ul>
+     *                                            <li>If the server was not able to answer the request in the
+     *                                            given time (see
+     *                                            {@link BeowulfJConfig#setResponseTimeout(int)
+     *                                            setResponseTimeout}).</li>
+     *                                            <li>If there is a connection problem.</li>
+     *                                            </ul>
+     * @throws BeowulfResponseException           <ul>
+     *                                            <li>If the BeowulfJ is unable to transform the JSON response
+     *                                            into a Java object.</li>
+     *                                            <li>If the Server returned an error object.</li>
+     *                                            </ul>
      * @throws BeowulfInvalidTransactionException The beowulf invalid transaction exception.
      */
     public String getTransactionHex(SignedTransaction signedTransaction)
@@ -780,10 +780,11 @@ public class BeowulfJ {
         return this.broadcastTransaction(signedTransaction);
     }
 
-    private SignedTransaction signTransaction(List<Operation> operations,  List<FutureExtensions> extensions) throws BeowulfCommunicationException, BeowulfResponseException {
+    public SignedTransaction signTransaction(List<Operation> operations, List<FutureExtensions> extensions) throws BeowulfCommunicationException, BeowulfResponseException, BeowulfInvalidTransactionException {
         DynamicGlobalProperty globalProperties = this.getDynamicGlobalProperties();
-        return new SignedTransaction(globalProperties.getHeadBlockId(), operations,
-                extensions);
+        SignedTransaction signedTransaction = new SignedTransaction(globalProperties.getHeadBlockId(), operations, extensions);
+        signedTransaction.sign();
+        return signedTransaction;
     }
 
     public TransactionId signAndBroadcastWithExtension(List<Operation> operations, List<FutureExtensions> extensions)
