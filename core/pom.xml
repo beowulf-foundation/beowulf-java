@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.beowulfchain</groupId>
@@ -203,17 +204,6 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>org.sonatype.plugins</groupId>
-                <artifactId>nexus-staging-maven-plugin</artifactId>
-                <version>1.6.8</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <serverId>ossrh</serverId>
-                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                    <autoReleaseAfterClose>false</autoReleaseAfterClose>
-                </configuration>
-            </plugin>
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-release-plugin</artifactId>
                 <version>2.5.3</version>
@@ -260,5 +250,17 @@
         <sonar.projectKey>beowulfj-core</sonar.projectKey>
         <sonar.organization>beowulf-foundation</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <bintray.repo>beowulf-java</bintray.repo>
+        <bintray.package>beowulfj-core</bintray.package>
+        <bintray.subject>beowulf-foundation</bintray.subject>
     </properties>
+
+    <distributionManagement>
+        <repository>
+            <id>bintray-beowulf-foundation-beowulf-java</id>
+            <name>bintray</name>
+            <url>https://api.bintray.com/maven/${bintray.subject}/${bintray.repo}/${bintray.package}/;publish=1</url>
+        </repository>
+    </distributionManagement>
+
 </project>
