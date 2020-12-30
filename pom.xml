@@ -3,7 +3,7 @@
 
     <groupId>com.beowulfchain</groupId>
     <artifactId>beowulfj-parent</artifactId>
-    <version>0.0.6</version>
+    <version>0.0.7-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>beowulfj-parent</name>
     <description>Provides the common configuration for the BeowulfJ modules.</description>
@@ -37,7 +37,7 @@
         <url>https://github.com/beowulf-foundation/beowulf-java</url>
         <connection>scm:git:git@github.com:beowulf-foundation/beowulf-java.git</connection>
         <developerConnection>scm:git:git@github.com:beowulf-foundation/beowulf-java.git</developerConnection>
-      <tag>beowulfj-parent-0.0.6</tag>
+      <tag>HEAD</tag>
   </scm>
 
     <developers>
