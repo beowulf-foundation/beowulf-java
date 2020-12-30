@@ -26,6 +26,7 @@ import com.beowulfchain.beowulfj.enums.ValidationType;
 import com.beowulfchain.beowulfj.exceptions.BeowulfTimeoutException;
 import com.beowulfchain.beowulfj.protocol.AccountName;
 import com.beowulfchain.beowulfj.protocol.AssetSymbol;
+import com.beowulfchain.beowulfj.protocol.Symbol;
 import com.beowulfchain.beowulfj.protocol.enums.AssetSymbolType;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
@@ -515,7 +516,7 @@ public class BeowulfJConfig {
      * @return One specific endpoint URI.
      */
     public Pair<URI, Boolean> getNextEndpointURI(int selector) {
-        return endpointURIs.get(((int) (selector % endpointURIs.size())));
+        return endpointURIs.get(selector % endpointURIs.size());
     }
 
     /**
@@ -681,5 +682,580 @@ public class BeowulfJConfig {
         this.setDollarSymbol(new AssetSymbol(network.getWd_symbol()));
         this.setTokenSymbol(new AssetSymbol(network.getBeowulf_symbol()));
         this.setVestsSymbol(new AssetSymbol(network.getVests_symbol()));
+    }
+
+    public static class BeowulfConfig {
+        private boolean IS_TEST_NET;
+        private float SMT_TOKEN_CREATION_FEE;
+        Symbol WD_SYMBOL;
+        private float BEOWULF_100_PERCENT;
+        private float BEOWULF_1_PERCENT;
+        private String BEOWULF_ADDRESS_PREFIX;
+        private String BEOWULF_BLOCKCHAIN_HARDFORK_VERSION;
+        private String BEOWULF_BLOCKCHAIN_VERSION;
+        private float BEOWULF_BLOCK_INTERVAL;
+        private float BEOWULF_BLOCKS_PER_DAY;
+        private float BEOWULF_BLOCKS_PER_YEAR;
+        private String BEOWULF_CHAIN_ID;
+        private String BEOWULF_GENESIS_TIME;
+        private float BEOWULF_HARDFORK_REQUIRED_SUPERNODES;
+        private float BEOWULF_INFLATION_NARROWING_PERIOD;
+        private float BEOWULF_INFLATION_RATE_START_PERCENT;
+        private float BEOWULF_INFLATION_RATE_STOP_PERCENT;
+        private String BEOWULF_INIT_MINER_NAME;
+        private String BEOWULF_INIT_PUBLIC_KEY_STR;
+        private float BEOWULF_INIT_SUPPLY;
+        private float WD_INIT_SUPPLY;
+        private float BEOWULF_IRREVERSIBLE_THRESHOLD;
+        private float BEOWULF_MAX_ACCOUNT_NAME_LENGTH;
+        private float BEOWULF_MAX_ACCOUNT_SUPERNODE_VOTES;
+        private float BEOWULF_MAX_AUTHORITY_MEMBERSHIP;
+        private float BEOWULF_SOFT_MAX_BLOCK_SIZE;
+        private float BEOWULF_MAX_MEMO_SIZE;
+        private float BEOWULF_MAX_SUPERNODES;
+        private float BEOWULF_MAX_PERMANENT_SUPERNODES_HF0;
+        private float BEOWULF_MAX_RUNNER_SUPERNODES_HF0;
+        private float BEOWULF_MAX_SHARE_SUPPLY;
+        private float BEOWULF_MAX_SIG_CHECK_DEPTH;
+        private float BEOWULF_MAX_SIG_CHECK_ACCOUNTS;
+        private float BEOWULF_MAX_TIME_UNTIL_EXPIRATION;
+        private float BEOWULF_MAX_TRANSACTION_SIZE;
+        private float BEOWULF_MAX_UNDO_HISTORY;
+        private float BEOWULF_MAX_VOTED_SUPERNODES_HF0;
+        private float BEOWULF_MIN_SUPERNODE_FUND;
+        private float BEOWULF_MIN_TRANSACTION_FEE;
+        private float BEOWULF_MIN_ACCOUNT_CREATION_FEE;
+        private float BEOWULF_MIN_ACCOUNT_NAME_LENGTH;
+        private float BEOWULF_MIN_BLOCK_SIZE;
+        private String BEOWULF_NULL_ACCOUNT;
+        private float BEOWULF_NUM_INIT_MINERS;
+        private float BEOWULF_OWNER_AUTH_HISTORY_TRACKING_START_BLOCK_NUM;
+        private float BEOWULF_OWNER_UPDATE_LIMIT;
+        private float BEOWULF_VESTING_WITHDRAW_INTERVALS;
+        private float BEOWULF_VESTING_WITHDRAW_INTERVAL_SECONDS;
+        private Symbol BEOWULF_SYMBOL;
+        private Symbol VESTS_SYMBOL;
+        private String BEOWULF_VIRTUAL_SCHEDULE_LAP_LENGTH2;
+        private float BEOWULF_1_BEOWULF;
+        private float BEOWULF_1_VESTS;
+        private float BEOWULF_MAX_TOKEN_PER_ACCOUNT;
+        private float BEOWULF_MIN_PERMANENT_SUPERNODE_FUND;
+        private float BEOWULF_MAX_TOKEN_NAME_LENGTH;
+        private float BEOWULF_MIN_TOKEN_NAME_LENGTH;
+        private String BEOWULF_SYMBOL_BEOWULF;
+        private String BEOWULF_SYMBOL_WD;
+        private String BEOWULF_SYMBOL_VESTS;
+        private float BEOWULF_BLOCK_REWARD_GAP;
+        private float BEOWULF_ITEM_QUEUE_SIZE;
+        private float BEOWULF_FLUSH_INTERVAL;
+
+
+        // Getter Methods
+
+        public boolean getIS_TEST_NET() {
+            return IS_TEST_NET;
+        }
+
+        public float getSMT_TOKEN_CREATION_FEE() {
+            return SMT_TOKEN_CREATION_FEE;
+        }
+
+        public Symbol getWD_SYMBOL() {
+            return WD_SYMBOL;
+        }
+
+        public float getBEOWULF_100_PERCENT() {
+            return BEOWULF_100_PERCENT;
+        }
+
+        public float getBEOWULF_1_PERCENT() {
+            return BEOWULF_1_PERCENT;
+        }
+
+        public String getBEOWULF_ADDRESS_PREFIX() {
+            return BEOWULF_ADDRESS_PREFIX;
+        }
+
+        public String getBEOWULF_BLOCKCHAIN_HARDFORK_VERSION() {
+            return BEOWULF_BLOCKCHAIN_HARDFORK_VERSION;
+        }
+
+        public String getBEOWULF_BLOCKCHAIN_VERSION() {
+            return BEOWULF_BLOCKCHAIN_VERSION;
+        }
+
+        public float getBEOWULF_BLOCK_INTERVAL() {
+            return BEOWULF_BLOCK_INTERVAL;
+        }
+
+        public float getBEOWULF_BLOCKS_PER_DAY() {
+            return BEOWULF_BLOCKS_PER_DAY;
+        }
+
+        public float getBEOWULF_BLOCKS_PER_YEAR() {
+            return BEOWULF_BLOCKS_PER_YEAR;
+        }
+
+        public String getBEOWULF_CHAIN_ID() {
+            return BEOWULF_CHAIN_ID;
+        }
+
+        public String getBEOWULF_GENESIS_TIME() {
+            return BEOWULF_GENESIS_TIME;
+        }
+
+        public float getBEOWULF_HARDFORK_REQUIRED_SUPERNODES() {
+            return BEOWULF_HARDFORK_REQUIRED_SUPERNODES;
+        }
+
+        public float getBEOWULF_INFLATION_NARROWING_PERIOD() {
+            return BEOWULF_INFLATION_NARROWING_PERIOD;
+        }
+
+        public float getBEOWULF_INFLATION_RATE_START_PERCENT() {
+            return BEOWULF_INFLATION_RATE_START_PERCENT;
+        }
+
+        public float getBEOWULF_INFLATION_RATE_STOP_PERCENT() {
+            return BEOWULF_INFLATION_RATE_STOP_PERCENT;
+        }
+
+        public String getBEOWULF_INIT_MINER_NAME() {
+            return BEOWULF_INIT_MINER_NAME;
+        }
+
+        public String getBEOWULF_INIT_PUBLIC_KEY_STR() {
+            return BEOWULF_INIT_PUBLIC_KEY_STR;
+        }
+
+        public float getBEOWULF_INIT_SUPPLY() {
+            return BEOWULF_INIT_SUPPLY;
+        }
+
+        public float getWD_INIT_SUPPLY() {
+            return WD_INIT_SUPPLY;
+        }
+
+        public float getBEOWULF_IRREVERSIBLE_THRESHOLD() {
+            return BEOWULF_IRREVERSIBLE_THRESHOLD;
+        }
+
+        public float getBEOWULF_MAX_ACCOUNT_NAME_LENGTH() {
+            return BEOWULF_MAX_ACCOUNT_NAME_LENGTH;
+        }
+
+        public float getBEOWULF_MAX_ACCOUNT_SUPERNODE_VOTES() {
+            return BEOWULF_MAX_ACCOUNT_SUPERNODE_VOTES;
+        }
+
+        public float getBEOWULF_MAX_AUTHORITY_MEMBERSHIP() {
+            return BEOWULF_MAX_AUTHORITY_MEMBERSHIP;
+        }
+
+        public float getBEOWULF_SOFT_MAX_BLOCK_SIZE() {
+            return BEOWULF_SOFT_MAX_BLOCK_SIZE;
+        }
+
+        public float getBEOWULF_MAX_MEMO_SIZE() {
+            return BEOWULF_MAX_MEMO_SIZE;
+        }
+
+        public float getBEOWULF_MAX_SUPERNODES() {
+            return BEOWULF_MAX_SUPERNODES;
+        }
+
+        public float getBEOWULF_MAX_PERMANENT_SUPERNODES_HF0() {
+            return BEOWULF_MAX_PERMANENT_SUPERNODES_HF0;
+        }
+
+        public float getBEOWULF_MAX_RUNNER_SUPERNODES_HF0() {
+            return BEOWULF_MAX_RUNNER_SUPERNODES_HF0;
+        }
+
+        public float getBEOWULF_MAX_SHARE_SUPPLY() {
+            return BEOWULF_MAX_SHARE_SUPPLY;
+        }
+
+        public float getBEOWULF_MAX_SIG_CHECK_DEPTH() {
+            return BEOWULF_MAX_SIG_CHECK_DEPTH;
+        }
+
+        public float getBEOWULF_MAX_SIG_CHECK_ACCOUNTS() {
+            return BEOWULF_MAX_SIG_CHECK_ACCOUNTS;
+        }
+
+        public float getBEOWULF_MAX_TIME_UNTIL_EXPIRATION() {
+            return BEOWULF_MAX_TIME_UNTIL_EXPIRATION;
+        }
+
+        public float getBEOWULF_MAX_TRANSACTION_SIZE() {
+            return BEOWULF_MAX_TRANSACTION_SIZE;
+        }
+
+        public float getBEOWULF_MAX_UNDO_HISTORY() {
+            return BEOWULF_MAX_UNDO_HISTORY;
+        }
+
+        public float getBEOWULF_MAX_VOTED_SUPERNODES_HF0() {
+            return BEOWULF_MAX_VOTED_SUPERNODES_HF0;
+        }
+
+        public float getBEOWULF_MIN_SUPERNODE_FUND() {
+            return BEOWULF_MIN_SUPERNODE_FUND;
+        }
+
+        public float getBEOWULF_MIN_TRANSACTION_FEE() {
+            return BEOWULF_MIN_TRANSACTION_FEE;
+        }
+
+        public float getBEOWULF_MIN_ACCOUNT_CREATION_FEE() {
+            return BEOWULF_MIN_ACCOUNT_CREATION_FEE;
+        }
+
+        public float getBEOWULF_MIN_ACCOUNT_NAME_LENGTH() {
+            return BEOWULF_MIN_ACCOUNT_NAME_LENGTH;
+        }
+
+        public float getBEOWULF_MIN_BLOCK_SIZE() {
+            return BEOWULF_MIN_BLOCK_SIZE;
+        }
+
+        public String getBEOWULF_NULL_ACCOUNT() {
+            return BEOWULF_NULL_ACCOUNT;
+        }
+
+        public float getBEOWULF_NUM_INIT_MINERS() {
+            return BEOWULF_NUM_INIT_MINERS;
+        }
+
+        public float getBEOWULF_OWNER_AUTH_HISTORY_TRACKING_START_BLOCK_NUM() {
+            return BEOWULF_OWNER_AUTH_HISTORY_TRACKING_START_BLOCK_NUM;
+        }
+
+        public float getBEOWULF_OWNER_UPDATE_LIMIT() {
+            return BEOWULF_OWNER_UPDATE_LIMIT;
+        }
+
+        public float getBEOWULF_VESTING_WITHDRAW_INTERVALS() {
+            return BEOWULF_VESTING_WITHDRAW_INTERVALS;
+        }
+
+        public float getBEOWULF_VESTING_WITHDRAW_INTERVAL_SECONDS() {
+            return BEOWULF_VESTING_WITHDRAW_INTERVAL_SECONDS;
+        }
+
+        public Symbol getBEOWULF_SYMBOL() {
+            return BEOWULF_SYMBOL;
+        }
+
+        public Symbol getVESTS_SYMBOL() {
+            return VESTS_SYMBOL;
+        }
+
+        public String getBEOWULF_VIRTUAL_SCHEDULE_LAP_LENGTH2() {
+            return BEOWULF_VIRTUAL_SCHEDULE_LAP_LENGTH2;
+        }
+
+        public float getBEOWULF_1_BEOWULF() {
+            return BEOWULF_1_BEOWULF;
+        }
+
+        public float getBEOWULF_1_VESTS() {
+            return BEOWULF_1_VESTS;
+        }
+
+        public float getBEOWULF_MAX_TOKEN_PER_ACCOUNT() {
+            return BEOWULF_MAX_TOKEN_PER_ACCOUNT;
+        }
+
+        public float getBEOWULF_MIN_PERMANENT_SUPERNODE_FUND() {
+            return BEOWULF_MIN_PERMANENT_SUPERNODE_FUND;
+        }
+
+        public float getBEOWULF_MAX_TOKEN_NAME_LENGTH() {
+            return BEOWULF_MAX_TOKEN_NAME_LENGTH;
+        }
+
+        public float getBEOWULF_MIN_TOKEN_NAME_LENGTH() {
+            return BEOWULF_MIN_TOKEN_NAME_LENGTH;
+        }
+
+        public String getBEOWULF_SYMBOL_BEOWULF() {
+            return BEOWULF_SYMBOL_BEOWULF;
+        }
+
+        public String getBEOWULF_SYMBOL_WD() {
+            return BEOWULF_SYMBOL_WD;
+        }
+
+        public String getBEOWULF_SYMBOL_VESTS() {
+            return BEOWULF_SYMBOL_VESTS;
+        }
+
+        public float getBEOWULF_BLOCK_REWARD_GAP() {
+            return BEOWULF_BLOCK_REWARD_GAP;
+        }
+
+        public float getBEOWULF_ITEM_QUEUE_SIZE() {
+            return BEOWULF_ITEM_QUEUE_SIZE;
+        }
+
+        public float getBEOWULF_FLUSH_INTERVAL() {
+            return BEOWULF_FLUSH_INTERVAL;
+        }
+
+        // Setter Methods
+
+        public void setIS_TEST_NET(boolean IS_TEST_NET) {
+            this.IS_TEST_NET = IS_TEST_NET;
+        }
+
+        public void setSMT_TOKEN_CREATION_FEE(float SMT_TOKEN_CREATION_FEE) {
+            this.SMT_TOKEN_CREATION_FEE = SMT_TOKEN_CREATION_FEE;
+        }
+
+        public void setWD_SYMBOL(Symbol WD_SYMBOL) {
+            this.WD_SYMBOL = this.WD_SYMBOL;
+        }
+
+        public void setBEOWULF_100_PERCENT(float BEOWULF_100_PERCENT) {
+            this.BEOWULF_100_PERCENT = BEOWULF_100_PERCENT;
+        }
+
+        public void setBEOWULF_1_PERCENT(float BEOWULF_1_PERCENT) {
+            this.BEOWULF_1_PERCENT = BEOWULF_1_PERCENT;
+        }
+
+        public void setBEOWULF_ADDRESS_PREFIX(String BEOWULF_ADDRESS_PREFIX) {
+            this.BEOWULF_ADDRESS_PREFIX = BEOWULF_ADDRESS_PREFIX;
+        }
+
+        public void setBEOWULF_BLOCKCHAIN_HARDFORK_VERSION(String BEOWULF_BLOCKCHAIN_HARDFORK_VERSION) {
+            this.BEOWULF_BLOCKCHAIN_HARDFORK_VERSION = BEOWULF_BLOCKCHAIN_HARDFORK_VERSION;
+        }
+
+        public void setBEOWULF_BLOCKCHAIN_VERSION(String BEOWULF_BLOCKCHAIN_VERSION) {
+            this.BEOWULF_BLOCKCHAIN_VERSION = BEOWULF_BLOCKCHAIN_VERSION;
+        }
+
+        public void setBEOWULF_BLOCK_INTERVAL(float BEOWULF_BLOCK_INTERVAL) {
+            this.BEOWULF_BLOCK_INTERVAL = BEOWULF_BLOCK_INTERVAL;
+        }
+
+        public void setBEOWULF_BLOCKS_PER_DAY(float BEOWULF_BLOCKS_PER_DAY) {
+            this.BEOWULF_BLOCKS_PER_DAY = BEOWULF_BLOCKS_PER_DAY;
+        }
+
+        public void setBEOWULF_BLOCKS_PER_YEAR(float BEOWULF_BLOCKS_PER_YEAR) {
+            this.BEOWULF_BLOCKS_PER_YEAR = BEOWULF_BLOCKS_PER_YEAR;
+        }
+
+        public void setBEOWULF_CHAIN_ID(String BEOWULF_CHAIN_ID) {
+            this.BEOWULF_CHAIN_ID = BEOWULF_CHAIN_ID;
+        }
+
+        public void setBEOWULF_GENESIS_TIME(String BEOWULF_GENESIS_TIME) {
+            this.BEOWULF_GENESIS_TIME = BEOWULF_GENESIS_TIME;
+        }
+
+        public void setBEOWULF_HARDFORK_REQUIRED_SUPERNODES(float BEOWULF_HARDFORK_REQUIRED_SUPERNODES) {
+            this.BEOWULF_HARDFORK_REQUIRED_SUPERNODES = BEOWULF_HARDFORK_REQUIRED_SUPERNODES;
+        }
+
+        public void setBEOWULF_INFLATION_NARROWING_PERIOD(float BEOWULF_INFLATION_NARROWING_PERIOD) {
+            this.BEOWULF_INFLATION_NARROWING_PERIOD = BEOWULF_INFLATION_NARROWING_PERIOD;
+        }
+
+        public void setBEOWULF_INFLATION_RATE_START_PERCENT(float BEOWULF_INFLATION_RATE_START_PERCENT) {
+            this.BEOWULF_INFLATION_RATE_START_PERCENT = BEOWULF_INFLATION_RATE_START_PERCENT;
+        }
+
+        public void setBEOWULF_INFLATION_RATE_STOP_PERCENT(float BEOWULF_INFLATION_RATE_STOP_PERCENT) {
+            this.BEOWULF_INFLATION_RATE_STOP_PERCENT = BEOWULF_INFLATION_RATE_STOP_PERCENT;
+        }
+
+        public void setBEOWULF_INIT_MINER_NAME(String BEOWULF_INIT_MINER_NAME) {
+            this.BEOWULF_INIT_MINER_NAME = BEOWULF_INIT_MINER_NAME;
+        }
+
+        public void setBEOWULF_INIT_PUBLIC_KEY_STR(String BEOWULF_INIT_PUBLIC_KEY_STR) {
+            this.BEOWULF_INIT_PUBLIC_KEY_STR = BEOWULF_INIT_PUBLIC_KEY_STR;
+        }
+
+        public void setBEOWULF_INIT_SUPPLY(float BEOWULF_INIT_SUPPLY) {
+            this.BEOWULF_INIT_SUPPLY = BEOWULF_INIT_SUPPLY;
+        }
+
+        public void setWD_INIT_SUPPLY(float WD_INIT_SUPPLY) {
+            this.WD_INIT_SUPPLY = WD_INIT_SUPPLY;
+        }
+
+        public void setBEOWULF_IRREVERSIBLE_THRESHOLD(float BEOWULF_IRREVERSIBLE_THRESHOLD) {
+            this.BEOWULF_IRREVERSIBLE_THRESHOLD = BEOWULF_IRREVERSIBLE_THRESHOLD;
+        }
+
+        public void setBEOWULF_MAX_ACCOUNT_NAME_LENGTH(float BEOWULF_MAX_ACCOUNT_NAME_LENGTH) {
+            this.BEOWULF_MAX_ACCOUNT_NAME_LENGTH = BEOWULF_MAX_ACCOUNT_NAME_LENGTH;
+        }
+
+        public void setBEOWULF_MAX_ACCOUNT_SUPERNODE_VOTES(float BEOWULF_MAX_ACCOUNT_SUPERNODE_VOTES) {
+            this.BEOWULF_MAX_ACCOUNT_SUPERNODE_VOTES = BEOWULF_MAX_ACCOUNT_SUPERNODE_VOTES;
+        }
+
+        public void setBEOWULF_MAX_AUTHORITY_MEMBERSHIP(float BEOWULF_MAX_AUTHORITY_MEMBERSHIP) {
+            this.BEOWULF_MAX_AUTHORITY_MEMBERSHIP = BEOWULF_MAX_AUTHORITY_MEMBERSHIP;
+        }
+
+        public void setBEOWULF_SOFT_MAX_BLOCK_SIZE(float BEOWULF_SOFT_MAX_BLOCK_SIZE) {
+            this.BEOWULF_SOFT_MAX_BLOCK_SIZE = BEOWULF_SOFT_MAX_BLOCK_SIZE;
+        }
+
+        public void setBEOWULF_MAX_MEMO_SIZE(float BEOWULF_MAX_MEMO_SIZE) {
+            this.BEOWULF_MAX_MEMO_SIZE = BEOWULF_MAX_MEMO_SIZE;
+        }
+
+        public void setBEOWULF_MAX_SUPERNODES(float BEOWULF_MAX_SUPERNODES) {
+            this.BEOWULF_MAX_SUPERNODES = BEOWULF_MAX_SUPERNODES;
+        }
+
+        public void setBEOWULF_MAX_PERMANENT_SUPERNODES_HF0(float BEOWULF_MAX_PERMANENT_SUPERNODES_HF0) {
+            this.BEOWULF_MAX_PERMANENT_SUPERNODES_HF0 = BEOWULF_MAX_PERMANENT_SUPERNODES_HF0;
+        }
+
+        public void setBEOWULF_MAX_RUNNER_SUPERNODES_HF0(float BEOWULF_MAX_RUNNER_SUPERNODES_HF0) {
+            this.BEOWULF_MAX_RUNNER_SUPERNODES_HF0 = BEOWULF_MAX_RUNNER_SUPERNODES_HF0;
+        }
+
+        public void setBEOWULF_MAX_SHARE_SUPPLY(float BEOWULF_MAX_SHARE_SUPPLY) {
+            this.BEOWULF_MAX_SHARE_SUPPLY = BEOWULF_MAX_SHARE_SUPPLY;
+        }
+
+        public void setBEOWULF_MAX_SIG_CHECK_DEPTH(float BEOWULF_MAX_SIG_CHECK_DEPTH) {
+            this.BEOWULF_MAX_SIG_CHECK_DEPTH = BEOWULF_MAX_SIG_CHECK_DEPTH;
+        }
+
+        public void setBEOWULF_MAX_SIG_CHECK_ACCOUNTS(float BEOWULF_MAX_SIG_CHECK_ACCOUNTS) {
+            this.BEOWULF_MAX_SIG_CHECK_ACCOUNTS = BEOWULF_MAX_SIG_CHECK_ACCOUNTS;
+        }
+
+        public void setBEOWULF_MAX_TIME_UNTIL_EXPIRATION(float BEOWULF_MAX_TIME_UNTIL_EXPIRATION) {
+            this.BEOWULF_MAX_TIME_UNTIL_EXPIRATION = BEOWULF_MAX_TIME_UNTIL_EXPIRATION;
+        }
+
+        public void setBEOWULF_MAX_TRANSACTION_SIZE(float BEOWULF_MAX_TRANSACTION_SIZE) {
+            this.BEOWULF_MAX_TRANSACTION_SIZE = BEOWULF_MAX_TRANSACTION_SIZE;
+        }
+
+        public void setBEOWULF_MAX_UNDO_HISTORY(float BEOWULF_MAX_UNDO_HISTORY) {
+            this.BEOWULF_MAX_UNDO_HISTORY = BEOWULF_MAX_UNDO_HISTORY;
+        }
+
+        public void setBEOWULF_MAX_VOTED_SUPERNODES_HF0(float BEOWULF_MAX_VOTED_SUPERNODES_HF0) {
+            this.BEOWULF_MAX_VOTED_SUPERNODES_HF0 = BEOWULF_MAX_VOTED_SUPERNODES_HF0;
+        }
+
+        public void setBEOWULF_MIN_SUPERNODE_FUND(float BEOWULF_MIN_SUPERNODE_FUND) {
+            this.BEOWULF_MIN_SUPERNODE_FUND = BEOWULF_MIN_SUPERNODE_FUND;
+        }
+
+        public void setBEOWULF_MIN_TRANSACTION_FEE(float BEOWULF_MIN_TRANSACTION_FEE) {
+            this.BEOWULF_MIN_TRANSACTION_FEE = BEOWULF_MIN_TRANSACTION_FEE;
+        }
+
+        public void setBEOWULF_MIN_ACCOUNT_CREATION_FEE(float BEOWULF_MIN_ACCOUNT_CREATION_FEE) {
+            this.BEOWULF_MIN_ACCOUNT_CREATION_FEE = BEOWULF_MIN_ACCOUNT_CREATION_FEE;
+        }
+
+        public void setBEOWULF_MIN_ACCOUNT_NAME_LENGTH(float BEOWULF_MIN_ACCOUNT_NAME_LENGTH) {
+            this.BEOWULF_MIN_ACCOUNT_NAME_LENGTH = BEOWULF_MIN_ACCOUNT_NAME_LENGTH;
+        }
+
+        public void setBEOWULF_MIN_BLOCK_SIZE(float BEOWULF_MIN_BLOCK_SIZE) {
+            this.BEOWULF_MIN_BLOCK_SIZE = BEOWULF_MIN_BLOCK_SIZE;
+        }
+
+        public void setBEOWULF_NULL_ACCOUNT(String BEOWULF_NULL_ACCOUNT) {
+            this.BEOWULF_NULL_ACCOUNT = BEOWULF_NULL_ACCOUNT;
+        }
+
+        public void setBEOWULF_NUM_INIT_MINERS(float BEOWULF_NUM_INIT_MINERS) {
+            this.BEOWULF_NUM_INIT_MINERS = BEOWULF_NUM_INIT_MINERS;
+        }
+
+        public void setBEOWULF_OWNER_AUTH_HISTORY_TRACKING_START_BLOCK_NUM(float BEOWULF_OWNER_AUTH_HISTORY_TRACKING_START_BLOCK_NUM) {
+            this.BEOWULF_OWNER_AUTH_HISTORY_TRACKING_START_BLOCK_NUM = BEOWULF_OWNER_AUTH_HISTORY_TRACKING_START_BLOCK_NUM;
+        }
+
+        public void setBEOWULF_OWNER_UPDATE_LIMIT(float BEOWULF_OWNER_UPDATE_LIMIT) {
+            this.BEOWULF_OWNER_UPDATE_LIMIT = BEOWULF_OWNER_UPDATE_LIMIT;
+        }
+
+        public void setBEOWULF_VESTING_WITHDRAW_INTERVALS(float BEOWULF_VESTING_WITHDRAW_INTERVALS) {
+            this.BEOWULF_VESTING_WITHDRAW_INTERVALS = BEOWULF_VESTING_WITHDRAW_INTERVALS;
+        }
+
+        public void setBEOWULF_VESTING_WITHDRAW_INTERVAL_SECONDS(float BEOWULF_VESTING_WITHDRAW_INTERVAL_SECONDS) {
+            this.BEOWULF_VESTING_WITHDRAW_INTERVAL_SECONDS = BEOWULF_VESTING_WITHDRAW_INTERVAL_SECONDS;
+        }
+
+        public void setBEOWULF_SYMBOL(Symbol BEOWULF_SYMBOL) {
+            this.BEOWULF_SYMBOL = BEOWULF_SYMBOL;
+        }
+
+        public void setVESTS_SYMBOL(Symbol VESTS_SYMBOL) {
+            this.VESTS_SYMBOL = VESTS_SYMBOL;
+        }
+
+        public void setBEOWULF_VIRTUAL_SCHEDULE_LAP_LENGTH2(String BEOWULF_VIRTUAL_SCHEDULE_LAP_LENGTH2) {
+            this.BEOWULF_VIRTUAL_SCHEDULE_LAP_LENGTH2 = BEOWULF_VIRTUAL_SCHEDULE_LAP_LENGTH2;
+        }
+
+        public void setBEOWULF_1_BEOWULF(float BEOWULF_1_BEOWULF) {
+            this.BEOWULF_1_BEOWULF = BEOWULF_1_BEOWULF;
+        }
+
+        public void setBEOWULF_1_VESTS(float BEOWULF_1_VESTS) {
+            this.BEOWULF_1_VESTS = BEOWULF_1_VESTS;
+        }
+
+        public void setBEOWULF_MAX_TOKEN_PER_ACCOUNT(float BEOWULF_MAX_TOKEN_PER_ACCOUNT) {
+            this.BEOWULF_MAX_TOKEN_PER_ACCOUNT = BEOWULF_MAX_TOKEN_PER_ACCOUNT;
+        }
+
+        public void setBEOWULF_MIN_PERMANENT_SUPERNODE_FUND(float BEOWULF_MIN_PERMANENT_SUPERNODE_FUND) {
+            this.BEOWULF_MIN_PERMANENT_SUPERNODE_FUND = BEOWULF_MIN_PERMANENT_SUPERNODE_FUND;
+        }
+
+        public void setBEOWULF_MAX_TOKEN_NAME_LENGTH(float BEOWULF_MAX_TOKEN_NAME_LENGTH) {
+            this.BEOWULF_MAX_TOKEN_NAME_LENGTH = BEOWULF_MAX_TOKEN_NAME_LENGTH;
+        }
+
+        public void setBEOWULF_MIN_TOKEN_NAME_LENGTH(float BEOWULF_MIN_TOKEN_NAME_LENGTH) {
+            this.BEOWULF_MIN_TOKEN_NAME_LENGTH = BEOWULF_MIN_TOKEN_NAME_LENGTH;
+        }
+
+        public void setBEOWULF_SYMBOL_BEOWULF(String BEOWULF_SYMBOL_BEOWULF) {
+            this.BEOWULF_SYMBOL_BEOWULF = BEOWULF_SYMBOL_BEOWULF;
+        }
+
+        public void setBEOWULF_SYMBOL_WD(String BEOWULF_SYMBOL_WD) {
+            this.BEOWULF_SYMBOL_WD = BEOWULF_SYMBOL_WD;
+        }
+
+        public void setBEOWULF_SYMBOL_VESTS(String BEOWULF_SYMBOL_VESTS) {
+            this.BEOWULF_SYMBOL_VESTS = BEOWULF_SYMBOL_VESTS;
+        }
+
+        public void setBEOWULF_BLOCK_REWARD_GAP(float BEOWULF_BLOCK_REWARD_GAP) {
+            this.BEOWULF_BLOCK_REWARD_GAP = BEOWULF_BLOCK_REWARD_GAP;
+        }
+
+        public void setBEOWULF_ITEM_QUEUE_SIZE(float BEOWULF_ITEM_QUEUE_SIZE) {
+            this.BEOWULF_ITEM_QUEUE_SIZE = BEOWULF_ITEM_QUEUE_SIZE;
+        }
+
+        public void setBEOWULF_FLUSH_INTERVAL(float BEOWULF_FLUSH_INTERVAL) {
+            this.BEOWULF_FLUSH_INTERVAL = BEOWULF_FLUSH_INTERVAL;
+        }
     }
 }
