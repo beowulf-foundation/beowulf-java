@@ -464,9 +464,6 @@ public class BeowulfJ {
      */
     public String getTransactionHex(SignedTransaction signedTransaction)
             throws BeowulfCommunicationException, BeowulfResponseException, BeowulfInvalidTransactionException {
-        if (BeowulfJConfig.getInstance().getDefaultAccount().isEmpty()) {
-            throw new InvalidParameterException(NO_DEFAULT_ACCOUNT_ERROR_MESSAGE);
-        }
         String result = CondenserApi.getTransactionHex(communicationHandler, signedTransaction);
         return result;
     }
@@ -492,9 +489,6 @@ public class BeowulfJ {
      */
     public CompletedTransaction getTransactionDetail(String trx_id)
             throws BeowulfCommunicationException, BeowulfResponseException {
-        if (BeowulfJConfig.getInstance().getDefaultAccount().isEmpty()) {
-            throw new InvalidParameterException(NO_DEFAULT_ACCOUNT_ERROR_MESSAGE);
-        }
         CompletedTransaction result = CondenserApi.getTransactionDetail(communicationHandler, trx_id);
         return result;
     }
