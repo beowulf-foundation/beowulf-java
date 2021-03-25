@@ -138,11 +138,11 @@ public class SmtCreateOperation extends Operation {
             serializedSmtCreateOperation.write(BeowulfJUtils.transformByteToLittleEndian(this.getPrecision().byteValue()));
 
             serializedSmtCreateOperation.write(BeowulfJUtils.transformIntToVarIntByteArray(this.getExtensions().size()));
-            serializedSmtCreateOperation.write(BeowulfJUtils.transformLongToByteArray(this.getMaxSupply()));
             for (FutureExtensions extension :
                     this.getExtensions()) {
                 serializedSmtCreateOperation.write(extension.toByteArray());
             }
+            serializedSmtCreateOperation.write(BeowulfJUtils.transformLongToByteArray(this.getMaxSupply()));
             return serializedSmtCreateOperation.toByteArray();
         } catch (IOException e) {
             throw new BeowulfInvalidTransactionException(

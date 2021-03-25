@@ -268,8 +268,7 @@ public class Asset implements ByteTransformable {
 
     @Override
     public String toString() {
-//        return ToStringBuilder.reflectionToString(this);
-        return BigDecimal.valueOf(this.getAmount()).divide(BigDecimal.valueOf(100000L)).toPlainString() + " " + this.getName();
+        return BigDecimal.valueOf(this.getAmount()).divide(BigDecimal.valueOf(Math.pow(10, precision))).toPlainString() + " " + this.getName();
     }
 
     @Override
