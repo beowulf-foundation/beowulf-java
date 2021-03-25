@@ -23,12 +23,15 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import eu.bittrade.crypto.core.ECKey;
 import org.spongycastle.pqc.math.linearalgebra.ByteUtils;
+
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.security.GeneralSecurityException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
@@ -48,23 +51,33 @@ public class WalletUtils {
         return null;
     }
 
+    public static WalletObject encryptWallet(AccountName account, ECKey ecKey, String password) throws GeneralSecurityException {
+        KeyPair keyPair = new KeyPair();
+        keyPair.setOwner(BeowulfJUtils.fromEckeyToWif(ecKey));
+        keyPair.setOwnerPubkey(BeowulfJUtils.getAddressFromEckey(ecKey));
+        return encryptWallet(account, keyPair, password);
+    }
+
     /**
-     * @param account The account name.
-     * @param keypair The key pair public key and private key.
+     * @param account  The account name.
+     * @param keypair  The key pair public key and private key.
      * @param password The password.
      * @return WalletObject
      */
-    public static WalletObject encryptWallet(AccountName account, KeyPair keypair, String password) {
+    public static WalletObject encryptWallet(AccountName account, KeyPair keypair, String password) throws GeneralSecurityException {
         String salt = UUID.randomUUID().toString().substring(16);
         String msg = password + salt;
         byte[] hashedPassword = sha256(msg);
+        assert hashedPassword != null;
         byte[] iv = Arrays.copyOfRange(hashedPassword, 32, 48);
         byte[] newPassword = Arrays.copyOfRange(hashedPassword, 0, 32);
 
         JsonNodeFactory factory = new JsonNodeFactory(true);
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode jsonNode = new ObjectNode(factory);
-        jsonNode.put("checksum", ByteUtils.toHexString(hashedPassword));
+        String checksum = ByteUtils.toHexString(hashedPassword);
+        System.out.println(checksum);
+        jsonNode.put("checksum", checksum);
         jsonNode.putPOJO("keys", mapper.convertValue(keypair, JsonNode.class));
 
 
@@ -80,54 +93,59 @@ public class WalletUtils {
         return walletObject;
     }
 
-    public static JsonNode decryptWallet(WalletObject encryptedWallet, String password) throws IOException {
+    public static ECKey decryptWallet(WalletObject encryptedWallet, String password) throws IOException, GeneralSecurityException {
         String encryptedKeys = encryptedWallet.getCipher_keys();
         byte[] cipherkeys = ByteUtils.fromHexString(encryptedKeys);
 
         String salt = encryptedWallet.getSalt();
         String msg = password + salt;
         byte[] hashedPassword = sha256(msg);
+        assert hashedPassword != null;
         byte[] iv = Arrays.copyOfRange(hashedPassword, 32, 48);
         byte[] newPassword = Arrays.copyOfRange(hashedPassword, 0, 32);
         byte[] strPlainKeys = decrypt(newPassword, iv, cipherkeys);
 
         ObjectMapper mapper = new ObjectMapper();
         JsonNode plainKeys = mapper.readTree(strPlainKeys);
-        return plainKeys;
+        String checksum = plainKeys.get("checksum").textValue();
+        System.out.println(checksum);
+        if (!checksum.equals(ByteUtils.toHexString(hashedPassword))){
+            throw new IllegalStateException("Wrong checksum!");
+        }
+        return BeowulfJUtils.fromWifToEckey(mapper.convertValue(plainKeys.get("keys"), KeyPair.class).getOwner());
     }
 
-    public static byte[] encrypt(byte[] key, byte[] initVector, byte[] value) {
-        try {
-            IvParameterSpec iv = new IvParameterSpec(initVector);
-            SecretKeySpec skeySpec = new SecretKeySpec(key, "AES");
+    public static byte[] encrypt(byte[] key, byte[] initVector, byte[] value) throws GeneralSecurityException {
+        IvParameterSpec iv = new IvParameterSpec(initVector);
+        SecretKeySpec skeySpec = new SecretKeySpec(key, "AES");
 
-            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
-            cipher.init(Cipher.ENCRYPT_MODE, skeySpec, iv);
+        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
+        cipher.init(Cipher.ENCRYPT_MODE, skeySpec, iv);
 
-            byte[] encrypted = cipher.doFinal(value);
+        byte[] encrypted = cipher.doFinal(value);
 
-            return encrypted;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
+        return encrypted;
     }
 
-    public static byte[] decrypt(byte[] key, byte[] initVector, byte[] encrypted) {
-        try {
-            IvParameterSpec iv = new IvParameterSpec(initVector);
-            SecretKeySpec skeySpec = new SecretKeySpec(key, "AES");
+    public static byte[] decrypt(byte[] key, byte[] initVector, byte[] encrypted) throws GeneralSecurityException {
+        IvParameterSpec iv = new IvParameterSpec(initVector);
+        SecretKeySpec skeySpec = new SecretKeySpec(key, "AES");
 
-            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
-            cipher.init(Cipher.DECRYPT_MODE, skeySpec, iv);
+        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
+        cipher.init(Cipher.DECRYPT_MODE, skeySpec, iv);
 
-            byte[] original = cipher.doFinal(encrypted);
+        byte[] original = cipher.doFinal(encrypted);
 
-            return original;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
+        return original;
+    }
+
+    public static void main(String[] args) throws GeneralSecurityException, IOException {
+        AccountName account = new AccountName("hello");
+        ECKey ecKey = BeowulfJUtils.fromWifToEckey("5K2v5Mn7Wcpxzr2cq1cUnDWrkj2oSo2MT7bQd6Vz1a1tzGNKjQu");
+        WalletObject walletObject = encryptWallet(account,  ecKey, "123456");
+        System.out.println(walletObject.toString());
+        ECKey node = decryptWallet(walletObject, "123456");
+        System.out.println(node);
     }
 }
 

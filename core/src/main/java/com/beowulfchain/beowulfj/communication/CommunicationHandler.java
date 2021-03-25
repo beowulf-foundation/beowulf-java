@@ -32,6 +32,7 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.net.URI;
 import java.security.InvalidParameterException;
@@ -120,6 +121,10 @@ public class CommunicationHandler {
                 throw new BeowulfCommunicationException("Could not close the current client connection.", e);
             }
         }
+        if (numberOfConnectionTries >= config.getEndpointURIs().size()) {
+            numberOfConnectionTries = 0;
+        }
+
         // Get a new endpoint URI based on the number of retries.
         Pair<URI, Boolean> endpoint = config.getNextEndpointURI(numberOfConnectionTries);
 
@@ -170,6 +175,9 @@ public class CommunicationHandler {
             LOGGER.debug("For the following reason: ", e);
 
             return performRequest(requestObject, targetClass);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            numberOfConnectionTries = 0;
+            throw new BeowulfCommunicationException("Unable to connect with all the endpoint, please check config or endpoint status.");
         }
     }
 }

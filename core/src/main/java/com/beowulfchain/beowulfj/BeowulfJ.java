@@ -39,10 +39,7 @@ import com.beowulfchain.beowulfj.plugins.apis.database.models.SupernodeSchedule;
 import com.beowulfchain.beowulfj.plugins.apis.network.broadcast.models.BroadcastTransactionSynchronousReturn;
 import com.beowulfchain.beowulfj.protocol.*;
 import com.beowulfchain.beowulfj.protocol.enums.AssetSymbolType;
-import com.beowulfchain.beowulfj.protocol.operations.AccountCreateOperation;
-import com.beowulfchain.beowulfj.protocol.operations.Operation;
-import com.beowulfchain.beowulfj.protocol.operations.SmtCreateOperation;
-import com.beowulfchain.beowulfj.protocol.operations.TransferOperation;
+import com.beowulfchain.beowulfj.protocol.operations.*;
 import com.beowulfchain.beowulfj.util.BeowulfJUtils;
 import eu.bittrade.crypto.core.ECKey;
 import eu.bittrade.crypto.core.Sha256Hash;
@@ -451,25 +448,22 @@ public class BeowulfJ {
      * @param signedTransaction The signed Transaction object you want to receive the HEX
      *                          representation for.
      * @return The HEX representation.
-     * @throws BeowulfCommunicationException <ul>
-     *                                       <li>If the server was not able to answer the request in the
-     *                                       given time (see
-     *                                       {@link BeowulfJConfig#setResponseTimeout(int)
-     *                                       setResponseTimeout}).</li>
-     *                                       <li>If there is a connection problem.</li>
-     *                                       </ul>
-     * @throws BeowulfResponseException      <ul>
-     *                                       <li>If the BeowulfJ is unable to transform the JSON response
-     *                                       into a Java object.</li>
-     *                                       <li>If the Server returned an error object.</li>
-     *                                       </ul>
+     * @throws BeowulfCommunicationException      <ul>
+     *                                            <li>If the server was not able to answer the request in the
+     *                                            given time (see
+     *                                            {@link BeowulfJConfig#setResponseTimeout(int)
+     *                                            setResponseTimeout}).</li>
+     *                                            <li>If there is a connection problem.</li>
+     *                                            </ul>
+     * @throws BeowulfResponseException           <ul>
+     *                                            <li>If the BeowulfJ is unable to transform the JSON response
+     *                                            into a Java object.</li>
+     *                                            <li>If the Server returned an error object.</li>
+     *                                            </ul>
      * @throws BeowulfInvalidTransactionException The beowulf invalid transaction exception.
      */
     public String getTransactionHex(SignedTransaction signedTransaction)
             throws BeowulfCommunicationException, BeowulfResponseException, BeowulfInvalidTransactionException {
-        if (BeowulfJConfig.getInstance().getDefaultAccount().isEmpty()) {
-            throw new InvalidParameterException(NO_DEFAULT_ACCOUNT_ERROR_MESSAGE);
-        }
         String result = CondenserApi.getTransactionHex(communicationHandler, signedTransaction);
         return result;
     }
@@ -495,9 +489,6 @@ public class BeowulfJ {
      */
     public CompletedTransaction getTransactionDetail(String trx_id)
             throws BeowulfCommunicationException, BeowulfResponseException {
-        if (BeowulfJConfig.getInstance().getDefaultAccount().isEmpty()) {
-            throw new InvalidParameterException(NO_DEFAULT_ACCOUNT_ERROR_MESSAGE);
-        }
         CompletedTransaction result = CondenserApi.getTransactionDetail(communicationHandler, trx_id);
         return result;
     }
@@ -752,6 +743,25 @@ public class BeowulfJ {
         return accountCreateOperation;
     }
 
+    public AccountUpdateOperation updateAccount(AccountName accountName, Asset fee, Authority owner, String jsonMetadata) {
+        AccountUpdateOperation accountUpdateOperation = new AccountUpdateOperation(accountName, owner, jsonMetadata, fee);
+        return accountUpdateOperation;
+    }
+
+    public TransferToVestingOperation transferToVesting(AccountName from, AccountName to, Asset amount) {
+        TransferToVestingOperation transferToVestingOperation = new TransferToVestingOperation(from, to, amount, BeowulfJConfig.getInstance().getNetwork().getTransactionFee());
+        return transferToVestingOperation;
+    }
+
+    public TransferToVestingOperation transferToVesting(AccountName from, Asset amount) {
+        return transferToVesting(from, from, amount);
+    }
+
+    public WithdrawVestingOperation withdrawVesting(AccountName from, Asset amount) {
+        WithdrawVestingOperation withdrawVestingOperation = new WithdrawVestingOperation(from, amount, BeowulfJConfig.getInstance().getNetwork().getTransactionFee());
+        return withdrawVestingOperation;
+    }
+
     public BroadcastTransactionSynchronousReturn signAndBroadcastSynchronous(List<Operation> operations)
             throws BeowulfCommunicationException, BeowulfResponseException, BeowulfInvalidTransactionException {
         SignedTransaction signedTransaction = signTransaction(operations, null);
@@ -764,10 +774,11 @@ public class BeowulfJ {
         return this.broadcastTransaction(signedTransaction);
     }
 
-    private SignedTransaction signTransaction(List<Operation> operations,  List<FutureExtensions> extensions) throws BeowulfCommunicationException, BeowulfResponseException {
+    public SignedTransaction signTransaction(List<Operation> operations, List<FutureExtensions> extensions) throws BeowulfCommunicationException, BeowulfResponseException, BeowulfInvalidTransactionException {
         DynamicGlobalProperty globalProperties = this.getDynamicGlobalProperties();
-        return new SignedTransaction(globalProperties.getHeadBlockId(), operations,
-                extensions);
+        SignedTransaction signedTransaction = new SignedTransaction(globalProperties.getHeadBlockId(), operations, extensions);
+        signedTransaction.sign();
+        return signedTransaction;
     }
 
     public TransactionId signAndBroadcastWithExtension(List<Operation> operations, List<FutureExtensions> extensions)
