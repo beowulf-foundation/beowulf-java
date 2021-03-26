@@ -257,9 +257,9 @@
 
     <distributionManagement>
         <repository>
-            <id>bintray-beowulf-foundation-beowulf-java</id>
-            <name>bintray</name>
-            <url>https://api.bintray.com/maven/${bintray.subject}/${bintray.repo}/${bintray.package}/;publish=1</url>
+            <id>github</id>
+            <name>GitHub Beowulfchain Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/beowulfchain-libs/beowulf-libs</url>
         </repository>
     </distributionManagement>
 
