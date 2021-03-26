@@ -225,4 +225,11 @@
             </plugin>
         </plugins>
     </build>
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub Beowulfchain Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/beowulfchain-libs/beowulf-libs</url>
+        </repository>
+    </distributionManagement>
 </project>
