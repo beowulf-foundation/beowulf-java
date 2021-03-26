@@ -247,12 +247,6 @@
         <slf4j.version>1.7.25</slf4j.version>
         <log4j.version>2.10.0</log4j.version>
         <google.http.client.version>1.23.0</google.http.client.version>
-        <sonar.projectKey>beowulfj-core</sonar.projectKey>
-        <sonar.organization>beowulf-foundation</sonar.organization>
-        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-        <bintray.repo>beowulf-java</bintray.repo>
-        <bintray.package>beowulfj-core</bintray.package>
-        <bintray.subject>beowulf-foundation</bintray.subject>
     </properties>
 
     <distributionManagement>
