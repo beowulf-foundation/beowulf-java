@@ -128,7 +128,11 @@ public class AccountUpdateOperation extends AbstractAccountOperation {
 
             // Handle optional values.
             if (this.getOwner() != null) {
+                // write optional byte
+                serializedAccountUpdateOperation.write(Integer.valueOf(1).byteValue());
                 serializedAccountUpdateOperation.write(this.getOwner().toByteArray());
+            } else {
+                serializedAccountUpdateOperation.write(Integer.valueOf(0).byteValue());
             }
 
             serializedAccountUpdateOperation
