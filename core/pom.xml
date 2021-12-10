@@ -245,7 +245,7 @@
         <apache.commons.lang.version>3.7</apache.commons.lang.version>
         <apache.commons.io.version>2.6</apache.commons.io.version>
         <slf4j.version>1.7.25</slf4j.version>
-        <log4j.version>2.10.0</log4j.version>
+        <log4j.version>2.15.0</log4j.version>
         <google.http.client.version>1.23.0</google.http.client.version>
     </properties>
 
