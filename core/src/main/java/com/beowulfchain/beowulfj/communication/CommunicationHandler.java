@@ -94,6 +94,8 @@ public class CommunicationHandler {
             mapper.setDateFormat(simpleDateFormat);
             mapper.setTimeZone(TimeZone.getTimeZone(BeowulfJConfig.getInstance().getTimeZoneId()));
             mapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
+            mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+            mapper.configure(DeserializationFeature.FAIL_ON_INVALID_SUBTYPE, false);
 
             SimpleModule simpleModule = new SimpleModule("BooleanAsString", new Version(1, 0, 0, null, null, null));
             simpleModule.addSerializer(Boolean.class, new BooleanSerializer());
