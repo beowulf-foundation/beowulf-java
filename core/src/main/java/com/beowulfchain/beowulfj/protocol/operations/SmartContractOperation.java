@@ -16,27 +16,35 @@
  */
 package com.beowulfchain.beowulfj.protocol.operations;
 
+import com.beowulfchain.beowulfj.enums.OperationType;
 import com.beowulfchain.beowulfj.enums.PrivateKeyType;
 import com.beowulfchain.beowulfj.enums.ValidationType;
 import com.beowulfchain.beowulfj.exceptions.BeowulfInvalidTransactionException;
 import com.beowulfchain.beowulfj.interfaces.SignatureObject;
-import com.beowulfchain.beowulfj.protocol.Authority;
+import com.beowulfchain.beowulfj.protocol.AccountName;
+import com.beowulfchain.beowulfj.protocol.Asset;
 import com.beowulfchain.beowulfj.util.BeowulfJUtils;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.security.InvalidParameterException;
+import java.util.List;
 import java.util.Map;
 
 /**
  * This class contains fields that exist in all Beowulf Operations
  */
-public class ContractOperation extends Operation {
+public class SmartContractOperation extends Operation {
     @JsonProperty("require_owners")
-    protected Authority require_owners;
+    protected List<AccountName> require_owners;
     @JsonProperty("scid")
     protected String scid;
     @JsonProperty("sc_operation")
     protected String sc_operation;
+    @JsonProperty("fee")
+    protected Asset fee;
 
     /**
      * Create a new Operation object by providing the operation type.
@@ -45,7 +53,7 @@ public class ContractOperation extends Operation {
      *                (<code>true</code>) or a market operation
      *                (<code>false</code>).
      */
-    protected ContractOperation(boolean virtual) {
+    protected SmartContractOperation(boolean virtual) {
         super(virtual);
     }
 
@@ -55,22 +63,22 @@ public class ContractOperation extends Operation {
     }
 
     /**
-     * Get the require_owners {@link Authority
-     * Authority}.
+     * Get the require_owners {@link AccountName
+     * AccountName}.
      *
      * @return The require_owners authority.
      */
-    public Authority getRequire_owners() {
+    public List<AccountName> getRequire_owners() {
         return require_owners;
     }
 
     /**
-     * Set the require_owners {@link Authority
-     * Authority}.
+     * Set the require_owners {@link AccountName
+     * AccountName}.
      *
      * @param require_owners The require_owners authority.
      */
-    public void setRequire_owners(Authority require_owners) {
+    public void setRequire_owners(List<AccountName> require_owners) {
         this.require_owners = require_owners;
     }
 
@@ -100,6 +108,14 @@ public class ContractOperation extends Operation {
         this.scid = scid;
     }
 
+    public Asset getFee() {
+        return fee;
+    }
+
+    public void setFee(Asset fee) {
+        this.fee = fee;
+    }
+
     @Override
     public void validate(ValidationType validationType) {
         if (!ValidationType.SKIP_VALIDATION.equals(validationType)
@@ -110,6 +126,27 @@ public class ContractOperation extends Operation {
 
     @Override
     public byte[] toByteArray() throws BeowulfInvalidTransactionException {
-        return new byte[0];
+        try (ByteArrayOutputStream serializedSmartContractOperation = new ByteArrayOutputStream()) {
+            serializedSmartContractOperation.write(
+                    BeowulfJUtils.transformIntToVarIntByteArray(OperationType.SMART_CONTRACT_OPERATION.getOrderId()));
+
+            serializedSmartContractOperation.write(BeowulfJUtils.transformIntToVarIntByteArray(this.getRequire_owners().size()));
+            for (AccountName accountName :
+                    this.getRequire_owners()) {
+                serializedSmartContractOperation.write(accountName.toByteArray());
+            }
+            serializedSmartContractOperation.write(BeowulfJUtils.transformStringToVarIntByteArray(this.getScid()));
+            serializedSmartContractOperation.write(BeowulfJUtils.transformStringToVarIntByteArray(this.getSc_operation()));
+            serializedSmartContractOperation.write(this.getFee().toByteArray());
+            return serializedSmartContractOperation.toByteArray();
+        } catch (IOException e) {
+            throw new BeowulfInvalidTransactionException(
+                    "A problem occured while transforming the operation into a byte array.", e);
+        }
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
     }
 }

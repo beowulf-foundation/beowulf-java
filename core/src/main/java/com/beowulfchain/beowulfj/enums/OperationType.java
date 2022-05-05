@@ -48,15 +48,17 @@ public enum OperationType {
 
     SMT_CREATE_OPERATION(7),
 
-    FILL_VESTING_WITHDRAW_OPERATION(8),
+    SMART_CONTRACT_OPERATION(8),
 
-    SHUTDOWN_SUPERNODE_OPERATION(9),
+    FILL_VESTING_WITHDRAW_OPERATION(9),
 
-    HARDFORK_OPERATION(10),
+    SHUTDOWN_SUPERNODE_OPERATION(10),
 
-    PRODUCER_REWARD_OPERATION(11),
+    HARDFORK_OPERATION(11),
 
-    CLEAR_NULL_ACCOUNT_BALANCE_OPERATION(12);
+    PRODUCER_REWARD_OPERATION(12),
+
+    CLEAR_NULL_ACCOUNT_BALANCE_OPERATION(13);
 
     /**
      * The id of an operation. The id is used for the byte transformation and
@@ -69,7 +71,7 @@ public enum OperationType {
      *
      * @param orderId The id of the operation to set.
      */
-    private OperationType(int orderId) {
+    OperationType(int orderId) {
         this.orderId = orderId;
     }
 

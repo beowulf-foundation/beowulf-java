@@ -48,6 +48,7 @@ import java.util.Map;
         @Type(value = SupernodeUpdateOperation.class, name = "supernode_update"),
         @Type(value = AccountSupernodeVoteOperation.class, name = "account_supernode_vote"),
         @Type(value = SmtCreateOperation.class, name = "smt_create"),
+        @Type(value = SmartContractOperation.class, name = "smart_contract"),
         @Type(value = FillVestingWithdrawOperation.class, name = "fill_vesting_withdraw"),
         @Type(value = ShutdownSupernodeOperation.class, name = "shutdown_supernode"),
         @Type(value = HardforkOperation.class, name = "hardfork"),
