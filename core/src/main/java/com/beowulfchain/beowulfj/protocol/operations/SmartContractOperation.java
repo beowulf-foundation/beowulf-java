@@ -23,7 +23,9 @@ import com.beowulfchain.beowulfj.exceptions.BeowulfInvalidTransactionException;
 import com.beowulfchain.beowulfj.interfaces.SignatureObject;
 import com.beowulfchain.beowulfj.protocol.AccountName;
 import com.beowulfchain.beowulfj.protocol.Asset;
+import com.beowulfchain.beowulfj.protocol.Authority;
 import com.beowulfchain.beowulfj.util.BeowulfJUtils;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
@@ -46,15 +48,15 @@ public class SmartContractOperation extends Operation {
     @JsonProperty("fee")
     protected Asset fee;
 
-    /**
-     * Create a new Operation object by providing the operation type.
-     *
-     * @param virtual Define if the operation instance is a virtual
-     *                (<code>true</code>) or a market operation
-     *                (<code>false</code>).
-     */
-    protected SmartContractOperation(boolean virtual) {
-        super(virtual);
+    public SmartContractOperation(@JsonProperty("require_owners") List<AccountName> require_owners,
+                                  @JsonProperty("scid") String scid,
+                                  @JsonProperty("sc_operation") String sc_operation,
+                                  @JsonProperty("fee") Asset fee) {
+        super(false);
+        this.require_owners = require_owners;
+        this.scid = scid;
+        this.sc_operation = sc_operation;
+        this.fee = fee;
     }
 
     @Override
@@ -66,7 +68,7 @@ public class SmartContractOperation extends Operation {
      * Get the require_owners {@link AccountName
      * AccountName}.
      *
-     * @return The require_owners authority.
+     * @return The require_owners account name.
      */
     public List<AccountName> getRequire_owners() {
         return require_owners;
@@ -76,7 +78,7 @@ public class SmartContractOperation extends Operation {
      * Set the require_owners {@link AccountName
      * AccountName}.
      *
-     * @param require_owners The require_owners authority.
+     * @param require_owners The require_owners account name.
      */
     public void setRequire_owners(List<AccountName> require_owners) {
         this.require_owners = require_owners;

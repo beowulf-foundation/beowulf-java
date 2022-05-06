@@ -1,17 +1,12 @@
 package com.beowulfchain.beowulfj.protocol.operations.sidechain;
 
 import com.beowulfchain.beowulfj.communication.CommunicationHandler;
-import com.beowulfchain.beowulfj.exceptions.BeowulfInvalidTransactionException;
-import com.beowulfchain.beowulfj.interfaces.ByteTransformable;
 import com.beowulfchain.beowulfj.protocol.operations.sidechain.payload.ContractPayload;
-import com.beowulfchain.beowulfj.util.BeowulfJUtils;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-
-public class SideChainOperation implements ByteTransformable {
+public class SideChainOperation {
     @JsonProperty("contractName")
     protected String contractName;
     @JsonProperty("contractAction")
@@ -44,18 +39,16 @@ public class SideChainOperation implements ByteTransformable {
     }
 
     @Override
-    public byte[] toByteArray() throws BeowulfInvalidTransactionException {
-        try (ByteArrayOutputStream serializedSideChainOperation = new ByteArrayOutputStream()) {
-            serializedSideChainOperation.write(BeowulfJUtils.transformStringToVarIntByteArray(CommunicationHandler.getObjectMapper().writeValueAsString(this)));
-            return serializedSideChainOperation.toByteArray();
-        } catch (IOException e) {
-            throw new BeowulfInvalidTransactionException(
-                    "A problem occured while transforming the operation into a byte array.", e);
-        }
-    }
-
-    @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
+    }
+
+    public String toJson() {
+        try {
+            return CommunicationHandler.getObjectMapper().writeValueAsString(this);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return "{}";
     }
 }

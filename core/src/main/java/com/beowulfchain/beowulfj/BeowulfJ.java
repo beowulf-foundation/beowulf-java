@@ -40,6 +40,7 @@ import com.beowulfchain.beowulfj.plugins.apis.network.broadcast.models.Broadcast
 import com.beowulfchain.beowulfj.protocol.*;
 import com.beowulfchain.beowulfj.protocol.enums.AssetSymbolType;
 import com.beowulfchain.beowulfj.protocol.operations.*;
+import com.beowulfchain.beowulfj.protocol.operations.sidechain.SideChainOperation;
 import com.beowulfchain.beowulfj.util.BeowulfJUtils;
 import eu.bittrade.crypto.core.ECKey;
 import eu.bittrade.crypto.core.Sha256Hash;
@@ -723,6 +724,11 @@ public class BeowulfJ {
     public TransferOperation transfer(AccountName from, AccountName to, Asset amount, Asset fee, String memo) {
         TransferOperation transferOperation = new TransferOperation(from, to, amount, fee, memo);
         return transferOperation;
+    }
+
+    public SmartContractOperation smartContract(SideChainOperation scOperation, List<AccountName> requireOwners, Asset fee) {
+        SmartContractOperation smartContractOperation = new SmartContractOperation(requireOwners, "s01", scOperation.toJson(), fee);
+        return smartContractOperation;
     }
 
     public List<FindSmtTokenByName> findSmtTokenByName(List<String> names)
