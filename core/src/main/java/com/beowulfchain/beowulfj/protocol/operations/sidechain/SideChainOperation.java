@@ -14,6 +14,15 @@ public class SideChainOperation {
     @JsonProperty("contractPayload")
     protected ContractPayload contractPayload;
 
+    public SideChainOperation() {
+    }
+
+    public SideChainOperation(String contractName, String contractAction, ContractPayload contractPayload) {
+        this.contractName = contractName;
+        this.contractAction = contractAction;
+        this.contractPayload = contractPayload;
+    }
+
     public String getContractName() {
         return contractName;
     }
