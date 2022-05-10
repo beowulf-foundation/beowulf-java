@@ -39,8 +39,8 @@ import java.util.Map;
  * This class contains fields that exist in all Beowulf Operations
  */
 public class SmartContractOperation extends Operation {
-    @JsonProperty("require_owners")
-    protected List<AccountName> require_owners;
+    @JsonProperty("required_owners")
+    protected List<AccountName> required_owners;
     @JsonProperty("scid")
     protected String scid;
     @JsonProperty("sc_operation")
@@ -48,12 +48,12 @@ public class SmartContractOperation extends Operation {
     @JsonProperty("fee")
     protected Asset fee;
 
-    public SmartContractOperation(@JsonProperty("require_owners") List<AccountName> require_owners,
+    public SmartContractOperation(@JsonProperty("require_owners") List<AccountName> required_owners,
                                   @JsonProperty("scid") String scid,
                                   @JsonProperty("sc_operation") String sc_operation,
                                   @JsonProperty("fee") Asset fee) {
         super(false);
-        this.require_owners = require_owners;
+        this.required_owners = required_owners;
         this.scid = scid;
         this.sc_operation = sc_operation;
         this.fee = fee;
@@ -61,7 +61,7 @@ public class SmartContractOperation extends Operation {
 
     @Override
     public Map<SignatureObject, PrivateKeyType> getRequiredAuthorities(Map<SignatureObject, PrivateKeyType> requiredAuthoritiesBase) {
-        return mergeRequiredAuthorities(requiredAuthoritiesBase, this.getRequire_owners(), PrivateKeyType.OWNER);
+        return mergeRequiredAuthorities(requiredAuthoritiesBase, this.getRequired_owners(), PrivateKeyType.OWNER);
     }
 
     /**
@@ -70,8 +70,8 @@ public class SmartContractOperation extends Operation {
      *
      * @return The require_owners account name.
      */
-    public List<AccountName> getRequire_owners() {
-        return require_owners;
+    public List<AccountName> getRequired_owners() {
+        return required_owners;
     }
 
     /**
@@ -81,7 +81,7 @@ public class SmartContractOperation extends Operation {
      * @param require_owners The require_owners account name.
      */
     public void setRequire_owners(List<AccountName> require_owners) {
-        this.require_owners = require_owners;
+        this.required_owners = require_owners;
     }
 
     /**
@@ -132,9 +132,9 @@ public class SmartContractOperation extends Operation {
             serializedSmartContractOperation.write(
                     BeowulfJUtils.transformIntToVarIntByteArray(OperationType.SMART_CONTRACT_OPERATION.getOrderId()));
 
-            serializedSmartContractOperation.write(BeowulfJUtils.transformIntToVarIntByteArray(this.getRequire_owners().size()));
+            serializedSmartContractOperation.write(BeowulfJUtils.transformIntToVarIntByteArray(this.getRequired_owners().size()));
             for (AccountName accountName :
-                    this.getRequire_owners()) {
+                    this.getRequired_owners()) {
                 serializedSmartContractOperation.write(accountName.toByteArray());
             }
             serializedSmartContractOperation.write(BeowulfJUtils.transformStringToVarIntByteArray(this.getScid()));
