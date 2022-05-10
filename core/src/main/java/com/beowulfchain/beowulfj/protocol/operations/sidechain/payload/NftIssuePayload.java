@@ -14,6 +14,16 @@ public class NftIssuePayload extends ContractPayload {
     @JsonProperty("feeSymbol")
     private String feeSymbol;
 
+    public NftIssuePayload() {
+    }
+
+    public NftIssuePayload(String symbol, AccountName to, String toType, String feeSymbol) {
+        this.symbol = symbol;
+        this.to = to;
+        this.toType = toType;
+        this.feeSymbol = feeSymbol;
+    }
+
     public String getSymbol() {
         return symbol;
     }
