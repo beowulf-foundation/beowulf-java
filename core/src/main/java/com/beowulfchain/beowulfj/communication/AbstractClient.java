@@ -20,8 +20,11 @@ import com.beowulfchain.beowulfj.communication.jrpc.JsonRPCRequest;
 import com.beowulfchain.beowulfj.communication.jrpc.JsonRPCResponse;
 import com.beowulfchain.beowulfj.exceptions.BeowulfCommunicationException;
 import com.beowulfchain.beowulfj.exceptions.BeowulfResponseException;
+import com.google.api.client.http.HttpHeaders;
+
 import java.io.IOException;
 import java.net.URI;
+import java.util.List;
 
 public abstract class AbstractClient {
     /**
@@ -38,6 +41,9 @@ public abstract class AbstractClient {
      */
     public abstract JsonRPCResponse invokeAndReadResponse(JsonRPCRequest requestObject, URI endpointUri,
                                                           boolean sslVerificationDisabled) throws BeowulfCommunicationException, BeowulfResponseException;
+
+    public abstract JsonRPCResponse invokeAndReadResponse(JsonRPCRequest requestObject, URI endpointUri,
+                                                          boolean sslVerificationDisabled, HttpHeaders httpHeaders) throws BeowulfCommunicationException, BeowulfResponseException;
 
     /**
      * Use this method to close the connection of this client.

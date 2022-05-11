@@ -19,10 +19,7 @@ package com.beowulfchain.beowulfj.communication;
 import com.beowulfchain.beowulfj.communication.jrpc.JsonRPCRequest;
 import com.beowulfchain.beowulfj.communication.jrpc.JsonRPCResponse;
 import com.beowulfchain.beowulfj.exceptions.BeowulfCommunicationException;
-import com.google.api.client.http.ByteArrayContent;
-import com.google.api.client.http.GenericUrl;
-import com.google.api.client.http.HttpRequest;
-import com.google.api.client.http.HttpResponse;
+import com.google.api.client.http.*;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import org.apache.http.client.ClientProtocolException;
 import org.slf4j.Logger;
@@ -39,6 +36,12 @@ public class HttpClient extends AbstractClient {
     @Override
     public JsonRPCResponse invokeAndReadResponse(JsonRPCRequest requestObject, URI endpointUri,
                                                  boolean sslVerificationDisabled) throws BeowulfCommunicationException {
+        return invokeAndReadResponse(requestObject, endpointUri, sslVerificationDisabled, null);
+    }
+
+    @Override
+    public JsonRPCResponse invokeAndReadResponse(JsonRPCRequest requestObject, URI endpointUri,
+                                                 boolean sslVerificationDisabled, HttpHeaders headers) throws BeowulfCommunicationException {
         try {
             NetHttpTransport.Builder builder = new NetHttpTransport.Builder();
             // Disable SSL verification if needed
@@ -50,6 +53,9 @@ public class HttpClient extends AbstractClient {
             HttpRequest httpRequest = builder.build().createRequestFactory(new HttpClientRequestInitializer())
                     .buildPostRequest(new GenericUrl(endpointUri),
                             ByteArrayContent.fromString("application/json", requestPayload));
+            if (headers != null) {
+                httpRequest.setHeaders(headers);
+            }
 
             LOGGER.debug("Sending {}.", requestPayload);
 

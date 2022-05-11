@@ -22,6 +22,7 @@ import com.beowulfchain.beowulfj.configuration.BeowulfJConfig;
 import com.beowulfchain.beowulfj.exceptions.BeowulfCommunicationException;
 import com.beowulfchain.beowulfj.exceptions.BeowulfResponseException;
 import com.beowulfchain.beowulfj.exceptions.BeowulfTimeoutException;
+import com.google.api.client.http.HttpHeaders;
 import org.glassfish.tyrus.client.ClientManager;
 import org.glassfish.tyrus.client.ClientProperties;
 import org.glassfish.tyrus.client.SslContextConfigurator;
@@ -119,6 +120,11 @@ public class WebsocketClient extends AbstractClient {
         }
 
         return websocketEndpoint.getLatestResponse();
+    }
+
+    @Override
+    public JsonRPCResponse invokeAndReadResponse(JsonRPCRequest requestObject, URI endpointUri, boolean sslVerificationDisabled, HttpHeaders httpHeaders) throws BeowulfCommunicationException, BeowulfResponseException {
+        return null;
     }
 
     @Override

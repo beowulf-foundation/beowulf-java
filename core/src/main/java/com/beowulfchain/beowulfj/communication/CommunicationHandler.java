@@ -29,6 +29,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.google.api.client.http.HttpHeaders;
 import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -159,10 +160,15 @@ public class CommunicationHandler {
      */
     public <T> List<T> performRequest(JsonRPCRequest requestObject, Class<T> targetClass)
             throws BeowulfCommunicationException, BeowulfResponseException {
+        return performRequest(requestObject, targetClass, null);
+    }
+
+    public <T> List<T> performRequest(JsonRPCRequest requestObject, Class<T> targetClass, HttpHeaders httpHeaders)
+            throws BeowulfCommunicationException, BeowulfResponseException {
         try {
             Pair<URI, Boolean> endpoint = BeowulfJConfig.getInstance().getNextEndpointURI(numberOfConnectionTries++);
             JsonRPCResponse rawJsonResponse = client.invokeAndReadResponse(requestObject, endpoint.getLeft(),
-                    endpoint.getRight());
+                    endpoint.getRight(), httpHeaders);
             LOGGER.debug("Received {} ", rawJsonResponse);
 
             if (rawJsonResponse.isError()) {
