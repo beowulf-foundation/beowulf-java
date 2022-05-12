@@ -182,7 +182,7 @@ public class CommunicationHandler {
             LOGGER.warn("The connection has been closed. Switching the endpoint and reconnecting.");
             LOGGER.debug("For the following reason: ", e);
 
-            return performRequest(requestObject, targetClass);
+            return performRequest(requestObject, targetClass, httpHeaders);
         } catch (ArrayIndexOutOfBoundsException e) {
             numberOfConnectionTries = 0;
             throw new BeowulfCommunicationException("Unable to connect with all the endpoint, please check config or endpoint status.");
