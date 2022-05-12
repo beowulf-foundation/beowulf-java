@@ -1,15 +1,9 @@
 package com.beowulfchain.beowulfj.protocol.operations.sidechain.payload;
 
-import com.beowulfchain.beowulfj.exceptions.BeowulfInvalidTransactionException;
-import com.beowulfchain.beowulfj.interfaces.ByteTransformable;
 import com.beowulfchain.beowulfj.protocol.AccountName;
-import com.beowulfchain.beowulfj.util.BeowulfJUtils;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.util.List;
 
 public class NftTransferPayload extends ContractPayload {
@@ -17,6 +11,14 @@ public class NftTransferPayload extends ContractPayload {
     private AccountName to;
     @JsonProperty("nfts")
     private List<TokenId> nfts;
+
+    public NftTransferPayload() {
+    }
+
+    public NftTransferPayload(AccountName to, List<TokenId> nfts) {
+        this.to = to;
+        this.nfts = nfts;
+    }
 
     public AccountName getTo() {
         return to;
@@ -44,6 +46,14 @@ public class NftTransferPayload extends ContractPayload {
         private String symbol;
         @JsonProperty("ids")
         private List<String> ids;
+
+        public TokenId() {
+        }
+
+        public TokenId(String symbol, List<String> ids) {
+            this.symbol = symbol;
+            this.ids = ids;
+        }
 
         public List<String> getIds() {
             return ids;
