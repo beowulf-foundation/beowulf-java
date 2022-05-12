@@ -39,7 +39,7 @@ public class JsonRPCRequest {
     /**
      * The ID of this request.
      */
-    private final long id = randomGenerator.nextLong();
+    private final long id = randomGenerator.nextLong() % 1000000000000L;
     private String method;
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private Object params;
@@ -61,6 +61,15 @@ public class JsonRPCRequest {
             namespaceAndMethod = beowulfApiType.name().toLowerCase() + ".";
         }
         this.method = namespaceAndMethod + requestMethod.name().toLowerCase();
+        this.params = params;
+    }
+
+    public JsonRPCRequest(@Nullable String apiType, String method, @Nullable Object params) {
+        String namespaceAndMethod = "";
+        if (apiType != null) {
+            namespaceAndMethod = apiType + ".";
+        }
+        this.method = namespaceAndMethod + method;
         this.params = params;
     }
 
