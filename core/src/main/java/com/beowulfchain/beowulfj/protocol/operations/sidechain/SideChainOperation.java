@@ -60,4 +60,21 @@ public class SideChainOperation {
         }
         return "{}";
     }
+
+    public enum Contract {
+        nftCreate("nft", "create"),
+        nftIssue("nft", "issue"),
+        nftTransfer("nft", "transfer"),
+        nftUpdateMetadata("nft", "updateMetadata"),
+        nftAddProperty("nft", "addProperty");
+
+        Contract(String name, String action) {
+            this.name = name;
+            this.action = action;
+        }
+
+        public final String name;
+        public final String action;
+
+    }
 }

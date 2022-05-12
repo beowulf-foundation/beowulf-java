@@ -37,6 +37,8 @@ import com.beowulfchain.beowulfj.plugins.apis.database.models.DynamicGlobalPrope
 import com.beowulfchain.beowulfj.plugins.apis.database.models.Supernode;
 import com.beowulfchain.beowulfj.plugins.apis.database.models.SupernodeSchedule;
 import com.beowulfchain.beowulfj.plugins.apis.network.broadcast.models.BroadcastTransactionSynchronousReturn;
+import com.beowulfchain.beowulfj.plugins.apis.sidechain.SideChainApi;
+import com.beowulfchain.beowulfj.plugins.apis.sidechain.model.GetBlockInfoReturn;
 import com.beowulfchain.beowulfj.protocol.*;
 import com.beowulfchain.beowulfj.protocol.enums.AssetSymbolType;
 import com.beowulfchain.beowulfj.protocol.operations.*;
@@ -791,5 +793,14 @@ public class BeowulfJ {
             throws BeowulfCommunicationException, BeowulfResponseException, BeowulfInvalidTransactionException {
         SignedTransaction signedTransaction = signTransaction(operations, extensions);
         return this.broadcastTransaction(signedTransaction);
+    }
+
+    public GetBlockInfoReturn getSideChainLatestBlockInfo() throws BeowulfCommunicationException, BeowulfResponseException {
+        return SideChainApi.getLatestBlockInfo(communicationHandler, "s01");
+    }
+
+
+    public GetBlockInfoReturn getSideChainBlockInfo(long blockNumber) throws BeowulfCommunicationException, BeowulfResponseException {
+        return SideChainApi.getBlockInfo(communicationHandler, "s01",  blockNumber);
     }
 }
