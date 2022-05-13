@@ -2,7 +2,7 @@ package com.beowulfchain.beowulfj.plugins.apis.sidechain.model;
 
 import java.util.List;
 
-public class GetBlockInfoReturn {
+public class SideChainBlockInfo {
     private long _id;
     private long blockNumber;
     private long refBeowulfBlockNumber;
