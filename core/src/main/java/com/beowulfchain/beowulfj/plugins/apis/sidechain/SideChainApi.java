@@ -4,9 +4,7 @@ import com.beowulfchain.beowulfj.communication.CommunicationHandler;
 import com.beowulfchain.beowulfj.communication.jrpc.JsonRPCRequest;
 import com.beowulfchain.beowulfj.exceptions.BeowulfCommunicationException;
 import com.beowulfchain.beowulfj.exceptions.BeowulfResponseException;
-import com.beowulfchain.beowulfj.plugins.apis.sidechain.model.GetStatusReturn;
-import com.beowulfchain.beowulfj.plugins.apis.sidechain.model.SideChainBlockInfo;
-import com.beowulfchain.beowulfj.plugins.apis.sidechain.model.SideChainTransactionInfo;
+import com.beowulfchain.beowulfj.plugins.apis.sidechain.model.*;
 import com.google.api.client.http.HttpHeaders;
 
 import java.util.Collections;
@@ -50,5 +48,27 @@ public class SideChainApi {
             return null;
         }
         return transactionInfos.get(0);
+    }
+
+    public static FindOneReturn findOne(CommunicationHandler communicationHandler, String scid, FindOneRequest request) throws BeowulfCommunicationException, BeowulfResponseException {
+        JsonRPCRequest requestObject = new JsonRPCRequest(null, SideChainRequestMethod.findOne.name(), request);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("scid", scid);
+        List<FindOneReturn> findOneReturns = communicationHandler.performRequest(requestObject, FindOneReturn.class, headers);
+        if (findOneReturns == null || findOneReturns.isEmpty()) {
+            return null;
+        }
+        return findOneReturns.get(0);
+    }
+
+    public static FindReturn find(CommunicationHandler communicationHandler, String scid, FindRequest request) throws BeowulfCommunicationException, BeowulfResponseException {
+        JsonRPCRequest requestObject = new JsonRPCRequest(null, SideChainRequestMethod.find.name(), request);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("scid", scid);
+        List<FindReturn> findReturns = communicationHandler.performRequest(requestObject, FindReturn.class, headers);
+        if (findReturns == null || findReturns.isEmpty()) {
+            return null;
+        }
+        return findReturns.get(0);
     }
 }

@@ -4,5 +4,7 @@ public enum SideChainRequestMethod {
     getLatestBlockInfo,
     getBlockInfo,
     getTransactionInfo,
-    getStatus
+    getStatus,
+    find,
+    findOne
 }

@@ -38,9 +38,7 @@ import com.beowulfchain.beowulfj.plugins.apis.database.models.Supernode;
 import com.beowulfchain.beowulfj.plugins.apis.database.models.SupernodeSchedule;
 import com.beowulfchain.beowulfj.plugins.apis.network.broadcast.models.BroadcastTransactionSynchronousReturn;
 import com.beowulfchain.beowulfj.plugins.apis.sidechain.SideChainApi;
-import com.beowulfchain.beowulfj.plugins.apis.sidechain.model.GetStatusReturn;
-import com.beowulfchain.beowulfj.plugins.apis.sidechain.model.SideChainBlockInfo;
-import com.beowulfchain.beowulfj.plugins.apis.sidechain.model.SideChainTransactionInfo;
+import com.beowulfchain.beowulfj.plugins.apis.sidechain.model.*;
 import com.beowulfchain.beowulfj.protocol.*;
 import com.beowulfchain.beowulfj.protocol.enums.AssetSymbolType;
 import com.beowulfchain.beowulfj.protocol.operations.*;
@@ -812,5 +810,13 @@ public class BeowulfJ {
 
     public SideChainTransactionInfo getSideChainTransactionInfo(String txid) throws BeowulfCommunicationException, BeowulfResponseException {
         return SideChainApi.getTransactionInfo(communicationHandler, "s01", txid);
+    }
+
+    public FindOneReturn findOne(FindOneRequest findOneRequest) throws BeowulfCommunicationException, BeowulfResponseException {
+        return SideChainApi.findOne(communicationHandler, "s01", findOneRequest);
+    }
+
+    public FindReturn find(FindRequest findRequest) throws BeowulfCommunicationException, BeowulfResponseException {
+        return SideChainApi.find(communicationHandler, "s01", findRequest);
     }
 }
