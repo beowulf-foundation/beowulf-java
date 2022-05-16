@@ -54,6 +54,7 @@ import org.slf4j.LoggerFactory;
 
 import java.security.InvalidParameterException;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -812,11 +813,17 @@ public class BeowulfJ {
         return SideChainApi.getTransactionInfo(communicationHandler, "s01", txid);
     }
 
-    public FindOneReturn findOne(FindOneRequest findOneRequest) throws BeowulfCommunicationException, BeowulfResponseException {
-        return SideChainApi.findOne(communicationHandler, "s01", findOneRequest);
+    public List<FindReturn> find(FindRequest findRequest) throws BeowulfCommunicationException, BeowulfResponseException {
+        return SideChainApi.find(communicationHandler, "s01", findRequest);
     }
 
-    public FindReturn find(FindRequest findRequest) throws BeowulfCommunicationException, BeowulfResponseException {
-        return SideChainApi.find(communicationHandler, "s01", findRequest);
+    public List<NftContractReturn> findNftContract(Map<String, Object> query, long limit, long offset, List<Index> indexes) throws BeowulfCommunicationException, BeowulfResponseException {
+        FindRequest request = new FindRequest("nft", "nfts", query, limit, offset, indexes);
+        return SideChainApi.findNftContract(communicationHandler, "s01", request);
+    }
+
+    public List<NftTokenReturn> findNftToken(String symbol, Map<String, Object> query, long limit, long offset, List<Index> indexes) throws BeowulfCommunicationException, BeowulfResponseException {
+        FindRequest request = new FindRequest("nft", symbol + "instances", query, limit, offset, indexes);
+        return SideChainApi.findNftToken(communicationHandler, "s01", request);
     }
 }

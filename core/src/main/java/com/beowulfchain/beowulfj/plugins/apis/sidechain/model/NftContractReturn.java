@@ -2,7 +2,7 @@ package com.beowulfchain.beowulfj.plugins.apis.sidechain.model;
 
 import java.util.List;
 
-public class FindOneReturn {
+public class NftContractReturn extends FindReturn {
     private long _id;
     private String issuer;
     private String symbol;
